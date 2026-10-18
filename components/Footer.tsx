@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getDict, type Locale } from "@/lib/i18n";
+import Logo from "./Logo";
 
 export default function Footer({ locale }: { locale: Locale }) {
   const t = getDict(locale);
@@ -7,7 +8,7 @@ export default function Footer({ locale }: { locale: Locale }) {
     <footer className="mt-24 border-t border-line">
       <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-10 text-sm text-muted md:flex-row md:items-center md:justify-between">
         <div>
-          <p className="font-bold text-white">Vexa<span className="gradient-text">Studios</span></p>
+          <div className="text-white"><Logo /></div>
           <p className="mt-1">{t.footer.tagline}</p>
         </div>
         <div className="flex flex-wrap gap-5">
