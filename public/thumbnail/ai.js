@@ -49,7 +49,8 @@ function setBusy(on, label) {
   busy = on;
   $("aiGo").disabled = on || usage() >= DAILY_LIMIT;
   $("aiGo").classList.toggle("loading", on);
-  $("aiGoLabel").textContent = label || "Mit KI erstellen";
+  $("aiGoLabel").textContent = label || "4 Varianten erstellen";
+  if (label) $("overlayText").textContent = label;
   document.querySelector(".stage").classList.toggle("loading", on);
 }
 
@@ -105,40 +106,40 @@ function randn(n, scale) {
   return d;
 }
 
-async function generate(prompt) {
+async function generate(prompt, count, onImage) {
   const s = await loadModels();
-  setBusy(true, "Bild wird erstellt …");
   const { input_ids } = await tokenizer(prompt, { padding: true, max_length: 77, truncation: true, return_tensor: false });
   const { last_hidden_state } = await s.text_encoder.run({ input_ids: new ort.Tensor("int32", input_ids, [1, input_ids.length]) });
-
   const shape = [1, 4, 64, 64];
-  const latent = randn(4 * 64 * 64, SIGMA);
   const div = Math.sqrt(SIGMA ** 2 + 1);
-  const scaled = latent.map((x) => x / div);
-  const { out_sample } = await s.unet.run({
-    sample: new ort.Tensor(scaled, shape),
-    timestep: new ort.Tensor("int64", [999n], [1]),
-    encoder_hidden_states: last_hidden_state,
-  });
-  last_hidden_state.dispose();
-
-  // Euler step to sigma 0 (same as the sample's "poor man's EulerA")
-  const out = out_sample.data;
-  const next = new Float32Array(out.length);
-  for (let i = 0; i < out.length; i++) {
-    const pred = latent[i] - SIGMA * out[i];
-    const deriv = (latent[i] - pred) / SIGMA;
-    next[i] = (latent[i] + deriv * -SIGMA) / VAE_SCALING;
+  try {
+    for (let n = 0; n < count; n++) {
+      setBusy(true, `Variante ${n + 1} von ${count} …`);
+      const latent = randn(4 * 64 * 64, SIGMA);
+      const { out_sample } = await s.unet.run({
+        sample: new ort.Tensor(latent.map((x) => x / div), shape),
+        timestep: new ort.Tensor("int64", [999n], [1]),
+        encoder_hidden_states: last_hidden_state,
+      });
+      // Euler step to sigma 0 (same as the sample's "poor man's EulerA")
+      const out = out_sample.data;
+      const next = new Float32Array(out.length);
+      for (let i = 0; i < out.length; i++) {
+        const pred = latent[i] - SIGMA * out[i];
+        next[i] = (latent[i] + ((latent[i] - pred) / SIGMA) * -SIGMA) / VAE_SCALING;
+      }
+      const { sample } = await s.vae_decoder.run({ latent_sample: new ort.Tensor(next, shape) });
+      const px = sample.data;
+      for (let i = 0; i < px.length; i++) px[i] = Math.min(1, Math.max(0, px[i] / 2 + 0.5));
+      const imageData = sample.toImageData({ tensorLayout: "NCWH", format: "RGB" });
+      const cv = document.createElement("canvas");
+      cv.width = imageData.width; cv.height = imageData.height;
+      cv.getContext("2d").putImageData(imageData, 0, 0);
+      onImage(cv, n);
+    }
+  } finally {
+    last_hidden_state.dispose();
   }
-  const { sample } = await s.vae_decoder.run({ latent_sample: new ort.Tensor(next, shape) });
-
-  const px = sample.data;
-  for (let i = 0; i < px.length; i++) px[i] = Math.min(1, Math.max(0, px[i] / 2 + 0.5));
-  const imageData = sample.toImageData({ tensorLayout: "NCWH", format: "RGB" });
-  const cv = document.createElement("canvas");
-  cv.width = imageData.width; cv.height = imageData.height;
-  cv.getContext("2d").putImageData(imageData, 0, 0);
-  return cv;
 }
 
 // ---------- UI ----------
@@ -146,23 +147,32 @@ async function supported() {
   try { const a = await navigator.gpu?.requestAdapter(); return !!a && a.features.has("shader-f16"); } catch { return false; }
 }
 
+function showVariant(cv, n) {
+  const wrap = $("aiVariants");
+  cv.title = `Variante ${n + 1} verwenden`;
+  cv.onclick = () => { window.thumbSetBackground(cv); wrap.querySelectorAll("canvas").forEach((x) => x.classList.toggle("on", x === cv)); };
+  wrap.appendChild(cv);
+  if (n === 0) cv.onclick();
+}
+
 async function onGenerate() {
   if (busy) return;
   const text = $("aiPrompt").value.trim();
-  if (text.length < 3) return setStatus("Beschreibe kurz, was im Hintergrund zu sehen sein soll.", true);
+  if (text.length < 3) return setStatus("Beschreibe kurz, was gross zu sehen sein soll.", true);
   if (BLOCKED.test(text)) return setStatus("Diese Beschreibung ist nicht erlaubt. Bitte wähle etwas Kinderfreundliches.", true);
   if (usage() >= DAILY_LIMIT) return showLeft();
   if (!sessions && !confirm("Beim ersten Mal lädt die KI ca. 2,5 GB herunter (danach im Browser gespeichert). Das kann je nach Internet einige Minuten dauern. Fortfahren?")) return;
 
-  const prompt = `${text}, ${$("aiStyle").value}, video game thumbnail background, vibrant colors, dramatic lighting, no text`;
+  // Icon-style prompt: one big centered subject on a clean background (text and frame come from the editor)
+  const prompt = `${text}, ${$("aiStyle").value}, single subject centered, close-up filling the frame, game icon art, clean simple gradient background, vibrant saturated colors, rim light, high quality, no text`;
+  $("aiVariants").innerHTML = "";
   setBusy(true, "KI wird geladen …");
   setStatus(sessions ? "Einen Moment …" : "Die KI wird geladen. Lass das Fenster offen.");
   try {
     const t0 = performance.now();
-    const img = await generate(prompt);
+    await generate(prompt, 4, showVariant);
     addUsage();
-    window.thumbSetBackground(img);
-    setStatus(`Fertig in ${((performance.now() - t0) / 1000).toFixed(0)} s! Du kannst jetzt Titel und Sticker anpassen.`);
+    setStatus(`4 Varianten in ${((performance.now() - t0) / 1000).toFixed(0)} s – klick auf eine, um sie zu verwenden.`);
   } catch (e) {
     console.error(e);
     setStatus("Das hat nicht geklappt – vermutlich reicht der Grafikspeicher nicht. Versuch es an einem PC mit stärkerer Grafikkarte.", true);

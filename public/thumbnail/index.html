@@ -3,94 +3,120 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Thumbnail Maker für Roblox-Spiele – kostenlos | Seitara</title>
-<meta name="description" content="Erstelle kostenlos Thumbnails und Icons für deine Roblox-Spiele: Vorlagen, eigener Hintergrund, Text mit Umrandung, Sticker und PNG-Download. Alles läuft in deinem Browser.">
+<title>Icon & Thumbnail Maker für Roblox-Spiele – kostenlos | Seitara</title>
+<meta name="description" content="Erstelle kostenlos Icons und Thumbnails für deine Roblox-Spiele: KI-Motive direkt im Browser, Logo-Text mit 3D-Effekt, Lichteffekte und Vorschau in Startseiten-Grösse.">
 <link rel="icon" href="../icon.svg" type="image/svg+xml">
 <style>
   :root { --bg:#0c0c10; --surface:#141419; --line:#26262e; --muted:#a6a6b2; --accent:#7c3aed; --text:#ececf1; }
   * { box-sizing:border-box; }
   body { margin:0; background:var(--bg); color:var(--text); font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif; }
   a { color:#a78bfa; }
-  header { display:flex; align-items:center; justify-content:space-between; gap:12px; max-width:1200px; margin:0 auto; padding:16px; }
+  header { display:flex; align-items:center; justify-content:space-between; gap:12px; max-width:1240px; margin:0 auto; padding:16px; }
   header a.home { color:var(--muted); text-decoration:none; font-size:14px; }
   header a.home:hover { color:#fff; }
   .brand { font-weight:700; font-size:18px; letter-spacing:-.01em; }
   .brand span { color:#8b5cf6; }
-  main { max-width:1200px; margin:0 auto; padding:8px 16px 48px; }
+  main { max-width:1240px; margin:0 auto; padding:8px 16px 48px; }
   h1 { font-size:clamp(28px,4vw,42px); line-height:1.1; letter-spacing:-.02em; margin:12px 0 8px; }
-  .lead { color:var(--muted); max-width:640px; margin:0 0 24px; }
+  .lead { color:var(--muted); max-width:680px; margin:0 0 24px; }
   .layout { display:grid; gap:20px; grid-template-columns:1fr; }
-  @media (min-width:960px) { .layout { grid-template-columns:minmax(0,1fr) 340px; } }
+  @media (min-width:980px) { .layout { grid-template-columns:minmax(0,1fr) 360px; } }
   .card { background:var(--surface); border:1px solid var(--line); border-radius:12px; }
-  .stage { padding:12px; }
-  canvas { display:block; width:100%; height:auto; border-radius:8px; background:#000; touch-action:none; cursor:grab; }
-  canvas.dragging { cursor:grabbing; }
+  .stage { padding:12px; position:relative; }
+  .canvas-wrap { position:relative; margin:0 auto; }
+  canvas#c { display:block; width:100%; height:auto; border-radius:8px; background:#000; touch-action:none; cursor:grab; }
+  canvas#c.dragging { cursor:grabbing; }
+  .overlay { position:absolute; inset:0; display:none; align-items:center; justify-content:center; background:rgb(0 0 0 / .55); border-radius:8px; color:#fff; font-weight:600; gap:10px; text-align:center; padding:16px; }
+  .stage.loading .overlay { display:flex; }
   .hint { color:var(--muted); font-size:13px; margin:8px 2px 0; }
+  .below { display:grid; gap:16px; margin-top:14px; }
+  @media (min-width:700px) { .below { grid-template-columns:auto 1fr; align-items:start; } }
+  .mini { display:flex; gap:12px; align-items:flex-start; }
+  .mini figure { margin:0; }
+  .mini canvas { display:block; border-radius:10px; border:1px solid var(--line); }
+  .mini figcaption { font-size:11px; color:var(--muted); margin-top:4px; }
+  .tips { font-size:13px; color:var(--muted); margin:0; padding-left:18px; }
+  .tips li { margin:2px 0; }
+  .tips strong { color:var(--text); }
   .panel { padding:16px; display:flex; flex-direction:column; gap:18px; }
   fieldset { border:0; padding:0; margin:0; min-width:0; }
-  legend, .label { font-size:13px; font-weight:600; margin-bottom:8px; display:block; }
-  input[type=text], select { width:100%; background:var(--bg); color:var(--text); border:1px solid var(--line); border-radius:8px; padding:9px 11px; font:inherit; }
-  input[type=text]:focus, select:focus { outline:none; border-color:var(--accent); }
-  input[type=range] { width:100%; accent-color:var(--accent); }
-  input[type=color] { width:38px; height:32px; padding:0; border:1px solid var(--line); border-radius:6px; background:none; cursor:pointer; }
-  .row { display:flex; align-items:center; gap:10px; }
-  .row > label { flex:1; font-size:13px; color:var(--muted); }
+  legend { font-size:13px; font-weight:600; margin-bottom:8px; display:block; }
+  input[type=text], select, textarea { width:100%; background:var(--bg); color:var(--text); border:1px solid var(--line); border-radius:8px; padding:9px 11px; font:inherit; }
+  textarea { min-height:64px; resize:vertical; }
+  input[type=text]:focus, select:focus, textarea:focus { outline:none; border-color:var(--accent); }
+  input[type=range] { width:58%; accent-color:var(--accent); }
+  input[type=color] { width:36px; height:30px; padding:0; border:1px solid var(--line); border-radius:6px; background:none; cursor:pointer; }
+  .row { display:flex; align-items:center; gap:10px; margin-top:6px; }
+  .row > label, .row > span { flex:1; font-size:13px; color:var(--muted); }
   .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
-  .seg { display:grid; grid-template-columns:1fr 1fr; gap:6px; }
   .btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; border-radius:8px; padding:10px 14px; font:600 14px/1 inherit; cursor:pointer; border:1px solid var(--line); background:var(--bg); color:var(--text); transition:border-color .2s, background .2s; }
   .btn:hover { border-color:#3d3d4a; }
   .btn.on { border-color:var(--accent); background:rgb(124 58 237 / .15); }
   .btn.primary { background:var(--accent); border-color:var(--accent); color:#fff; box-shadow:inset 0 1px 0 rgb(255 255 255 / .18); }
   .btn.primary:hover { background:#6d28d9; }
+  .btn:disabled { opacity:.5; cursor:not-allowed; }
+  .toggle { display:flex; align-items:center; gap:8px; font-size:13px; color:var(--muted); cursor:pointer; }
+  .toggle input { accent-color:var(--accent); width:16px; height:16px; }
   .templates { display:grid; grid-template-columns:repeat(4,1fr); gap:6px; }
-  .tpl { aspect-ratio:16/10; border-radius:6px; border:2px solid transparent; cursor:pointer; color:#fff; font:800 10px/1.1 "Arial Black",sans-serif; display:flex; align-items:center; justify-content:center; text-align:center; padding:2px; text-shadow:0 1px 2px #000; transition:transform .15s, border-color .15s; }
+  .tpl { aspect-ratio:1; border-radius:8px; border:2px solid transparent; cursor:pointer; color:#fff; font:800 10px/1.1 "Arial Black",sans-serif; display:flex; align-items:flex-end; justify-content:center; text-align:center; padding:4px 2px; text-shadow:0 1px 2px #000; transition:transform .15s, border-color .15s; }
   .tpl:hover { transform:translateY(-1px); }
   .tpl.on { border-color:#fff; }
   .file { position:relative; overflow:hidden; }
   .file input { position:absolute; inset:0; opacity:0; cursor:pointer; }
-  .donate { margin-top:20px; padding:20px; display:grid; gap:12px; border-top:2px solid var(--accent); }
-  @media (min-width:760px) { .donate { grid-template-columns:1fr auto; align-items:center; } }
-  .donate h2 { margin:0; font-size:18px; }
-  .donate p { margin:4px 0 0; color:var(--muted); font-size:14px; }
-  textarea { width:100%; min-height:72px; resize:vertical; background:var(--bg); color:var(--text); border:1px solid var(--line); border-radius:8px; padding:9px 11px; font:inherit; }
-  textarea:focus { outline:none; border-color:var(--accent); }
   .ai { border:1px solid rgb(124 58 237 / .45); border-radius:10px; padding:12px; background:rgb(124 58 237 / .06); }
   .ai-meta { display:flex; justify-content:space-between; gap:8px; font-size:12px; color:var(--muted); margin-top:8px; }
   .ai-status { font-size:13px; margin-top:8px; min-height:1em; }
   .ai-status.err { color:#f87171; }
-  .btn:disabled { opacity:.5; cursor:not-allowed; }
+  .variants { display:grid; grid-template-columns:repeat(4,1fr); gap:6px; margin-top:8px; }
+  .variants canvas { width:100%; aspect-ratio:1; border-radius:6px; border:2px solid transparent; cursor:pointer; display:block; }
+  .variants canvas.on { border-color:#fff; }
   .spin { width:14px; height:14px; border:2px solid rgb(255 255 255 / .35); border-top-color:#fff; border-radius:50%; animation:spin .8s linear infinite; display:none; }
-  .loading .spin { display:inline-block; }
+  .loading .spin, .overlay .spin { display:inline-block; }
   @keyframes spin { to { transform:rotate(360deg); } }
-  .stage { position:relative; }
-  .stage .overlay { position:absolute; inset:12px 12px auto 12px; aspect-ratio:var(--ar,16/9); display:none; align-items:center; justify-content:center; background:rgb(0 0 0 / .55); border-radius:8px; color:#fff; font-weight:600; gap:10px; }
-  .stage.loading .overlay { display:flex; }
-  footer { max-width:1200px; margin:0 auto; padding:24px 16px 40px; color:var(--muted); font-size:12px; border-top:1px solid var(--line); }
+  .donate { margin-top:20px; padding:20px; display:grid; gap:12px; border-top:2px solid var(--accent); }
+  @media (min-width:760px) { .donate { grid-template-columns:1fr auto; align-items:center; } }
+  .donate h2 { margin:0; font-size:18px; }
+  .donate p { margin:4px 0 0; color:var(--muted); font-size:14px; }
+  footer { max-width:1240px; margin:0 auto; padding:24px 16px 40px; color:var(--muted); font-size:12px; border-top:1px solid var(--line); }
 </style>
 </head>
 <body>
 <header>
-  <div class="brand">Seit<span>ara</span> · Thumbnail Maker</div>
+  <div class="brand">Seit<span>ara</span> · Icon Maker</div>
   <a class="home" href="../de/">Zur Startseite →</a>
 </header>
 
 <main>
-  <h1>Thumbnail Maker für Roblox-Spiele</h1>
-  <p class="lead">Wähle eine Vorlage, lass dir von der KI einen Hintergrund erstellen oder lade einen Screenshot aus deinem Spiel hoch, schreib deinen Titel drauf und lade das Bild als PNG herunter. Komplett kostenlos – alles läuft direkt in deinem Browser, nichts wird hochgeladen.</p>
+  <h1>Icon & Thumbnail Maker für Roblox-Spiele</h1>
+  <p class="lead">Auf der Roblox-Startseite sieht man vor allem das <strong>Spiel-Icon</strong> – klein und quadratisch. Gute Icons zeigen <strong>ein grosses Motiv</strong>, wenig Text und starke Farben. Dieses Tool hilft dir genau dabei. Kostenlos, alles läuft in deinem Browser.</p>
 
   <div class="layout">
-    <section class="card stage">
-      <canvas id="c" width="1920" height="1080" aria-label="Vorschau des Thumbnails"></canvas>
-      <div class="overlay"><span class="spin" style="display:inline-block"></span>KI arbeitet …</div>
-      <p class="hint">Tipp: Titel und Sticker kannst du in der Vorschau mit der Maus oder dem Finger verschieben.</p>
+    <section class="card stage" id="stage">
+      <div class="canvas-wrap">
+        <canvas id="c" width="1024" height="1024" aria-label="Vorschau"></canvas>
+        <div class="overlay"><span class="spin"></span><span id="overlayText">KI arbeitet …</span></div>
+      </div>
+      <p class="hint">Ziehen: Text verschieben · Ziehen ausserhalb vom Text: Hintergrund verschieben</p>
+      <div class="below">
+        <div class="mini">
+          <figure><canvas id="mini" width="150" height="150"></canvas><figcaption>So gross auf der Startseite</figcaption></figure>
+        </div>
+        <ul class="tips">
+          <li><strong>Ein Motiv</strong> – gross, mittig, gut erkennbar (Figur, Gesicht, Haustier, Waffe, Auto …)</li>
+          <li><strong>Max. 3 Wörter</strong> Text – oder gar keiner</li>
+          <li><strong>Starker Kontrast</strong> zwischen Motiv und Hintergrund</li>
+          <li><strong>Klein testen:</strong> Erkennt man links in der Mini-Vorschau sofort, worum es geht?</li>
+          <li>Für ein echtes Ergebnis: <strong>eigenen Render</strong> deines Spiels hochladen (z. B. Avatar in Roblox Studio) und hier veredeln</li>
+        </ul>
+      </div>
     </section>
 
     <aside class="card panel">
       <fieldset>
         <legend>Format</legend>
-        <div class="seg">
-          <button class="btn on" data-format="thumb" type="button">Thumbnail 16:9</button>
-          <button class="btn" data-format="icon" type="button">Icon 1:1</button>
+        <div class="grid2">
+          <button class="btn on" data-format="icon" type="button">Icon 1:1</button>
+          <button class="btn" data-format="thumb" type="button">Thumbnail 16:9</button>
         </div>
       </fieldset>
 
@@ -100,67 +126,75 @@
       </fieldset>
 
       <fieldset class="ai">
-        <legend>KI-Hintergrund <span style="font-weight:400;color:var(--muted)">(Beta)</span></legend>
-        <textarea id="aiPrompt" maxlength="200" placeholder="Beschreibe die Szene, z. B. „Lava-Parkour über einer Stadt bei Sonnenuntergang“"></textarea>
+        <legend>KI-Motiv <span style="font-weight:400;color:var(--muted)">(Beta)</span></legend>
+        <textarea id="aiPrompt" maxlength="160" placeholder="Was soll gross zu sehen sein? z. B. „ein süsser Drache mit grossen Augen“"></textarea>
         <select id="aiStyle" aria-label="KI-Stil" style="margin-top:8px">
-          <option value="colorful 3D video game art, blocky low-poly style">Bunte 3D-Spielgrafik</option>
-          <option value="cartoon style, bold colors, clean shapes">Cartoon</option>
-          <option value="cinematic, realistic lighting, highly detailed">Realistisch</option>
-          <option value="pixel art, retro game style">Pixel-Art</option>
+          <option value="3D render, glossy toy figure, blocky game character style, octane render, soft studio light">3D-Spielfigur (glänzend)</option>
+          <option value="cute cartoon mascot, bold outlines, flat bright colors">Cartoon-Maskottchen</option>
+          <option value="dramatic close-up, cinematic lighting, highly detailed">Dramatisch</option>
+          <option value="pixel art icon, retro game sprite">Pixel-Art</option>
         </select>
-        <button class="btn primary" id="aiGo" type="button" style="width:100%;margin-top:8px"><span class="spin"></span><span id="aiGoLabel">Mit KI erstellen</span></button>
+        <button class="btn primary" id="aiGo" type="button" style="width:100%;margin-top:8px"><span class="spin"></span><span id="aiGoLabel">4 Varianten erstellen</span></button>
+        <div class="variants" id="aiVariants"></div>
         <div class="ai-meta"><span id="aiLeft"></span><span>läuft auf deinem Gerät</span></div>
         <div class="ai-status" id="aiStatus" role="status"></div>
-        <p class="hint" style="margin:6px 0 0">Die KI läuft direkt in deinem Browser – deine Beschreibung verlässt dein Gerät nicht. Beim ersten Mal werden ca. 2,5 GB geladen; nötig ist ein PC mit guter Grafikkarte und aktuellem Chrome oder Edge.</p>
+        <p class="hint" style="margin:6px 0 0">Die KI läuft in deinem Browser, deine Beschreibung verlässt dein Gerät nicht. Beim ersten Mal ca. 2,5 GB Download; nötig ist ein PC mit guter Grafikkarte und aktuellem Chrome oder Edge.</p>
       </fieldset>
 
       <fieldset>
-        <legend>Hintergrund</legend>
+        <legend>Hintergrund & Bild</legend>
         <div class="grid2">
           <div class="btn file">Bild hochladen<input id="bgFile" type="file" accept="image/*"></div>
           <button class="btn" id="bgClear" type="button">Bild entfernen</button>
         </div>
-        <div class="row" style="margin-top:10px"><label for="dim">Abdunkeln</label><input id="dim" type="range" min="0" max="80" value="25" style="width:60%"></div>
-        <div class="row"><label>Verlauf-Farben</label><input id="g1" type="color"><input id="g2" type="color"></div>
+        <div class="row"><label for="zoom">Bild-Zoom</label><input id="zoom" type="range" min="100" max="250" value="100"></div>
+        <div class="row"><span>Farben Mitte / Rand</span><input id="g1" type="color"><input id="g2" type="color"></div>
       </fieldset>
 
       <fieldset>
-        <legend>Titel</legend>
-        <input id="title" type="text" maxlength="40" value="MEGA OBBY">
-        <input id="subtitle" type="text" maxlength="40" value="100 LEVELS!" style="margin-top:8px" placeholder="Untertitel (optional)">
+        <legend>Look</legend>
+        <div class="grid2">
+          <label class="toggle"><input id="rays" type="checkbox"> Lichtstrahlen</label>
+          <label class="toggle"><input id="spot" type="checkbox" checked> Spotlight</label>
+        </div>
+        <div class="row"><label for="sat">Farben verstärken</label><input id="sat" type="range" min="100" max="180" value="125"></div>
+        <div class="row"><label for="vig">Vignette</label><input id="vig" type="range" min="0" max="80" value="35"></div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Text (1–3 Wörter)</legend>
+        <input id="title" type="text" maxlength="24" value="DRAGON PETS">
         <div class="grid2" style="margin-top:8px">
+          <select id="effect" aria-label="Textstil">
+            <option value="logo">Logo (3D + Verlauf)</option>
+            <option value="outline">Dicke Umrandung</option>
+            <option value="glow">Leuchten</option>
+          </select>
           <select id="font" aria-label="Schriftart">
             <option value='"Arial Black", "Arial Bold", sans-serif'>Arial Black</option>
             <option value='Impact, "Arial Narrow Bold", sans-serif'>Impact</option>
             <option value='"Trebuchet MS", sans-serif'>Trebuchet</option>
-            <option value='Verdana, sans-serif'>Verdana</option>
             <option value='"Comic Sans MS", "Comic Sans", cursive'>Comic</option>
-            <option value='Georgia, serif'>Georgia</option>
-          </select>
-          <select id="effect" aria-label="Effekt">
-            <option value="outline">Umrandung</option>
-            <option value="3d">3D-Schatten</option>
-            <option value="glow">Leuchten</option>
-            <option value="none">Ohne</option>
           </select>
         </div>
-        <div class="row" style="margin-top:10px"><label for="size">Grösse</label><input id="size" type="range" min="60" max="260" value="170" style="width:60%"></div>
-        <div class="row"><label for="tilt">Drehung</label><input id="tilt" type="range" min="-15" max="15" value="-4" style="width:60%"></div>
-        <div class="row"><label>Text / Rand</label><input id="fill" type="color"><input id="stroke" type="color"></div>
+        <div class="row"><label for="size">Grösse</label><input id="size" type="range" min="60" max="240" value="150"></div>
+        <div class="row"><label for="curve">Bogen</label><input id="curve" type="range" min="-60" max="60" value="18"></div>
+        <div class="row"><label for="tilt">Drehung</label><input id="tilt" type="range" min="-15" max="15" value="-3"></div>
+        <div class="row"><span>Verlauf oben / unten / Rand</span><input id="fillTop" type="color"><input id="fillBottom" type="color"><input id="stroke" type="color"></div>
       </fieldset>
 
       <fieldset>
-        <legend>Sticker</legend>
-        <select id="sticker" aria-label="Sticker">
-          <option value="none">Kein Sticker</option>
-          <option value="burst:NEU!">Stern: NEU!</option>
-          <option value="burst:UPDATE">Stern: UPDATE</option>
-          <option value="burst:x2">Stern: x2</option>
-          <option value="banner:FREE">Band: FREE</option>
-          <option value="banner:EVENT">Band: EVENT</option>
-          <option value="arrow">Pfeil</option>
-        </select>
-        <div class="row" style="margin-top:8px"><label>Sticker-Farbe</label><input id="stickerColor" type="color"></div>
+        <legend>Sticker <span style="font-weight:400;color:var(--muted)">(sparsam einsetzen)</span></legend>
+        <div class="grid2">
+          <select id="sticker" aria-label="Sticker">
+            <option value="none">Kein Sticker</option>
+            <option value="burst:NEU!">Stern: NEU!</option>
+            <option value="burst:UPDATE">Stern: UPDATE</option>
+            <option value="burst:x2">Stern: x2</option>
+            <option value="banner:EVENT">Band: EVENT</option>
+          </select>
+          <div class="row" style="margin:0"><span>Farbe</span><input id="stickerColor" type="color"></div>
+        </div>
       </fieldset>
 
       <button class="btn primary" id="download" type="button">PNG herunterladen</button>
@@ -170,7 +204,7 @@
   <section class="card donate">
     <div>
       <h2>Gefällt dir das Tool?</h2>
-      <p>Der Thumbnail Maker ist und bleibt kostenlos. Wenn du etwas zurückgeben möchtest, kannst du freiwillig direkt an UNICEF Schweiz spenden – das Geld geht ohne Umweg an UNICEF. <strong>Bist du unter 18, frag bitte vorher deine Eltern.</strong></p>
+      <p>Der Icon Maker ist und bleibt kostenlos. Wenn du etwas zurückgeben möchtest, kannst du freiwillig direkt an UNICEF Schweiz spenden – das Geld geht ohne Umweg an UNICEF. <strong>Bist du unter 18, frag bitte vorher deine Eltern.</strong></p>
       <p style="font-size:12px">Seitara ist nicht mit UNICEF verbunden und erhält keinen Anteil an Spenden.</p>
     </div>
     <a class="btn" href="https://www.unicef.ch/de/spenden" target="_blank" rel="noopener noreferrer">Zur Spendenseite von UNICEF Schweiz ↗</a>
@@ -187,134 +221,185 @@
 (() => {
   const c = document.getElementById("c");
   const ctx = c.getContext("2d");
+  const mini = document.getElementById("mini");
   const $ = (id) => document.getElementById(id);
 
+  // Icon-first presets: one subject, few words, strong colours.
   const TEMPLATES = [
-    { name: "Obby",      g1: "#22d3ee", g2: "#7c3aed", title: "MEGA OBBY",       sub: "100 LEVELS!",  fill: "#ffe14d", stroke: "#1b1033", sticker: "burst:NEU!",   sc: "#ef4444", effect: "outline" },
-    { name: "Simulator", g1: "#34d399", g2: "#0ea5e9", title: "PET SIMULATOR",   sub: "SAMMLE ALLE!", fill: "#ffffff", stroke: "#064e3b", sticker: "burst:x2",     sc: "#f59e0b", effect: "3d" },
-    { name: "Tycoon",    g1: "#facc15", g2: "#ea580c", title: "MONEY TYCOON",    sub: "WERDE REICH",  fill: "#ffffff", stroke: "#7c2d12", sticker: "banner:FREE",  sc: "#16a34a", effect: "outline" },
-    { name: "Horror",    g1: "#111827", g2: "#7f1d1d", title: "DON'T LOOK BACK", sub: "ÜBERLEBE...",  fill: "#f87171", stroke: "#000000", sticker: "none",         sc: "#dc2626", effect: "glow" },
-    { name: "Update",    g1: "#6366f1", g2: "#ec4899", title: "BIG UPDATE",      sub: "NEUE MAP",     fill: "#ffffff", stroke: "#312e81", sticker: "burst:UPDATE", sc: "#facc15", effect: "3d" },
-    { name: "Tower Def", g1: "#0f766e", g2: "#1e293b", title: "TOWER DEFENSE",   sub: "WAVE 50",      fill: "#5eead4", stroke: "#022c22", sticker: "arrow",        sc: "#f97316", effect: "outline" },
-    { name: "Event",     g1: "#f472b6", g2: "#fb923c", title: "SUMMER EVENT",    sub: "LIMITIERT",    fill: "#fff7ed", stroke: "#9d174d", sticker: "banner:EVENT", sc: "#2563eb", effect: "outline" },
-    { name: "Racing",    g1: "#1d4ed8", g2: "#0f172a", title: "TURBO RACE",      sub: "FAHR SCHNELL", fill: "#fde047", stroke: "#000000", sticker: "burst:NEU!",   sc: "#e11d48", effect: "3d" },
+    { name: "Pets",      g1: "#7dd3fc", g2: "#1d4ed8", title: "DRAGON PETS",   top: "#fff59d", bottom: "#ffb300", stroke: "#1a1446", rays: true,  ai: "a cute baby dragon with big shiny eyes" },
+    { name: "Obby",      g1: "#fde047", g2: "#ea580c", title: "LAVA OBBY",     top: "#ffffff", bottom: "#ffd54f", stroke: "#4a1500", rays: true,  ai: "a happy blocky game character jumping over lava" },
+    { name: "Simulator", g1: "#86efac", g2: "#047857", title: "SIMULATOR",     top: "#ffffff", bottom: "#b9f6ca", stroke: "#06281d", rays: false, ai: "a giant golden coin with a smiling face" },
+    { name: "Horror",    g1: "#3f0d12", g2: "#000000", title: "RUN!",          top: "#ff8a80", bottom: "#d50000", stroke: "#000000", rays: false, ai: "a creepy monster face with glowing red eyes in the dark" },
+    { name: "Battle",    g1: "#c084fc", g2: "#3b0764", title: "RIVALS",        top: "#ffffff", bottom: "#e1bee7", stroke: "#1a0230", rays: true,  ai: "a blocky warrior character holding a glowing sword" },
+    { name: "Tycoon",    g1: "#a7f3d0", g2: "#0f766e", title: "TYCOON",        top: "#fffde7", bottom: "#ffca28", stroke: "#003c33", rays: true,  ai: "a stack of gold bars and a treasure chest" },
+    { name: "Racing",    g1: "#fda4af", g2: "#881337", title: "TURBO",         top: "#ffffff", bottom: "#ffcdd2", stroke: "#2b0010", rays: true,  ai: "a shiny red sports car toy, front view" },
+    { name: "Food",      g1: "#fbcfe8", g2: "#db2777", title: "COOK IT!",      top: "#ffffff", bottom: "#fff176", stroke: "#4a0026", rays: false, ai: "a giant cheeseburger with a cute face" },
   ];
 
   const state = {
-    format: "thumb", img: null,
-    titlePos: { x: 0.5, y: 0.42 }, stickerPos: { x: 0.84, y: 0.2 },
+    format: "icon", img: null,
+    titlePos: { x: 0.5, y: 0.83 }, stickerPos: { x: 0.8, y: 0.18 },
+    bgOffset: { x: 0, y: 0 },
   };
 
-  // Template buttons
+  // ---------- templates ----------
   const tplWrap = $("templates");
   TEMPLATES.forEach((t, i) => {
     const b = document.createElement("button");
     b.type = "button"; b.className = "tpl" + (i === 0 ? " on" : ""); b.textContent = t.name;
-    b.style.background = `linear-gradient(135deg, ${t.g1}, ${t.g2})`;
+    b.style.background = `radial-gradient(circle at 50% 40%, ${t.g1}, ${t.g2})`;
     b.onclick = () => { applyTemplate(t); tplWrap.querySelectorAll(".tpl").forEach((x) => x.classList.toggle("on", x === b)); };
     tplWrap.appendChild(b);
   });
-
   function applyTemplate(t) {
-    $("g1").value = t.g1; $("g2").value = t.g2; $("title").value = t.title; $("subtitle").value = t.sub;
-    $("fill").value = t.fill; $("stroke").value = t.stroke; $("sticker").value = t.sticker; $("stickerColor").value = t.sc; $("effect").value = t.effect;
+    $("g1").value = t.g1; $("g2").value = t.g2; $("title").value = t.title;
+    $("fillTop").value = t.top; $("fillBottom").value = t.bottom; $("stroke").value = t.stroke;
+    $("rays").checked = t.rays; $("sticker").value = "none"; $("stickerColor").value = "#ef4444";
+    if (!$("aiPrompt").value || $("aiPrompt").dataset.fromTemplate === "1") { $("aiPrompt").value = t.ai; $("aiPrompt").dataset.fromTemplate = "1"; }
     draw();
   }
+  $("aiPrompt").addEventListener("input", () => { $("aiPrompt").dataset.fromTemplate = "0"; });
 
-  // Format
+  // ---------- format ----------
   document.querySelectorAll("[data-format]").forEach((b) => b.onclick = () => {
     state.format = b.dataset.format;
     document.querySelectorAll("[data-format]").forEach((x) => x.classList.toggle("on", x === b));
-    if (state.format === "icon") { c.width = 1024; c.height = 1024; state.titlePos = { x: 0.5, y: 0.62 }; state.stickerPos = { x: 0.76, y: 0.2 }; }
-    else { c.width = 1920; c.height = 1080; state.titlePos = { x: 0.5, y: 0.42 }; state.stickerPos = { x: 0.84, y: 0.2 }; }
-    document.querySelector(".stage").style.setProperty("--ar", state.format === "icon" ? "1/1" : "16/9");
+    if (state.format === "icon") { c.width = 1024; c.height = 1024; mini.width = 150; mini.height = 150; state.titlePos = { x: 0.5, y: 0.83 }; state.stickerPos = { x: 0.8, y: 0.18 }; }
+    else { c.width = 1920; c.height = 1080; mini.width = 256; mini.height = 144; state.titlePos = { x: 0.5, y: 0.8 }; state.stickerPos = { x: 0.86, y: 0.2 }; }
+    state.bgOffset = { x: 0, y: 0 };
     draw();
   });
 
-  // Background image: read locally only
+  // ---------- background image ----------
   $("bgFile").onchange = (e) => {
     const f = e.target.files[0]; if (!f) return;
     const img = new Image();
-    img.onload = () => { state.img = img; draw(); URL.revokeObjectURL(img.src); };
+    img.onload = () => { setBackground(img); URL.revokeObjectURL(img.src); };
     img.src = URL.createObjectURL(f);
   };
   $("bgClear").onclick = () => { state.img = null; $("bgFile").value = ""; draw(); };
+  function setBackground(img) { state.img = img; state.bgOffset = { x: 0, y: 0 }; draw(); }
 
-  ["dim","g1","g2","title","subtitle","font","effect","size","tilt","fill","stroke","sticker","stickerColor"].forEach((id) => $(id).addEventListener("input", draw));
+  ["zoom","g1","g2","rays","spot","sat","vig","title","effect","font","size","curve","tilt","fillTop","fillBottom","stroke","sticker","stickerColor"]
+    .forEach((id) => $(id).addEventListener("input", draw));
 
-  // ---------- Drawing ----------
+  // ---------- drawing ----------
   function drawBackground(W, H) {
-    const g = ctx.createLinearGradient(0, 0, W, H);
+    const cx = W / 2, cy = H * 0.45, R = Math.hypot(W, H) / 2;
+    const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, R);
     g.addColorStop(0, $("g1").value); g.addColorStop(1, $("g2").value);
     ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
-    if (state.img) {
-      const s = Math.max(W / state.img.width, H / state.img.height);
-      const w = state.img.width * s, h = state.img.height * s;
-      ctx.drawImage(state.img, (W - w) / 2, (H - h) / 2, w, h);
-    } else {
-      // subtle diagonal stripes so plain gradients don't look flat
-      ctx.save(); ctx.globalAlpha = 0.08; ctx.fillStyle = "#fff";
-      for (let x = -H; x < W; x += 120) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x + 50, 0); ctx.lineTo(x + 50 + H, H); ctx.lineTo(x + H, H); ctx.fill(); }
+
+    if ($("rays").checked) {
+      ctx.save(); ctx.translate(cx, cy); ctx.fillStyle = "rgba(255,255,255,.13)";
+      const n = 18;
+      for (let i = 0; i < n; i++) { const a = (i / n) * Math.PI * 2; ctx.beginPath(); ctx.moveTo(0, 0); ctx.arc(0, 0, R * 1.2, a, a + Math.PI / n); ctx.closePath(); ctx.fill(); }
       ctx.restore();
     }
-    const dim = +$("dim").value / 100;
-    const v = ctx.createRadialGradient(W / 2, H / 2, Math.min(W, H) * 0.2, W / 2, H / 2, Math.max(W, H) * 0.75);
-    v.addColorStop(0, `rgba(0,0,0,${dim * 0.4})`); v.addColorStop(1, `rgba(0,0,0,${Math.min(dim + 0.25, 0.9)})`);
-    ctx.fillStyle = v; ctx.fillRect(0, 0, W, H);
+
+    if (state.img) {
+      const z = +$("zoom").value / 100;
+      const s = Math.max(W / state.img.width, H / state.img.height) * z;
+      const w = state.img.width * s, h = state.img.height * s;
+      ctx.save();
+      ctx.filter = `saturate(${+$("sat").value}%) contrast(108%)`;
+      ctx.imageSmoothingQuality = "high";
+      ctx.drawImage(state.img, (W - w) / 2 + state.bgOffset.x * W, (H - h) / 2 + state.bgOffset.y * H, w, h);
+      ctx.restore();
+    }
+
+    if ($("spot").checked) {
+      const sp = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.min(W, H) * 0.55);
+      sp.addColorStop(0, "rgba(255,255,255,.28)"); sp.addColorStop(1, "rgba(255,255,255,0)");
+      ctx.save(); ctx.globalCompositeOperation = "soft-light"; ctx.fillStyle = sp; ctx.fillRect(0, 0, W, H); ctx.restore();
+    }
+
+    const vig = +$("vig").value / 100;
+    if (vig > 0) {
+      const v = ctx.createRadialGradient(cx, H / 2, Math.min(W, H) * 0.35, cx, H / 2, R);
+      v.addColorStop(0, "rgba(0,0,0,0)"); v.addColorStop(1, `rgba(0,0,0,${vig})`);
+      ctx.fillStyle = v; ctx.fillRect(0, 0, W, H);
+    }
   }
 
-  function styledText(text, x, y, size) {
-    const font = $("font").value, effect = $("effect").value, fill = $("fill").value, stroke = $("stroke").value;
-    ctx.font = `900 ${size}px ${font}`; ctx.textAlign = "center"; ctx.textBaseline = "middle"; ctx.lineJoin = "round";
-    // shrink to fit width
-    const maxW = c.width * 0.9; const w = ctx.measureText(text).width;
-    if (w > maxW) { size *= maxW / w; ctx.font = `900 ${size}px ${font}`; }
-    if (effect === "3d") {
-      for (let i = Math.round(size * 0.08); i > 0; i--) { ctx.fillStyle = stroke; ctx.fillText(text, x + i, y + i); }
+  // Calls fn(char) with ctx positioned per glyph; supports an arc (curve in degrees of total bend).
+  function forEachGlyph(text, curveDeg, fn) {
+    if (!curveDeg) { ctx.save(); fn(text); ctx.restore(); return; }
+    const total = ctx.measureText(text).width;
+    const bend = (curveDeg * Math.PI) / 180;
+    const radius = total / bend;
+    let x = -total / 2;
+    for (const ch of text) {
+      const w = ctx.measureText(ch).width;
+      const a = (x + w / 2) / radius;
+      ctx.save();
+      ctx.translate(Math.sin(a) * radius, radius - Math.cos(a) * radius);
+      ctx.rotate(a);
+      fn(ch);
+      ctx.restore();
+      x += w;
     }
-    if (effect === "glow") { ctx.shadowColor = fill; ctx.shadowBlur = size * 0.35; }
-    if (effect === "outline" || effect === "3d") { ctx.lineWidth = size * 0.16; ctx.strokeStyle = stroke; ctx.strokeText(text, x, y); }
-    ctx.fillStyle = fill; ctx.fillText(text, x, y);
-    ctx.shadowBlur = 0;
-    return size;
   }
 
   function drawTitle(W, H) {
-    const scale = state.format === "icon" ? 0.75 : 1;
-    const size = +$("size").value * scale * (W / 1920) * (state.format === "icon" ? 1.9 : 1);
-    const x = state.titlePos.x * W, y = state.titlePos.y * H;
-    ctx.save(); ctx.translate(x, y); ctx.rotate((+$("tilt").value * Math.PI) / 180);
-    const title = $("title").value.trim(), sub = $("subtitle").value.trim();
-    const used = title ? styledText(title, 0, 0, size) : size;
-    if (sub) styledText(sub, 0, used * 0.95, used * 0.48);
-    ctx.restore();
-    return { x, y, w: W * 0.8, h: size * 1.8 };
-  }
+    const text = $("title").value.trim().toUpperCase();
+    if (!text) return null;
+    const font = $("font").value, effect = $("effect").value;
+    let size = +$("size").value * (Math.min(W, H) / 1024) * (state.format === "icon" ? 1.1 : 1.3);
+    ctx.font = `900 ${size}px ${font}`;
+    const maxW = W * 0.92, w0 = ctx.measureText(text).width;
+    if (w0 > maxW) { size *= maxW / w0; ctx.font = `900 ${size}px ${font}`; }
+    ctx.textAlign = "center"; ctx.textBaseline = "middle"; ctx.lineJoin = "round"; ctx.miterLimit = 2;
 
-  function burst(r, color, label) {
-    ctx.beginPath();
-    for (let i = 0; i < 28; i++) { const a = (i / 28) * Math.PI * 2, rr = i % 2 ? r * 0.78 : r; ctx.lineTo(Math.cos(a) * rr, Math.sin(a) * rr); }
-    ctx.closePath(); ctx.fillStyle = color; ctx.fill(); ctx.lineWidth = r * 0.07; ctx.strokeStyle = "#fff"; ctx.stroke();
-    ctx.font = `900 ${r * (label.length > 4 ? 0.36 : 0.5)}px "Arial Black", sans-serif`; ctx.textAlign = "center"; ctx.textBaseline = "middle";
-    ctx.lineWidth = r * 0.08; ctx.strokeStyle = "rgba(0,0,0,.45)"; ctx.strokeText(label, 0, 0); ctx.fillStyle = "#fff"; ctx.fillText(label, 0, 0);
+    const x = state.titlePos.x * W, y = state.titlePos.y * H;
+    const curve = -(+$("curve").value); // positive slider = smile-shaped arc
+    const top = $("fillTop").value, bottom = $("fillBottom").value, stroke = $("stroke").value;
+    const fillGrad = () => { const g = ctx.createLinearGradient(0, -size * 0.45, 0, size * 0.45); g.addColorStop(0, top); g.addColorStop(1, bottom); return g; };
+
+    ctx.save();
+    ctx.translate(x, y); ctx.rotate((+$("tilt").value * Math.PI) / 180);
+
+    if (effect === "logo") {
+      const depth = Math.round(size * 0.09);
+      // drop shadow + 3D extrusion
+      ctx.save(); ctx.shadowColor = "rgba(0,0,0,.45)"; ctx.shadowBlur = size * 0.25; ctx.shadowOffsetY = size * 0.08;
+      forEachGlyph(text, curve, (ch) => { ctx.lineWidth = size * 0.26; ctx.strokeStyle = stroke; ctx.strokeText(ch, 0, depth); });
+      ctx.restore();
+      for (let i = depth; i > 0; i--) forEachGlyph(text, curve, (ch) => { ctx.lineWidth = size * 0.26; ctx.strokeStyle = stroke; ctx.strokeText(ch, 0, i); });
+      // outer + inner outline, gradient fill, top highlight
+      forEachGlyph(text, curve, (ch) => { ctx.lineWidth = size * 0.26; ctx.strokeStyle = stroke; ctx.strokeText(ch, 0, 0); });
+      forEachGlyph(text, curve, (ch) => { ctx.lineWidth = size * 0.07; ctx.strokeStyle = "rgba(255,255,255,.95)"; ctx.strokeText(ch, 0, 0); });
+      forEachGlyph(text, curve, (ch) => { ctx.fillStyle = fillGrad(); ctx.fillText(ch, 0, 0); });
+      forEachGlyph(text, curve, (ch) => {
+        ctx.save(); ctx.beginPath(); ctx.rect(-size * 2, -size, size * 4, size * 0.62); ctx.clip();
+        ctx.fillStyle = "rgba(255,255,255,.28)"; ctx.fillText(ch, 0, 0); ctx.restore();
+      });
+    } else if (effect === "outline") {
+      forEachGlyph(text, curve, (ch) => { ctx.lineWidth = size * 0.24; ctx.strokeStyle = stroke; ctx.strokeText(ch, 0, 0); ctx.fillStyle = fillGrad(); ctx.fillText(ch, 0, 0); });
+    } else {
+      forEachGlyph(text, curve, (ch) => { ctx.shadowColor = bottom; ctx.shadowBlur = size * 0.45; ctx.fillStyle = fillGrad(); ctx.fillText(ch, 0, 0); ctx.shadowBlur = 0; ctx.fillText(ch, 0, 0); });
+    }
+    ctx.restore();
+    return { x, y, w: Math.min(w0, maxW) + size * 0.4, h: size * 1.4 };
   }
 
   function drawSticker(W, H) {
     const v = $("sticker").value; if (v === "none") return null;
     const [kind, label] = v.split(":"); const color = $("stickerColor").value;
-    const r = Math.min(W, H) * 0.16; const x = state.stickerPos.x * W, y = state.stickerPos.y * H;
+    const r = Math.min(W, H) * 0.14; const x = state.stickerPos.x * W, y = state.stickerPos.y * H;
     ctx.save(); ctx.translate(x, y); ctx.rotate(0.22);
-    if (kind === "burst") burst(r, color, label);
-    if (kind === "banner") {
+    if (kind === "burst") {
+      ctx.beginPath();
+      for (let i = 0; i < 28; i++) { const a = (i / 28) * Math.PI * 2, rr = i % 2 ? r * 0.78 : r; ctx.lineTo(Math.cos(a) * rr, Math.sin(a) * rr); }
+      ctx.closePath(); ctx.fillStyle = color; ctx.fill(); ctx.lineWidth = r * 0.07; ctx.strokeStyle = "#fff"; ctx.stroke();
+      ctx.font = `900 ${r * (label.length > 4 ? 0.36 : 0.5)}px "Arial Black", sans-serif`;
+    } else {
       const w = r * 2.6, h = r * 0.8;
       ctx.fillStyle = color; ctx.fillRect(-w / 2, -h / 2, w, h); ctx.lineWidth = r * 0.06; ctx.strokeStyle = "#fff"; ctx.strokeRect(-w / 2, -h / 2, w, h);
-      ctx.font = `900 ${h * 0.62}px "Arial Black", sans-serif`; ctx.textAlign = "center"; ctx.textBaseline = "middle"; ctx.fillStyle = "#fff"; ctx.fillText(label, 0, 2);
+      ctx.font = `900 ${h * 0.62}px "Arial Black", sans-serif`;
     }
-    if (kind === "arrow") {
-      ctx.rotate(0.5); ctx.beginPath();
-      ctx.moveTo(-r, -r * 0.25); ctx.lineTo(r * 0.2, -r * 0.25); ctx.lineTo(r * 0.2, -r * 0.6); ctx.lineTo(r, 0); ctx.lineTo(r * 0.2, r * 0.6); ctx.lineTo(r * 0.2, r * 0.25); ctx.lineTo(-r, r * 0.25); ctx.closePath();
-      ctx.fillStyle = color; ctx.fill(); ctx.lineWidth = r * 0.08; ctx.strokeStyle = "#fff"; ctx.stroke();
-    }
+    ctx.textAlign = "center"; ctx.textBaseline = "middle"; ctx.lineWidth = r * 0.08; ctx.strokeStyle = "rgba(0,0,0,.45)";
+    ctx.strokeText(label, 0, 2); ctx.fillStyle = "#fff"; ctx.fillText(label, 0, 2);
     ctx.restore();
     return { x, y, r: r * 1.3 };
   }
@@ -326,35 +411,42 @@
     drawBackground(W, H);
     hit.title = drawTitle(W, H);
     hit.sticker = drawSticker(W, H);
+    const m = mini.getContext("2d");
+    m.imageSmoothingQuality = "high";
+    m.clearRect(0, 0, mini.width, mini.height);
+    m.drawImage(c, 0, 0, mini.width, mini.height);
   }
 
-  // ---------- Dragging ----------
+  // ---------- dragging: sticker, title, otherwise background ----------
   let drag = null;
   const toCanvas = (e) => { const r = c.getBoundingClientRect(); return { x: (e.clientX - r.left) * (c.width / r.width), y: (e.clientY - r.top) * (c.height / r.height) }; };
   c.addEventListener("pointerdown", (e) => {
     const p = toCanvas(e); const s = hit.sticker, t = hit.title;
     if (s && Math.hypot(p.x - s.x, p.y - s.y) < s.r) drag = { key: "stickerPos", dx: p.x - s.x, dy: p.y - s.y };
-    else if (t && Math.abs(p.x - t.x) < t.w / 2 && Math.abs(p.y - t.y) < t.h) drag = { key: "titlePos", dx: p.x - t.x, dy: p.y - t.y };
+    else if (t && Math.abs(p.x - t.x) < t.w / 2 && Math.abs(p.y - t.y) < t.h / 2) drag = { key: "titlePos", dx: p.x - t.x, dy: p.y - t.y };
+    else if (state.img) drag = { key: "bg", sx: p.x, sy: p.y, ox: state.bgOffset.x, oy: state.bgOffset.y };
     if (drag) { c.setPointerCapture(e.pointerId); c.classList.add("dragging"); }
   });
   c.addEventListener("pointermove", (e) => {
     if (!drag) return; const p = toCanvas(e);
-    state[drag.key] = { x: Math.min(Math.max((p.x - drag.dx) / c.width, 0.05), 0.95), y: Math.min(Math.max((p.y - drag.dy) / c.height, 0.05), 0.95) };
+    if (drag.key === "bg") state.bgOffset = { x: drag.ox + (p.x - drag.sx) / c.width, y: drag.oy + (p.y - drag.sy) / c.height };
+    else state[drag.key] = { x: Math.min(Math.max((p.x - drag.dx) / c.width, 0.05), 0.95), y: Math.min(Math.max((p.y - drag.dy) / c.height, 0.05), 0.95) };
     draw();
   });
   const end = () => { drag = null; c.classList.remove("dragging"); };
   c.addEventListener("pointerup", end); c.addEventListener("pointercancel", end);
 
-  // ---------- Download ----------
+  // ---------- download ----------
   $("download").onclick = () => {
-    const name = ($("title").value.trim() || "thumbnail").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "thumbnail";
+    const name = ($("title").value.trim() || "icon").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "icon";
     const a = document.createElement("a");
     a.download = `${name}-${state.format === "icon" ? "icon" : "thumbnail"}.png`;
     a.href = c.toDataURL("image/png"); a.click();
   };
 
-  // Hook for ai.js: use a generated image/canvas as background
-  window.thumbSetBackground = (img) => { state.img = img; draw(); };
+  // Hooks for ai.js
+  window.thumbSetBackground = setBackground;
+  window.thumbFormat = () => state.format;
 
   applyTemplate(TEMPLATES[0]);
 })();

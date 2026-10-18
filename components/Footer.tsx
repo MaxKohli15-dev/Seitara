@@ -29,7 +29,7 @@ export default function Footer({ locale }: { locale: Locale }) {
               ))}
               {/* Static tool page outside the Next router, so a plain link with basePath */}
               {c.title === t.footer.resources && (
-                <li><a href={asset("/thumbnail/")} className="transition hover:text-white">Roblox Thumbnail Maker</a></li>
+                <li><a href={asset("/thumbnail/")} className="transition hover:text-white">Roblox Icon Maker</a></li>
               )}
             </ul>
           </nav>
