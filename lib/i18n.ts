@@ -38,7 +38,7 @@ const de = {
       { title: "Live gehen", text: "Deine Website geht online. Fertig." },
     ],
   },
-  portfolio: { title: "Ausgewählte Projekte", text: "Ein Auszug aus Websites, die wir gratis erstellt haben.", all: "Alle Projekte", back: "Zurück zum Portfolio", visit: "Ähnliche Website anfragen" },
+  portfolio: { title: "Beispiel-Designs", text: "So könnte deine Website aussehen – drei Design-Konzepte für unterschiedliche Branchen.", concept: "Design-Konzept", all: "Alle Beispiele", back: "Zurück zum Portfolio", visit: "Ähnliche Website anfragen" },
   pricing: {
     title: "Unsere Leistungen",
     text: "Alles, was du für einen professionellen Auftritt brauchst – komplett kostenlos.",
@@ -126,7 +126,7 @@ const en: typeof de = {
       { title: "Go live", text: "Your website goes online. Done." },
     ],
   },
-  portfolio: { title: "Selected work", text: "A selection of websites we built for free.", all: "All projects", back: "Back to portfolio", visit: "Request a similar website" },
+  portfolio: { title: "Example designs", text: "This is what your website could look like – three design concepts for different industries.", concept: "Design concept", all: "All examples", back: "Back to portfolio", visit: "Request a similar website" },
   pricing: {
     title: "Our services",
     text: "Everything you need for a professional presence – completely free.",

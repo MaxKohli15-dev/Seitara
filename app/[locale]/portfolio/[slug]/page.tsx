@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { getDict, locales, type Locale } from "@/lib/i18n";
 import { projects } from "@/lib/content";
 import { pageMeta } from "@/lib/seo";
+import SiteMock from "@/components/SiteMock";
 
 type Params = Promise<{ locale: Locale; slug: string }>;
 
@@ -26,11 +27,10 @@ export default async function ProjectPage({ params }: { params: Params }) {
   return (
     <article className="mx-auto max-w-3xl px-4 pt-16">
       <Link href={`/${locale}/portfolio`} className="text-sm text-muted hover:text-white">← {t.back}</Link>
-      <div className={`mt-6 flex aspect-[16/9] items-end rounded-2xl bg-gradient-to-br ${p.gradient} p-8`}>
-        <h1 className="text-4xl font-bold text-white drop-shadow">{p.name}</h1>
-      </div>
-      <p className="mt-8 text-xs font-semibold uppercase tracking-wider text-violet-400">{p.category[locale]}</p>
-      <p className="mt-3 text-lg leading-relaxed text-muted">{p.details[locale]}</p>
+      <p className="eyebrow mt-8">{p.category[locale]} · {t.concept}</p>
+      <h1 className="mt-3 text-4xl font-semibold tracking-tight">{p.name}</h1>
+      <div className="mt-8"><SiteMock project={p} locale={locale} large /></div>
+      <p className="mt-8 text-lg leading-relaxed text-muted">{p.details[locale]}</p>
       <Link href={`/${locale}/contact`} className="btn-primary mt-10">{t.visit}</Link>
     </article>
   );

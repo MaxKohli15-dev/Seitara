@@ -9,7 +9,8 @@ export type Project = {
   category: Localized;
   summary: Localized;
   details: Localized;
-  gradient: string;
+  theme: { bg: string; fg: string; accent: string; variant: "menu" | "schedule" | "gallery" };
+  tagline: Localized;
 };
 
 export const projects: Project[] = [
@@ -19,10 +20,11 @@ export const projects: Project[] = [
     category: { de: "Gastronomie", en: "Hospitality" },
     summary: { de: "Einladende Website mit Speisekarte und Tischreservierung.", en: "Inviting website with menu and table booking." },
     details: {
-      de: "Für Café Lumen haben wir eine warme, bildstarke Website mit digitaler Speisekarte, Öffnungszeiten und Reservierungsformular gebaut. Lokale Suchanfragen wie „Café in der Nähe“ bringen seitdem deutlich mehr Besucher.",
-      en: "For Café Lumen we built a warm, image-rich website with a digital menu, opening hours and a booking form. Local searches like “café near me” now bring in noticeably more visitors.",
+      de: "Ein Konzept für ein Café: warme Farben, eine digitale Speisekarte, Öffnungszeiten auf einen Blick und ein einfaches Formular für Tischreservierungen. Ideal, um bei lokalen Suchen wie „Café in der Nähe“ gefunden zu werden.",
+      en: "A concept for a café: warm colours, a digital menu, opening hours at a glance and a simple table booking form. Ideal for showing up in local searches like “café near me”.",
     },
-    gradient: "from-amber-500 to-rose-500",
+    theme: { bg: "#f6efe6", fg: "#3b2a1e", accent: "#c2410c", variant: "menu" },
+    tagline: { de: "Frisch geröstet. Mit Liebe serviert.", en: "Freshly roasted. Served with love." },
   },
   {
     slug: "fitlab-studio",
@@ -30,10 +32,11 @@ export const projects: Project[] = [
     category: { de: "Fitness", en: "Fitness" },
     summary: { de: "Dynamischer Auftritt mit Kursplan und Probetraining.", en: "Dynamic site with class schedule and free trial." },
     details: {
-      de: "FitLab wollte mehr Probetrainings. Wir haben eine energiegeladene Seite mit Kursplan, Trainerprofilen und einem klaren Call-to-Action gebaut.",
-      en: "FitLab wanted more trial sign-ups. We built an energetic site with class schedule, trainer profiles and a clear call to action.",
+      de: "Ein Konzept für ein Fitnessstudio: dunkles, energiegeladenes Design mit Kursplan, Trainerprofilen und einem klaren Button für ein Probetraining.",
+      en: "A concept for a gym: a dark, energetic design with class schedule, trainer profiles and a clear button for a free trial.",
     },
-    gradient: "from-emerald-500 to-cyan-500",
+    theme: { bg: "#0f1412", fg: "#e7f5ee", accent: "#22c55e", variant: "schedule" },
+    tagline: { de: "Stärker werden. Jeden Tag.", en: "Get stronger. Every day." },
   },
   {
     slug: "nordwerk-handwerk",
@@ -41,10 +44,11 @@ export const projects: Project[] = [
     category: { de: "Handwerk", en: "Trades" },
     summary: { de: "Seriöse Handwerker-Website mit Referenzen und Anfrageformular.", en: "Trustworthy trades website with references and quote form." },
     details: {
-      de: "Nordwerk ist ein Schreinerbetrieb. Die neue Website zeigt Referenzprojekte in einer Galerie und sammelt Angebotsanfragen direkt online.",
-      en: "Nordwerk is a carpentry business. The new website shows reference projects in a gallery and collects quote requests online.",
+      de: "Ein Konzept für einen Schreinerbetrieb: seriös und aufgeräumt, mit Referenz-Galerie und einem Formular, über das Kunden direkt ein Angebot anfragen können.",
+      en: "A concept for a carpentry business: clean and trustworthy, with a reference gallery and a form for requesting a quote directly.",
     },
-    gradient: "from-sky-500 to-indigo-500",
+    theme: { bg: "#f4f5f7", fg: "#1f2937", accent: "#1d4ed8", variant: "gallery" },
+    tagline: { de: "Massarbeit aus Holz seit 1998.", en: "Custom woodwork since 1998." },
   },
 ];
 

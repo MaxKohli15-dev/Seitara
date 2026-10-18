@@ -4,6 +4,7 @@ import { industries, projects } from "@/lib/content";
 import Reveal from "./Reveal";
 import CountUp from "./CountUp";
 import Icon from "./Icons";
+import SiteMock from "./SiteMock";
 
 export function SectionTitle({ title, text }: { title: string; text?: string }) {
   return (
@@ -48,13 +49,14 @@ export function ProjectGrid({ locale, limit }: { locale: Locale; limit?: number 
       {projects.slice(0, limit).map((p, i) => (
         <Reveal key={p.slug} delay={i * 120}>
           <Link href={`/${locale}/portfolio/${p.slug}`} className="card card-hover group block h-full overflow-hidden">
-            <div className="overflow-hidden">
-              <div className={`flex aspect-[16/10] items-end bg-gradient-to-br ${p.gradient} p-5 transition-transform duration-500 ease-out group-hover:scale-[1.02]`}>
-                <span className="text-2xl font-bold text-white drop-shadow">{p.name}</span>
-              </div>
+            <div className="p-3 pb-0">
+              <SiteMock project={p} locale={locale} />
             </div>
             <div className="p-5">
-              <p className="text-xs font-semibold uppercase tracking-wider text-violet-400">{p.category[locale]}</p>
+              <p className="flex items-baseline justify-between gap-3">
+                <span className="font-semibold">{p.name}</span>
+                <span className="text-xs text-muted">{p.category[locale]}</span>
+              </p>
               <p className="mt-2 text-muted">{p.summary[locale]}</p>
             </div>
           </Link>
