@@ -1,7 +1,7 @@
 export const locales = ["de", "en"] as const;
 export type Locale = (typeof locales)[number];
 
-export const SITE_URL = "https://maxkohli15-dev.github.io/VexaStudiosSites";
+export const SITE_URL = "https://vexastudios.example";
 export const BRAND = "Vexa Studios";
 
 export function isLocale(value: string): value is Locale {
@@ -46,14 +46,14 @@ const de = {
     faqTitle: "Häufige Fragen",
   },
   tutorial: {
-    badge: "Bald verfügbar",
+    badge: "Jetzt ansehen",
     title: "Video-Tutorial: Deine Website mit GitHub Pages online stellen",
-    text: "Wir arbeiten an einem Schritt-für-Schritt-Video, das zeigt, wie du die Website, die wir für dich bauen, kostenlos mit GitHub Pages veröffentlichst – ganz ohne Vorkenntnisse.",
+    text: "In diesem Schritt-für-Schritt-Video zeigen wir, wie du die Website, die wir für dich bauen, kostenlos mit GitHub Pages veröffentlichst – ganz ohne Vorkenntnisse.",
     points: ["GitHub-Konto anlegen", "Website-Dateien hochladen", "GitHub Pages aktivieren", "Live gehen – gratis"],
   },
   faq: [
     { q: "Ist die Website wirklich kostenlos?", a: "Ja, zu 100 %. Design, Umsetzung und Hosting über GitHub Pages kosten dich nichts." },
-    { q: "Wo wird meine Website gehostet?", a: "Kostenlos bei GitHub Pages. Bald zeigen wir dir in einem Video-Tutorial Schritt für Schritt, wie das geht." },
+    { q: "Wo wird meine Website gehostet?", a: "Kostenlos bei GitHub Pages. In unserem Video-Tutorial zeigen wir dir Schritt für Schritt, wie das geht." },
     { q: "Wie lange dauert es?", a: "In der Regel ist deine Website innerhalb von 1–2 Wochen fertig." },
     { q: "Gehört mir die Website?", a: "Ja. Du bekommst alle Dateien und bist an nichts gebunden." },
   ],
@@ -108,14 +108,14 @@ const en: typeof de = {
     faqTitle: "Frequently asked questions",
   },
   tutorial: {
-    badge: "Coming soon",
+    badge: "Watch now",
     title: "Video tutorial: Publish your website with GitHub Pages",
-    text: "We're working on a step-by-step video showing how to publish the website we build for you on GitHub Pages for free – no prior knowledge needed.",
+    text: "This step-by-step video shows how to publish the website we build for you on GitHub Pages for free – no prior knowledge needed.",
     points: ["Create a GitHub account", "Upload your website files", "Enable GitHub Pages", "Go live – for free"],
   },
   faq: [
     { q: "Is the website really free?", a: "Yes, 100%. Design, development and hosting via GitHub Pages cost you nothing." },
-    { q: "Where is my website hosted?", a: "For free on GitHub Pages. Soon a video tutorial will show you step by step how it works." },
+    { q: "Where is my website hosted?", a: "For free on GitHub Pages. Our video tutorial shows you step by step how it works." },
     { q: "How long does it take?", a: "Your website is usually ready within 1–2 weeks." },
     { q: "Do I own the website?", a: "Yes. You get all files and you're not locked in." },
   ],

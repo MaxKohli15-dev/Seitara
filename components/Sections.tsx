@@ -84,12 +84,17 @@ export function Tutorial({ locale }: { locale: Locale }) {
               ))}
             </ol>
           </div>
-          <div className="video-placeholder relative flex aspect-video items-center justify-center overflow-hidden rounded-2xl border border-line bg-bg">
-            <div className="float absolute -left-10 -top-10 h-40 w-40 rounded-full bg-violet-600/30 blur-2xl" />
-            <div className="float-slow absolute -bottom-10 -right-10 h-40 w-40 rounded-full bg-blue-600/30 blur-2xl" />
-            <div className="play-btn relative flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-violet-600 to-blue-600 shadow-lg shadow-violet-600/40">
-              <span className="ml-1 text-2xl">▶</span>
-            </div>
+          <div className="relative">
+            <div className="float absolute -left-10 -top-10 -z-10 h-40 w-40 rounded-full bg-violet-600/30 blur-2xl" />
+            <div className="float-slow absolute -bottom-10 -right-10 -z-10 h-40 w-40 rounded-full bg-blue-600/30 blur-2xl" />
+            <video
+              className="aspect-video w-full rounded-2xl border border-line bg-bg shadow-2xl shadow-violet-900/30"
+              src={`${process.env.NEXT_PUBLIC_BASE_PATH}/videos/github-pages-tutorial.mp4#t=0.5`}
+              controls
+              playsInline
+              preload="metadata"
+              aria-label={t.title}
+            />
           </div>
         </div>
       </Reveal>
