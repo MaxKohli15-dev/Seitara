@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Icon from "./Icons";
 
 /** Thin gradient reading-progress bar at the top plus a back-to-top button. */
 export default function ScrollUI({ label }: { label: string }) {
@@ -25,7 +26,7 @@ export default function ScrollUI({ label }: { label: string }) {
   return (
     <>
       <div
-        className="fixed left-0 top-0 z-[60] h-0.5 origin-left bg-gradient-to-r from-violet-600 to-cyan-400"
+        className="fixed left-0 top-0 z-[60] h-0.5 origin-left bg-violet-500"
         style={{ width: "100%", transform: `scaleX(${progress})` }}
         aria-hidden="true"
       />
@@ -33,9 +34,9 @@ export default function ScrollUI({ label }: { label: string }) {
         type="button"
         onClick={() => scrollTo({ top: 0, behavior: "smooth" })}
         aria-label={label}
-        className={`fixed bottom-5 right-5 z-50 flex h-11 w-11 items-center justify-center rounded-full border border-line bg-surface/90 text-lg backdrop-blur transition-all duration-300 hover:border-violet-500 ${showTop ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-4 opacity-0"}`}
+        className={`fixed bottom-5 right-5 z-50 flex h-11 w-11 items-center justify-center rounded-lg border border-line bg-surface/90 backdrop-blur transition-all duration-300 hover:border-violet-500 ${showTop ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-4 opacity-0"}`}
       >
-        ↑
+        <Icon name="arrowUp" className="h-4 w-4" />
       </button>
     </>
   );

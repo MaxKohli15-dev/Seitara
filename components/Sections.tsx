@@ -3,11 +3,12 @@ import { getDict, type Locale } from "@/lib/i18n";
 import { industries, projects } from "@/lib/content";
 import Reveal from "./Reveal";
 import CountUp from "./CountUp";
+import Icon from "./Icons";
 
 export function SectionTitle({ title, text }: { title: string; text?: string }) {
   return (
-    <Reveal className="mx-auto mb-12 max-w-2xl text-center">
-      <h2 className="text-3xl font-bold tracking-tight md:text-4xl">{title}</h2>
+    <Reveal className="mb-10 max-w-2xl">
+      <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">{title}</h2>
       {text && <p className="mt-4 text-muted">{text}</p>}
     </Reveal>
   );
@@ -48,7 +49,7 @@ export function ProjectGrid({ locale, limit }: { locale: Locale; limit?: number 
         <Reveal key={p.slug} delay={i * 120}>
           <Link href={`/${locale}/portfolio/${p.slug}`} className="card card-hover group block h-full overflow-hidden">
             <div className="overflow-hidden">
-              <div className={`flex aspect-[16/10] items-end bg-gradient-to-br ${p.gradient} p-5 transition-transform duration-700 ease-out group-hover:scale-105`}>
+              <div className={`flex aspect-[16/10] items-end bg-gradient-to-br ${p.gradient} p-5 transition-transform duration-500 ease-out group-hover:scale-[1.02]`}>
                 <span className="text-2xl font-bold text-white drop-shadow">{p.name}</span>
               </div>
             </div>
@@ -70,7 +71,7 @@ export function IndustryGrid({ locale }: { locale: Locale }) {
       {industries.map((ind, i) => (
         <Reveal key={ind.slug} delay={(i % 3) * 100}>
           <Link href={`/${locale}/industries/${ind.slug}`} className="card card-hover group flex h-full flex-col p-6">
-            <span className="icon-badge text-3xl">{ind.icon}</span>
+            <span className="icon-badge flex h-11 w-11 items-center justify-center rounded-lg border border-line bg-bg text-violet-400"><Icon name={ind.icon} className="h-5 w-5" /></span>
             <h3 className="mt-4 text-lg font-semibold">{ind.name[locale]}</h3>
             <p className="mt-2 line-clamp-2 flex-1 text-sm text-muted">{ind.intro[locale]}</p>
             <span className="mt-4 text-sm font-semibold text-violet-400 transition-transform group-hover:translate-x-1">{t.more} →</span>
@@ -86,11 +87,11 @@ export function Facts({ locale }: { locale: Locale }) {
   return (
     <section className="mx-auto max-w-6xl px-4">
       <Reveal>
-        <dl className="card grid grid-cols-2 divide-line md:grid-cols-4 md:divide-x">
+        <dl className="card grid grid-cols-2 md:grid-cols-4 md:divide-x md:divide-line">
           {facts.map((f) => (
-            <div key={f.label} className="p-6 text-center">
+            <div key={f.label} className="p-6">
               <dt className="sr-only">{f.label}</dt>
-              <dd className="gradient-text text-4xl font-bold">
+              <dd className="text-4xl font-semibold tracking-tight">
                 <CountUp value={f.value} prefix={f.prefix} suffix={f.suffix} />
               </dd>
               <p className="mt-2 text-sm text-muted">{f.label}</p>
@@ -109,26 +110,24 @@ export function Tutorial({ locale }: { locale: Locale }) {
       <Reveal>
         <div className="card glow-border grid items-center gap-10 p-8 md:grid-cols-2 md:p-12">
           <div>
-            <span className="inline-flex items-center gap-2 rounded-full border border-violet-500/40 bg-violet-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-violet-300">
-              <span className="pulse-dot h-2 w-2 rounded-full bg-violet-400" />
+            <span className="eyebrow inline-flex items-center gap-2">
+              <span className="pulse-dot h-1.5 w-1.5 rounded-full bg-violet-400" />
               {t.badge}
             </span>
-            <h2 className="mt-5 text-2xl font-bold leading-tight md:text-3xl">{t.title}</h2>
+            <h2 className="mt-4 text-2xl font-semibold leading-tight md:text-3xl">{t.title}</h2>
             <p className="mt-4 text-muted">{t.text}</p>
             <ol className="mt-6 space-y-2">
               {t.points.map((pt, i) => (
                 <li key={pt} className="flex items-center gap-3">
-                  <span className="flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-br from-violet-600 to-blue-600 text-xs font-bold">{i + 1}</span>
+                  <span className="w-6 font-mono text-sm text-violet-400">0{i + 1}</span>
                   {pt}
                 </li>
               ))}
             </ol>
           </div>
-          <div className="relative">
-            <div className="float absolute -left-10 -top-10 -z-10 h-40 w-40 rounded-full bg-violet-600/30 blur-2xl" />
-            <div className="float-slow absolute -bottom-10 -right-10 -z-10 h-40 w-40 rounded-full bg-blue-600/30 blur-2xl" />
+          <div>
             <video
-              className="aspect-video w-full rounded-2xl border border-line bg-bg shadow-2xl shadow-violet-900/30"
+              className="aspect-video w-full rounded-lg border border-line bg-bg"
               src={`${process.env.NEXT_PUBLIC_BASE_PATH}/videos/github-pages-tutorial.mp4#t=0.5`}
               controls
               playsInline
@@ -147,10 +146,12 @@ export function Cta({ locale }: { locale: Locale }) {
   return (
     <section className="mx-auto max-w-6xl px-4">
       <Reveal>
-        <div className="animated-gradient relative overflow-hidden rounded-3xl border border-line px-6 py-16 text-center">
-          <h2 className="text-3xl font-bold md:text-4xl">{t.title}</h2>
-          <p className="mt-3 text-muted">{t.text}</p>
-          <Link href={`/${locale}/contact`} className="btn-primary mt-8">{t.button}</Link>
+        <div className="card glow-border flex flex-col gap-6 px-6 py-10 md:flex-row md:items-center md:justify-between md:px-10">
+          <div>
+            <h2 className="text-2xl font-semibold tracking-tight md:text-3xl">{t.title}</h2>
+            <p className="mt-2 text-muted">{t.text}</p>
+          </div>
+          <Link href={`/${locale}/contact`} className="btn-primary shrink-0">{t.button}</Link>
         </div>
       </Reveal>
     </section>

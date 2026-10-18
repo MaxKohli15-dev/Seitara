@@ -70,8 +70,8 @@ export default function ContactForm({ t, c, industries }: { t: Dictionary["conta
             const on = needs.includes(o);
             return (
               <button key={o} type="button" onClick={() => toggleNeed(o)} aria-pressed={on}
-                className={`rounded-full border px-4 py-2 text-sm transition ${on ? "border-violet-500 bg-violet-600/20 text-white" : "border-line text-muted hover:border-violet-500/60"}`}>
-                {on ? "✓ " : ""}{o}
+                className={`rounded-lg border px-3.5 py-2 text-sm transition ${on ? "border-violet-500 bg-violet-600/20 text-white" : "border-line text-muted hover:border-violet-500/60"}`}>
+                {o}
               </button>
             );
           })}

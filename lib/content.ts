@@ -1,4 +1,5 @@
 import type { Locale } from "./i18n";
+import type { IconName } from "@/components/Icons";
 
 type Localized = Record<Locale, string>;
 
@@ -114,7 +115,7 @@ export const posts: Post[] = [
 
 export type Industry = {
   slug: string;
-  icon: string;
+  icon: IconName;
   name: Localized;
   intro: Localized;
   features: Record<Locale, string[]>;
@@ -123,7 +124,7 @@ export type Industry = {
 export const industries: Industry[] = [
   {
     slug: "restaurant-cafe",
-    icon: "☕",
+    icon: "coffee",
     name: { de: "Restaurant & Café", en: "Restaurant & Café" },
     intro: {
       de: "Gäste suchen online nach Speisekarte, Öffnungszeiten und Lage. Wir bauen dir eine appetitliche Website, die genau das in Sekunden zeigt – kostenlos.",
@@ -136,7 +137,7 @@ export const industries: Industry[] = [
   },
   {
     slug: "handwerk",
-    icon: "🔨",
+    icon: "hammer",
     name: { de: "Handwerk", en: "Trades & Crafts" },
     intro: {
       de: "Kunden wollen sehen, was du kannst. Mit einer Referenz-Galerie und einem einfachen Anfrageformular gewinnst du neue Aufträge – auch während du auf der Baustelle bist.",
@@ -149,7 +150,7 @@ export const industries: Industry[] = [
   },
   {
     slug: "fitness-sport",
-    icon: "💪",
+    icon: "dumbbell",
     name: { de: "Fitness & Sport", en: "Fitness & Sports" },
     intro: {
       de: "Ob Studio, Personal Trainer oder Verein: Eine dynamische Website mit Kursplan und Probetraining bringt neue Mitglieder.",
@@ -162,7 +163,7 @@ export const industries: Industry[] = [
   },
   {
     slug: "friseur-beauty",
-    icon: "✂️",
+    icon: "scissors",
     name: { de: "Friseur & Beauty", en: "Hair & Beauty" },
     intro: {
       de: "Zeig deinen Stil: Eine elegante Website mit Leistungen, Team und Terminanfrage macht aus Besuchern Stammkunden.",
@@ -175,7 +176,7 @@ export const industries: Industry[] = [
   },
   {
     slug: "vereine",
-    icon: "🤝",
+    icon: "users",
     name: { de: "Vereine", en: "Clubs & Associations" },
     intro: {
       de: "Termine, Neuigkeiten und Mitgliedschaft an einem Ort. Ideal für Vereine mit kleinem Budget – denn bei uns kostet die Website nichts.",
@@ -188,7 +189,7 @@ export const industries: Industry[] = [
   },
   {
     slug: "portfolio-freelancer",
-    icon: "🎨",
+    icon: "pen",
     name: { de: "Freelancer & Portfolio", en: "Freelancers & Portfolios" },
     intro: {
       de: "Fotografen, Designer, Musiker: Präsentiere deine Arbeit professionell und lass dich direkt buchen.",
