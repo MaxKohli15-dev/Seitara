@@ -24,6 +24,7 @@ export function imprint(locale: Locale): Section[] {
       { title: "Liability for content", body: ["The content of this website was created with great care. However, we cannot guarantee that it is correct, complete or up to date."] },
       { title: "Liability for links", body: ["This website contains links to external websites. We have no influence on their content and accept no liability for it. The respective operator is always responsible for the content of linked pages."] },
       { title: "Copyright", body: ["Texts, graphics, the logo and the video on this website are protected by copyright. Any use beyond what is permitted by law requires our prior written consent."] },
+      { title: "Image credits", body: ["Photos: Unsplash (unsplash.com), used under the Unsplash License."] },
     ];
   }
   return [
@@ -32,6 +33,7 @@ export function imprint(locale: Locale): Section[] {
     { title: "Haftung für Inhalte", body: ["Die Inhalte dieser Website wurden mit grösster Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität können wir jedoch keine Gewähr übernehmen."] },
     { title: "Haftung für Links", body: ["Diese Website enthält Links zu externen Websites. Auf deren Inhalte haben wir keinen Einfluss und übernehmen dafür keine Haftung. Für die Inhalte verlinkter Seiten ist stets der jeweilige Betreiber verantwortlich."] },
     { title: "Urheberrecht", body: ["Texte, Grafiken, das Logo und das Video auf dieser Website sind urheberrechtlich geschützt. Jede Verwendung ausserhalb der gesetzlichen Schranken bedarf unserer vorherigen schriftlichen Zustimmung."] },
+    { title: "Bildnachweis", body: ["Fotos: Unsplash (unsplash.com), verwendet unter der Unsplash-Lizenz."] },
   ];
 }
 
@@ -50,7 +52,7 @@ export function privacy(locale: Locale): Section[] {
         "The data is stored for as long as needed to process your request and deleted afterwards, unless there are legal retention obligations. Legal basis under GDPR: Art. 6(1)(b) and (f).",
       ] },
       { title: "5. Email", body: ["If you contact us by email, we process your email address and the content of your message to answer your request. Our email provider is Google (Gmail), which may process data in the USA."] },
-      { title: "6. Fonts and video", body: ["Fonts and the tutorial video are served directly from this website. No connection is made to Google Fonts, YouTube or similar services."] },
+      { title: "6. Fonts, images and video", body: ["Fonts, photos and the tutorial video are served directly from this website. No connection is made to Google Fonts, YouTube, Unsplash or similar services."] },
       { title: "7. Cookies and tracking", body: ["This website does not use cookies, analytics or advertising tools. Your browser may store small amounts of technical data locally, which are not used to track you."] },
       { title: "8. Your rights", body: ["You have the right to information about your stored data and the right to have it corrected or deleted. You may also object to processing or request restriction. To exercise your rights, simply write to us by email. You may also lodge a complaint with the Federal Data Protection and Information Commissioner (FDPIC) or, if you live in the EU, with your local data protection authority."] },
       { title: "9. Changes", body: [`This privacy policy may be updated when the website changes. Last updated: ${LEGAL_UPDATED}.`] },
@@ -68,7 +70,7 @@ export function privacy(locale: Locale): Section[] {
       "Die Daten werden gespeichert, solange es für die Bearbeitung deiner Anfrage nötig ist, und danach gelöscht, sofern keine gesetzlichen Aufbewahrungspflichten bestehen. Rechtsgrundlage nach DSGVO: Art. 6 Abs. 1 lit. b und f.",
     ] },
     { title: "5. E-Mail", body: ["Wenn du uns per E-Mail kontaktierst, bearbeiten wir deine E-Mail-Adresse und den Inhalt deiner Nachricht, um deine Anfrage zu beantworten. Unser E-Mail-Anbieter ist Google (Gmail); dabei können Daten in den USA bearbeitet werden."] },
-    { title: "6. Schriftarten und Video", body: ["Schriftarten und das Tutorial-Video werden direkt von dieser Website ausgeliefert. Es wird keine Verbindung zu Google Fonts, YouTube oder ähnlichen Diensten hergestellt."] },
+    { title: "6. Schriftarten, Bilder und Video", body: ["Schriftarten, Fotos und das Tutorial-Video werden direkt von dieser Website ausgeliefert. Es wird keine Verbindung zu Google Fonts, YouTube, Unsplash oder ähnlichen Diensten hergestellt."] },
     { title: "7. Cookies und Tracking", body: ["Diese Website verwendet keine Cookies, keine Analyse- und keine Werbe-Tools. Dein Browser speichert höchstens technisch notwendige Daten lokal, die nicht zu deiner Verfolgung genutzt werden."] },
     { title: "8. Deine Rechte", body: ["Du hast das Recht auf Auskunft über deine gespeicherten Daten sowie auf Berichtigung und Löschung. Ausserdem kannst du der Bearbeitung widersprechen oder eine Einschränkung verlangen. Schreib uns dafür einfach eine E-Mail. Du kannst dich zudem beim Eidgenössischen Datenschutz- und Öffentlichkeitsbeauftragten (EDÖB) beschweren oder, wenn du in der EU wohnst, bei deiner zuständigen Datenschutzbehörde."] },
     { title: "9. Änderungen", body: [`Diese Datenschutzerklärung kann angepasst werden, wenn sich die Website ändert. Stand: ${LEGAL_UPDATED}.`] },

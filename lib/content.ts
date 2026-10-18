@@ -12,6 +12,7 @@ export type Project = {
   details: Localized;
   theme: MockTheme;
   tagline: Localized;
+  image: string;
 };
 
 export const projects: Project[] = [
@@ -24,6 +25,7 @@ export const projects: Project[] = [
       de: "Ein Konzept für ein Café: warme Farben, eine digitale Speisekarte, Öffnungszeiten auf einen Blick und ein einfaches Formular für Tischreservierungen. Ideal, um bei lokalen Suchen wie „Café in der Nähe“ gefunden zu werden.",
       en: "A concept for a café: warm colours, a digital menu, opening hours at a glance and a simple table booking form. Ideal for showing up in local searches like “café near me”.",
     },
+    image: "/images/cafe.webp",
     theme: { bg: "#f6efe6", fg: "#3b2a1e", accent: "#c2410c", variant: "menu" },
     tagline: { de: "Frisch geröstet. Mit Liebe serviert.", en: "Freshly roasted. Served with love." },
   },
@@ -36,6 +38,7 @@ export const projects: Project[] = [
       de: "Ein Konzept für ein Fitnessstudio: dunkles, energiegeladenes Design mit Kursplan, Trainerprofilen und einem klaren Button für ein Probetraining.",
       en: "A concept for a gym: a dark, energetic design with class schedule, trainer profiles and a clear button for a free trial.",
     },
+    image: "/images/fitness.webp",
     theme: { bg: "#0f1412", fg: "#e7f5ee", accent: "#22c55e", variant: "schedule" },
     tagline: { de: "Stärker werden. Jeden Tag.", en: "Get stronger. Every day." },
   },
@@ -48,6 +51,7 @@ export const projects: Project[] = [
       de: "Ein Konzept für einen Schreinerbetrieb: seriös und aufgeräumt, mit Referenz-Galerie und einem Formular, über das Kunden direkt ein Angebot anfragen können.",
       en: "A concept for a carpentry business: clean and trustworthy, with a reference gallery and a form for requesting a quote directly.",
     },
+    image: "/images/handwerk.webp",
     theme: { bg: "#f4f5f7", fg: "#1f2937", accent: "#1d4ed8", variant: "gallery" },
     tagline: { de: "Massarbeit aus Holz seit 1998.", en: "Custom woodwork since 1998." },
   },
@@ -123,6 +127,7 @@ export type Industry = {
   icon: IconName;
   variant: MockTheme["variant"];
   tagline: Localized;
+  image: string;
   name: Localized;
   intro: Localized;
   features: Record<Locale, string[]>;
@@ -132,6 +137,7 @@ export const industries: Industry[] = [
   {
     slug: "restaurant-cafe",
     icon: "coffee",
+    image: "/images/cafe.webp",
     variant: "menu",
     tagline: { de: "Frisch gekocht. Herzlich serviert.", en: "Freshly made. Warmly served." },
     name: { de: "Restaurant & Café", en: "Restaurant & Café" },
@@ -147,6 +153,7 @@ export const industries: Industry[] = [
   {
     slug: "handwerk",
     icon: "hammer",
+    image: "/images/handwerk.webp",
     variant: "gallery",
     tagline: { de: "Qualität, die man sieht.", en: "Quality you can see." },
     name: { de: "Handwerk", en: "Trades & Crafts" },
@@ -162,6 +169,7 @@ export const industries: Industry[] = [
   {
     slug: "fitness-sport",
     icon: "dumbbell",
+    image: "/images/fitness.webp",
     variant: "schedule",
     tagline: { de: "Dein Training. Dein Tempo.", en: "Your training. Your pace." },
     name: { de: "Fitness & Sport", en: "Fitness & Sports" },
@@ -177,6 +185,7 @@ export const industries: Industry[] = [
   {
     slug: "friseur-beauty",
     icon: "scissors",
+    image: "/images/friseur.webp",
     variant: "gallery",
     tagline: { de: "Dein Look. Unser Handwerk.", en: "Your look. Our craft." },
     name: { de: "Friseur & Beauty", en: "Hair & Beauty" },
@@ -192,6 +201,7 @@ export const industries: Industry[] = [
   {
     slug: "vereine",
     icon: "users",
+    image: "/images/verein.webp",
     variant: "schedule",
     tagline: { de: "Gemeinsam mehr erleben.", en: "Better together." },
     name: { de: "Vereine", en: "Clubs & Associations" },
@@ -207,6 +217,7 @@ export const industries: Industry[] = [
   {
     slug: "portfolio-freelancer",
     icon: "pen",
+    image: "/images/freelancer.webp",
     variant: "gallery",
     tagline: { de: "Ideen, die auffallen.", en: "Ideas that stand out." },
     name: { de: "Freelancer & Portfolio", en: "Freelancers & Portfolios" },

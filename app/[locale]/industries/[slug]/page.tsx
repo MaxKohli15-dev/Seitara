@@ -6,6 +6,7 @@ import { industries } from "@/lib/content";
 import { pageMeta } from "@/lib/seo";
 import { Faq, ProjectGrid } from "@/components/Sections";
 import Reveal from "@/components/Reveal";
+import { asset } from "@/components/SiteMock";
 
 type Params = Promise<{ locale: Locale; slug: string }>;
 
@@ -37,6 +38,13 @@ export default async function IndustryPage({ params }: { params: Params }) {
             {t.industries.pageTitle} <span className="gradient-text">{ind.name[locale]}</span>
           </h1>
           <p className="fade-up delay-2 mt-6 max-w-2xl text-lg text-muted">{ind.intro[locale]}</p>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-5xl px-4 pb-14">
+        <div className="fade-up delay-3 relative aspect-[21/9] overflow-hidden rounded-xl border border-line">
+          <img src={asset(ind.image)} alt={ind.name[locale]} className="h-full w-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-t from-bg/60 to-transparent" />
         </div>
       </section>
 

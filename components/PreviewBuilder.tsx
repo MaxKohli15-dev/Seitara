@@ -5,7 +5,7 @@ import { useState } from "react";
 import SiteMock, { type MockTheme } from "./SiteMock";
 import type { Dictionary } from "@/lib/i18n";
 
-type IndustryOption = { slug: string; name: string; tagline: string; variant: MockTheme["variant"] };
+type IndustryOption = { slug: string; name: string; tagline: string; variant: MockTheme["variant"]; image: string };
 
 const styles = {
   dark: { bg: "#111116", fg: "#f1f1f4" },
@@ -63,8 +63,8 @@ export default function PreviewBuilder({ locale, t, industries }: { locale: stri
       </div>
 
       <div className="self-center">
-        <div key={`${style}-${slug}`} className="swap-in">
-          <SiteMock site={{ name: name || t.namePlaceholder, tagline: ind.tagline, theme }} large />
+        <div key={slug} className="swap-in">
+          <SiteMock site={{ name: name || t.namePlaceholder, tagline: ind.tagline, theme, image: ind.image }} large />
         </div>
         <p className="mt-3 text-xs text-muted">{t.note}</p>
       </div>

@@ -35,7 +35,7 @@ export default async function Home({ params }: { params: Promise<{ locale: Local
           </ul>
           </div>
           <div className="fade-up delay-2">
-            <HeroPreview badge={t.hero.previewBadge} sites={projects.map((p) => ({ name: p.name, tagline: p.tagline[locale], theme: p.theme }))} />
+            <HeroPreview badge={t.hero.previewBadge} sites={projects.map((p) => ({ name: p.name, tagline: p.tagline[locale], theme: p.theme, image: p.image }))} />
           </div>
         </div>
       </section>
@@ -66,7 +66,7 @@ export default async function Home({ params }: { params: Promise<{ locale: Local
           <PreviewBuilder
             locale={locale}
             t={t.builder}
-            industries={industries.map((i) => ({ slug: i.slug, name: i.name[locale], tagline: i.tagline[locale], variant: i.variant }))}
+            industries={industries.map((i) => ({ slug: i.slug, name: i.name[locale], tagline: i.tagline[locale], variant: i.variant, image: i.image }))}
           />
         </Reveal>
       </section>

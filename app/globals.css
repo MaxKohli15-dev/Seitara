@@ -99,6 +99,10 @@ p { text-wrap: pretty; }
 }
 .industry-cell:last-child { border-bottom-width: 0; }
 
+/* Photos inside previews zoom slightly on hover */
+.mock-photo { transition: transform .8s cubic-bezier(.2,.7,.2,1); }
+.group:hover .mock-photo { transform: scale(1.04); }
+
 /* Comparison rows */
 .compare-row { transition: background-color .2s; }
 .compare-row:hover { background: #ffffff05; }

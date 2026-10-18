@@ -53,7 +53,7 @@ export function ProjectGrid({ locale, limit }: { locale: Locale; limit?: number 
         <Reveal key={p.slug} delay={i * 120}>
           <Link href={`/${locale}/portfolio/${p.slug}`} className="card card-hover group block h-full overflow-hidden">
             <div className="p-3 pb-0">
-              <SiteMock site={{ name: p.name, tagline: p.tagline[locale], theme: p.theme }} />
+              <SiteMock site={{ name: p.name, tagline: p.tagline[locale], theme: p.theme, image: p.image }} />
             </div>
             <div className="p-5">
               <p className="flex items-baseline justify-between gap-3">
