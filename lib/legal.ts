@@ -53,6 +53,11 @@ export function privacy(locale: Locale): Section[] {
       ] },
       { title: "5. Email", body: ["If you contact us by email, we process your email address and the content of your message to answer your request. Our email provider is Google (Gmail), which may process data in the USA."] },
       { title: "6. Fonts, images and video", body: ["Fonts, photos and the tutorial video are served directly from this website. No connection is made to Google Fonts, YouTube, Unsplash or similar services."] },
+      { title: "6a. Thumbnail Maker and AI backgrounds", body: [
+        "Images you upload in the Thumbnail Maker and descriptions for AI backgrounds are processed only in your browser and are not transmitted to us or third parties.",
+        "Only when you use “Create with AI” does your browser load the AI model from Hugging Face (huggingface.co) and the required libraries from jsDelivr (cdn.jsdelivr.net). Technical data such as your IP address is transmitted to these providers, which may operate servers outside Switzerland and the EU. The model is then stored in your browser's storage.",
+        "For the daily limit, your browser counts locally (localStorage) how many images you created today. This information never leaves your device.",
+      ] },
       { title: "7. Cookies and tracking", body: ["This website does not use cookies, analytics or advertising tools. Your browser may store small amounts of technical data locally, which are not used to track you."] },
       { title: "8. Your rights", body: ["You have the right to information about your stored data and the right to have it corrected or deleted. You may also object to processing or request restriction. To exercise your rights, simply write to us by email. You may also lodge a complaint with the Federal Data Protection and Information Commissioner (FDPIC) or, if you live in the EU, with your local data protection authority."] },
       { title: "9. Changes", body: [`This privacy policy may be updated when the website changes. Last updated: ${LEGAL_UPDATED}.`] },
@@ -71,6 +76,11 @@ export function privacy(locale: Locale): Section[] {
     ] },
     { title: "5. E-Mail", body: ["Wenn du uns per E-Mail kontaktierst, bearbeiten wir deine E-Mail-Adresse und den Inhalt deiner Nachricht, um deine Anfrage zu beantworten. Unser E-Mail-Anbieter ist Google (Gmail); dabei können Daten in den USA bearbeitet werden."] },
     { title: "6. Schriftarten, Bilder und Video", body: ["Schriftarten, Fotos und das Tutorial-Video werden direkt von dieser Website ausgeliefert. Es wird keine Verbindung zu Google Fonts, YouTube, Unsplash oder ähnlichen Diensten hergestellt."] },
+    { title: "6a. Thumbnail Maker und KI-Hintergründe", body: [
+      "Im Thumbnail Maker hochgeladene Bilder und die Beschreibungen für KI-Hintergründe werden ausschliesslich in deinem Browser verarbeitet und nicht an uns oder Dritte übertragen.",
+      "Nur wenn du „Mit KI erstellen“ nutzt, lädt dein Browser das KI-Modell von Hugging Face (huggingface.co) und die nötigen Programmbibliotheken vom Dienst jsDelivr (cdn.jsdelivr.net). Dabei werden technische Daten wie deine IP-Adresse an diese Anbieter übermittelt, die ihre Server auch ausserhalb der Schweiz und der EU betreiben können. Das Modell wird danach im Speicher deines Browsers abgelegt.",
+      "Für das Tageslimit zählt dein Browser lokal (localStorage), wie viele Bilder du heute erstellt hast. Diese Angabe verlässt dein Gerät nicht.",
+    ] },
     { title: "7. Cookies und Tracking", body: ["Diese Website verwendet keine Cookies, keine Analyse- und keine Werbe-Tools. Dein Browser speichert höchstens technisch notwendige Daten lokal, die nicht zu deiner Verfolgung genutzt werden."] },
     { title: "8. Deine Rechte", body: ["Du hast das Recht auf Auskunft über deine gespeicherten Daten sowie auf Berichtigung und Löschung. Ausserdem kannst du der Bearbeitung widersprechen oder eine Einschränkung verlangen. Schreib uns dafür einfach eine E-Mail. Du kannst dich zudem beim Eidgenössischen Datenschutz- und Öffentlichkeitsbeauftragten (EDÖB) beschweren oder, wenn du in der EU wohnst, bei deiner zuständigen Datenschutzbehörde."] },
     { title: "9. Änderungen", body: [`Diese Datenschutzerklärung kann angepasst werden, wenn sich die Website ändert. Stand: ${LEGAL_UPDATED}.`] },

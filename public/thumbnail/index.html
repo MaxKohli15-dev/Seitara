@@ -52,6 +52,19 @@
   @media (min-width:760px) { .donate { grid-template-columns:1fr auto; align-items:center; } }
   .donate h2 { margin:0; font-size:18px; }
   .donate p { margin:4px 0 0; color:var(--muted); font-size:14px; }
+  textarea { width:100%; min-height:72px; resize:vertical; background:var(--bg); color:var(--text); border:1px solid var(--line); border-radius:8px; padding:9px 11px; font:inherit; }
+  textarea:focus { outline:none; border-color:var(--accent); }
+  .ai { border:1px solid rgb(124 58 237 / .45); border-radius:10px; padding:12px; background:rgb(124 58 237 / .06); }
+  .ai-meta { display:flex; justify-content:space-between; gap:8px; font-size:12px; color:var(--muted); margin-top:8px; }
+  .ai-status { font-size:13px; margin-top:8px; min-height:1em; }
+  .ai-status.err { color:#f87171; }
+  .btn:disabled { opacity:.5; cursor:not-allowed; }
+  .spin { width:14px; height:14px; border:2px solid rgb(255 255 255 / .35); border-top-color:#fff; border-radius:50%; animation:spin .8s linear infinite; display:none; }
+  .loading .spin { display:inline-block; }
+  @keyframes spin { to { transform:rotate(360deg); } }
+  .stage { position:relative; }
+  .stage .overlay { position:absolute; inset:12px 12px auto 12px; aspect-ratio:var(--ar,16/9); display:none; align-items:center; justify-content:center; background:rgb(0 0 0 / .55); border-radius:8px; color:#fff; font-weight:600; gap:10px; }
+  .stage.loading .overlay { display:flex; }
   footer { max-width:1200px; margin:0 auto; padding:24px 16px 40px; color:var(--muted); font-size:12px; border-top:1px solid var(--line); }
 </style>
 </head>
@@ -63,11 +76,12 @@
 
 <main>
   <h1>Thumbnail Maker für Roblox-Spiele</h1>
-  <p class="lead">Wähle eine Vorlage, lade einen Screenshot aus deinem Spiel hoch, schreib deinen Titel drauf und lade das Bild als PNG herunter. Komplett kostenlos – alles läuft direkt in deinem Browser, nichts wird hochgeladen.</p>
+  <p class="lead">Wähle eine Vorlage, lass dir von der KI einen Hintergrund erstellen oder lade einen Screenshot aus deinem Spiel hoch, schreib deinen Titel drauf und lade das Bild als PNG herunter. Komplett kostenlos – alles läuft direkt in deinem Browser, nichts wird hochgeladen.</p>
 
   <div class="layout">
     <section class="card stage">
       <canvas id="c" width="1920" height="1080" aria-label="Vorschau des Thumbnails"></canvas>
+      <div class="overlay"><span class="spin" style="display:inline-block"></span>KI arbeitet …</div>
       <p class="hint">Tipp: Titel und Sticker kannst du in der Vorschau mit der Maus oder dem Finger verschieben.</p>
     </section>
 
@@ -83,6 +97,21 @@
       <fieldset>
         <legend>Vorlage</legend>
         <div class="templates" id="templates"></div>
+      </fieldset>
+
+      <fieldset class="ai">
+        <legend>KI-Hintergrund <span style="font-weight:400;color:var(--muted)">(Beta)</span></legend>
+        <textarea id="aiPrompt" maxlength="200" placeholder="Beschreibe die Szene, z. B. „Lava-Parkour über einer Stadt bei Sonnenuntergang“"></textarea>
+        <select id="aiStyle" aria-label="KI-Stil" style="margin-top:8px">
+          <option value="colorful 3D video game art, blocky low-poly style">Bunte 3D-Spielgrafik</option>
+          <option value="cartoon style, bold colors, clean shapes">Cartoon</option>
+          <option value="cinematic, realistic lighting, highly detailed">Realistisch</option>
+          <option value="pixel art, retro game style">Pixel-Art</option>
+        </select>
+        <button class="btn primary" id="aiGo" type="button" style="width:100%;margin-top:8px"><span class="spin"></span><span id="aiGoLabel">Mit KI erstellen</span></button>
+        <div class="ai-meta"><span id="aiLeft"></span><span>läuft auf deinem Gerät</span></div>
+        <div class="ai-status" id="aiStatus" role="status"></div>
+        <p class="hint" style="margin:6px 0 0">Die KI läuft direkt in deinem Browser – deine Beschreibung verlässt dein Gerät nicht. Beim ersten Mal werden ca. 2,5 GB geladen; nötig ist ein PC mit guter Grafikkarte und aktuellem Chrome oder Edge.</p>
       </fieldset>
 
       <fieldset>
@@ -150,7 +179,7 @@
 
 <footer>
   Roblox ist eine Marke der Roblox Corporation. Dieses Tool ist ein unabhängiges Projekt und steht in keiner Verbindung zu Roblox.
-  Hochgeladene Bilder werden nur in deinem Browser verarbeitet und nicht gespeichert oder übertragen.
+  Hochgeladene Bilder und KI-Beschreibungen werden nur in deinem Browser verarbeitet und nicht übertragen. Das KI-Modell (SD-Turbo) wird von Hugging Face geladen.
   · <a href="../de/imprint/">Impressum</a> · <a href="../de/privacy/">Datenschutz</a>
 </footer>
 
@@ -198,6 +227,7 @@
     document.querySelectorAll("[data-format]").forEach((x) => x.classList.toggle("on", x === b));
     if (state.format === "icon") { c.width = 1024; c.height = 1024; state.titlePos = { x: 0.5, y: 0.62 }; state.stickerPos = { x: 0.76, y: 0.2 }; }
     else { c.width = 1920; c.height = 1080; state.titlePos = { x: 0.5, y: 0.42 }; state.stickerPos = { x: 0.84, y: 0.2 }; }
+    document.querySelector(".stage").style.setProperty("--ar", state.format === "icon" ? "1/1" : "16/9");
     draw();
   });
 
@@ -323,8 +353,12 @@
     a.href = c.toDataURL("image/png"); a.click();
   };
 
+  // Hook for ai.js: use a generated image/canvas as background
+  window.thumbSetBackground = (img) => { state.img = img; draw(); };
+
   applyTemplate(TEMPLATES[0]);
 })();
 </script>
+<script type="module" src="ai.js"></script>
 </body>
 </html>
