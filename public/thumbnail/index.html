@@ -6,6 +6,7 @@
 <title>Icon & Thumbnail Maker für Roblox-Spiele – kostenlos | Seitara</title>
 <meta name="description" content="Erstelle kostenlos Icons und Thumbnails für deine Roblox-Spiele: KI-Motive direkt im Browser, Logo-Text mit 3D-Effekt, Lichteffekte und Vorschau in Startseiten-Grösse.">
 <link rel="icon" href="../icon.svg" type="image/svg+xml">
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
 <style>
   :root { --bg:#0c0c10; --surface:#141419; --line:#26262e; --muted:#a6a6b2; --accent:#7c3aed; --text:#ececf1; }
   * { box-sizing:border-box; }
@@ -73,6 +74,8 @@
   .spin { width:14px; height:14px; border:2px solid rgb(255 255 255 / .35); border-top-color:#fff; border-radius:50%; animation:spin .8s linear infinite; display:none; }
   .loading .spin, .overlay .spin { display:inline-block; }
   @keyframes spin { to { transform:rotate(360deg); } }
+  .presets { display:grid; grid-template-columns:repeat(3,1fr); gap:6px; }
+  .presets .btn { padding:8px 6px; font-size:12px; }
   .donate { margin-top:20px; padding:20px; display:grid; gap:12px; border-top:2px solid var(--accent); }
   @media (min-width:760px) { .donate { grid-template-columns:1fr auto; align-items:center; } }
   .donate h2 { margin:0; font-size:18px; }
@@ -88,7 +91,7 @@
 
 <main>
   <h1>Icon & Thumbnail Maker für Roblox-Spiele</h1>
-  <p class="lead">Auf der Roblox-Startseite sieht man vor allem das <strong>Spiel-Icon</strong> – klein und quadratisch. Gute Icons zeigen <strong>ein grosses Motiv</strong>, wenig Text und starke Farben. Dieses Tool hilft dir genau dabei. Kostenlos, alles läuft in deinem Browser.</p>
+  <p class="lead">Auf der Roblox-Startseite sieht man vor allem das <strong>Spiel-Icon</strong> – klein und quadratisch. Gute Icons zeigen <strong>eine grosse Roblox-Figur</strong>, wenig Text und starke Farben. Dieses Tool hilft dir genau dabei. Kostenlos, alles läuft in deinem Browser.</p>
 
   <div class="layout">
     <section class="card stage" id="stage">
@@ -96,17 +99,17 @@
         <canvas id="c" width="1024" height="1024" aria-label="Vorschau"></canvas>
         <div class="overlay"><span class="spin"></span><span id="overlayText">KI arbeitet …</span></div>
       </div>
-      <p class="hint">Ziehen: Text verschieben · Ziehen ausserhalb vom Text: Hintergrund verschieben</p>
+      <p class="hint">Ziehen: Text, Figur oder Hintergrund verschieben</p>
       <div class="below">
         <div class="mini">
           <figure><canvas id="mini" width="150" height="150"></canvas><figcaption>So gross auf der Startseite</figcaption></figure>
         </div>
         <ul class="tips">
-          <li><strong>Ein Motiv</strong> – gross, mittig, gut erkennbar (Figur, Gesicht, Haustier, Waffe, Auto …)</li>
+          <li><strong>Eine Roblox-Figur</strong> gross im Bild – mit klarer Pose und Gesichtsausdruck</li>
           <li><strong>Max. 3 Wörter</strong> Text – oder gar keiner</li>
           <li><strong>Starker Kontrast</strong> zwischen Motiv und Hintergrund</li>
           <li><strong>Klein testen:</strong> Erkennt man links in der Mini-Vorschau sofort, worum es geht?</li>
-          <li>Für ein echtes Ergebnis: <strong>eigenen Render</strong> deines Spiels hochladen (z. B. Avatar in Roblox Studio) und hier veredeln</li>
+          <li><strong>Hintergrund</strong> unscharf und farbig halten, damit die Figur heraussticht</li>
         </ul>
       </div>
     </section>
@@ -125,14 +128,40 @@
         <div class="templates" id="templates"></div>
       </fieldset>
 
+      <fieldset>
+        <legend>Roblox-Figur</legend>
+        <label class="toggle" style="margin-bottom:8px"><input id="avOn" type="checkbox" checked> Figur anzeigen</label>
+        <div class="presets" id="avPresets"></div>
+        <div class="grid2" style="margin-top:8px">
+          <select id="avPose" aria-label="Pose">
+            <option value="hero">Pose: Held</option><option value="wave">Pose: Winken</option><option value="jump">Pose: Springen</option>
+            <option value="run">Pose: Rennen</option><option value="point">Pose: Zeigen</option><option value="shocked">Pose: Schock</option><option value="idle">Pose: Stehen</option>
+          </select>
+          <select id="avFace" aria-label="Gesicht">
+            <option value="smile">Gesicht: Lächeln</option><option value="shocked">Gesicht: Schock</option><option value="angry">Gesicht: Wütend</option>
+            <option value="evil">Gesicht: Fies</option><option value="cool">Gesicht: Cool</option>
+          </select>
+          <select id="avAcc" aria-label="Zubehör">
+            <option value="none">Ohne Zubehör</option><option value="sword">Schwert</option><option value="crown">Krone</option><option value="cap">Cap</option>
+          </select>
+          <select id="avFraming" aria-label="Ausschnitt">
+            <option value="full">Ganze Figur</option><option value="close">Nahaufnahme</option>
+          </select>
+        </div>
+        <div class="row"><span>Haut / Shirt / Hose</span><input id="avSkin" type="color"><input id="avShirt" type="color"><input id="avPants" type="color"></div>
+        <div class="row"><label for="avYaw">Drehen</label><input id="avYaw" type="range" min="-60" max="60" value="-18"></div>
+        <div class="row"><label for="avScale">Grösse</label><input id="avScale" type="range" min="40" max="140" value="92"></div>
+        <label class="toggle" style="margin-top:6px"><input id="avOutline" type="checkbox" checked> Weisse Kontur</label>
+      </fieldset>
+
       <fieldset class="ai">
-        <legend>KI-Motiv <span style="font-weight:400;color:var(--muted)">(Beta)</span></legend>
-        <textarea id="aiPrompt" maxlength="160" placeholder="Was soll gross zu sehen sein? z. B. „ein süsser Drache mit grossen Augen“"></textarea>
+        <legend>KI-Hintergrund-Szene <span style="font-weight:400;color:var(--muted)">(Beta)</span></legend>
+        <textarea id="aiPrompt" maxlength="160" placeholder="Wo spielt dein Spiel? z. B. „Lava-Parkour über den Wolken“"></textarea>
         <select id="aiStyle" aria-label="KI-Stil" style="margin-top:8px">
-          <option value="3D render, glossy toy figure, blocky game character style, octane render, soft studio light">3D-Spielfigur (glänzend)</option>
-          <option value="cute cartoon mascot, bold outlines, flat bright colors">Cartoon-Maskottchen</option>
-          <option value="dramatic close-up, cinematic lighting, highly detailed">Dramatisch</option>
-          <option value="pixel art icon, retro game sprite">Pixel-Art</option>
+          <option value="colorful 3D video game environment, blocky low-poly world, bright daylight">Bunte 3D-Spielwelt</option>
+          <option value="cartoon game background, bold flat colors">Cartoon</option>
+          <option value="cinematic game environment, dramatic lighting, highly detailed">Dramatisch</option>
+          <option value="dark spooky game environment, fog, eerie glow">Gruselig</option>
         </select>
         <button class="btn primary" id="aiGo" type="button" style="width:100%;margin-top:8px"><span class="spin"></span><span id="aiGoLabel">4 Varianten erstellen</span></button>
         <div class="variants" id="aiVariants"></div>
@@ -148,6 +177,7 @@
           <button class="btn" id="bgClear" type="button">Bild entfernen</button>
         </div>
         <div class="row"><label for="zoom">Bild-Zoom</label><input id="zoom" type="range" min="100" max="250" value="100"></div>
+        <div class="row"><label for="blur">Bild weichzeichnen</label><input id="blur" type="range" min="0" max="12" value="3"></div>
         <div class="row"><span>Farben Mitte / Rand</span><input id="g1" type="color"><input id="g2" type="color"></div>
       </fieldset>
 
@@ -225,21 +255,31 @@
   const $ = (id) => document.getElementById(id);
 
   // Icon-first presets: one subject, few words, strong colours.
+  const AV = {
+    Noob:    { skin: "#f5cd30", shirt: "#0d69ac", pants: "#a4bd47" },
+    Ninja:   { skin: "#f5cd30", shirt: "#1f1f24", pants: "#1f1f24" },
+    King:    { skin: "#f5cd30", shirt: "#6d28d9", pants: "#1f2937" },
+    Builder: { skin: "#f5cd30", shirt: "#f97316", pants: "#1e3a8a" },
+    Ghost:   { skin: "#d9dde3", shirt: "#2b2b33", pants: "#2b2b33" },
+    Pro:     { skin: "#c68863", shirt: "#e11d48", pants: "#111827" },
+  };
+  // Icon-first presets: roblox figure + few words + strong colours + scene for the AI
   const TEMPLATES = [
-    { name: "Pets",      g1: "#7dd3fc", g2: "#1d4ed8", title: "DRAGON PETS",   top: "#fff59d", bottom: "#ffb300", stroke: "#1a1446", rays: true,  ai: "a cute baby dragon with big shiny eyes" },
-    { name: "Obby",      g1: "#fde047", g2: "#ea580c", title: "LAVA OBBY",     top: "#ffffff", bottom: "#ffd54f", stroke: "#4a1500", rays: true,  ai: "a happy blocky game character jumping over lava" },
-    { name: "Simulator", g1: "#86efac", g2: "#047857", title: "SIMULATOR",     top: "#ffffff", bottom: "#b9f6ca", stroke: "#06281d", rays: false, ai: "a giant golden coin with a smiling face" },
-    { name: "Horror",    g1: "#3f0d12", g2: "#000000", title: "RUN!",          top: "#ff8a80", bottom: "#d50000", stroke: "#000000", rays: false, ai: "a creepy monster face with glowing red eyes in the dark" },
-    { name: "Battle",    g1: "#c084fc", g2: "#3b0764", title: "RIVALS",        top: "#ffffff", bottom: "#e1bee7", stroke: "#1a0230", rays: true,  ai: "a blocky warrior character holding a glowing sword" },
-    { name: "Tycoon",    g1: "#a7f3d0", g2: "#0f766e", title: "TYCOON",        top: "#fffde7", bottom: "#ffca28", stroke: "#003c33", rays: true,  ai: "a stack of gold bars and a treasure chest" },
-    { name: "Racing",    g1: "#fda4af", g2: "#881337", title: "TURBO",         top: "#ffffff", bottom: "#ffcdd2", stroke: "#2b0010", rays: true,  ai: "a shiny red sports car toy, front view" },
-    { name: "Food",      g1: "#fbcfe8", g2: "#db2777", title: "COOK IT!",      top: "#ffffff", bottom: "#fff176", stroke: "#4a0026", rays: false, ai: "a giant cheeseburger with a cute face" },
+    { name: "Pets",      g1: "#7dd3fc", g2: "#1d4ed8", title: "PET WORLD", top: "#fff59d", bottom: "#ffb300", stroke: "#1a1446", rays: true,  av: "Noob",    pose: "wave",    face: "smile",   acc: "none",  ai: "a magical meadow with colorful pet eggs and rainbows" },
+    { name: "Obby",      g1: "#fde047", g2: "#ea580c", title: "LAVA OBBY", top: "#ffffff", bottom: "#ffd54f", stroke: "#4a1500", rays: true,  av: "Noob",    pose: "jump",    face: "shocked", acc: "none",  ai: "a parkour course with floating platforms above glowing lava" },
+    { name: "Simulator", g1: "#86efac", g2: "#047857", title: "SIMULATOR", top: "#ffffff", bottom: "#b9f6ca", stroke: "#06281d", rays: true,  av: "Builder", pose: "point",   face: "cool",    acc: "cap",   ai: "piles of shiny gold coins and gems in a sunny world" },
+    { name: "Horror",    g1: "#3f0d12", g2: "#000000", title: "RUN!",      top: "#ff8a80", bottom: "#d50000", stroke: "#000000", rays: false, av: "Ghost",   pose: "shocked", face: "shocked", acc: "none",  ai: "a dark haunted forest at night with glowing red eyes" },
+    { name: "Battle",    g1: "#c084fc", g2: "#3b0764", title: "RIVALS",    top: "#ffffff", bottom: "#e1bee7", stroke: "#1a0230", rays: true,  av: "Ninja",   pose: "hero",    face: "angry",   acc: "sword", ai: "an epic battle arena with purple energy and sparks" },
+    { name: "Tycoon",    g1: "#a7f3d0", g2: "#0f766e", title: "TYCOON",    top: "#fffde7", bottom: "#ffca28", stroke: "#003c33", rays: true,  av: "King",    pose: "point",   face: "cool",    acc: "crown", ai: "a futuristic city full of money and skyscrapers" },
+    { name: "Racing",    g1: "#fda4af", g2: "#881337", title: "TURBO",     top: "#ffffff", bottom: "#ffcdd2", stroke: "#2b0010", rays: true,  av: "Pro",     pose: "run",     face: "evil",    acc: "none",  ai: "a neon race track with speed lines at sunset" },
+    { name: "Food",      g1: "#fbcfe8", g2: "#db2777", title: "COOK IT!",  top: "#ffffff", bottom: "#fff176", stroke: "#4a0026", rays: false, av: "Builder", pose: "wave",    face: "smile",   acc: "none",  ai: "a colorful cartoon kitchen with giant burgers and pizza" },
   ];
 
   const state = {
     format: "icon", img: null,
     titlePos: { x: 0.5, y: 0.83 }, stickerPos: { x: 0.8, y: 0.18 },
     bgOffset: { x: 0, y: 0 },
+    avPos: { x: 0.5, y: 0.47 },
   };
 
   // ---------- templates ----------
@@ -255,17 +295,26 @@
     $("g1").value = t.g1; $("g2").value = t.g2; $("title").value = t.title;
     $("fillTop").value = t.top; $("fillBottom").value = t.bottom; $("stroke").value = t.stroke;
     $("rays").checked = t.rays; $("sticker").value = "none"; $("stickerColor").value = "#ef4444";
+    applyAvatarPreset(t.av); $("avPose").value = t.pose; $("avFace").value = t.face; $("avAcc").value = t.acc;
     if (!$("aiPrompt").value || $("aiPrompt").dataset.fromTemplate === "1") { $("aiPrompt").value = t.ai; $("aiPrompt").dataset.fromTemplate = "1"; }
     draw();
   }
   $("aiPrompt").addEventListener("input", () => { $("aiPrompt").dataset.fromTemplate = "0"; });
 
+  function applyAvatarPreset(name) { const a = AV[name]; $("avSkin").value = a.skin; $("avShirt").value = a.shirt; $("avPants").value = a.pants; }
+  const avWrap = $("avPresets");
+  Object.keys(AV).forEach((name) => {
+    const b = document.createElement("button"); b.type = "button"; b.className = "btn"; b.textContent = name;
+    b.onclick = () => { applyAvatarPreset(name); draw(); };
+    avWrap.appendChild(b);
+  });
+
   // ---------- format ----------
   document.querySelectorAll("[data-format]").forEach((b) => b.onclick = () => {
     state.format = b.dataset.format;
     document.querySelectorAll("[data-format]").forEach((x) => x.classList.toggle("on", x === b));
-    if (state.format === "icon") { c.width = 1024; c.height = 1024; mini.width = 150; mini.height = 150; state.titlePos = { x: 0.5, y: 0.83 }; state.stickerPos = { x: 0.8, y: 0.18 }; }
-    else { c.width = 1920; c.height = 1080; mini.width = 256; mini.height = 144; state.titlePos = { x: 0.5, y: 0.8 }; state.stickerPos = { x: 0.86, y: 0.2 }; }
+    if (state.format === "icon") { c.width = 1024; c.height = 1024; mini.width = 150; mini.height = 150; state.titlePos = { x: 0.5, y: 0.83 }; state.stickerPos = { x: 0.8, y: 0.18 }; state.avPos = { x: 0.5, y: 0.47 }; }
+    else { c.width = 1920; c.height = 1080; mini.width = 256; mini.height = 144; state.titlePos = { x: 0.5, y: 0.8 }; state.stickerPos = { x: 0.86, y: 0.2 }; state.avPos = { x: 0.5, y: 0.47 }; }
     state.bgOffset = { x: 0, y: 0 };
     draw();
   });
@@ -280,7 +329,7 @@
   $("bgClear").onclick = () => { state.img = null; $("bgFile").value = ""; draw(); };
   function setBackground(img) { state.img = img; state.bgOffset = { x: 0, y: 0 }; draw(); }
 
-  ["zoom","g1","g2","rays","spot","sat","vig","title","effect","font","size","curve","tilt","fillTop","fillBottom","stroke","sticker","stickerColor"]
+  ["avOn","avPose","avFace","avAcc","avFraming","avSkin","avShirt","avPants","avYaw","avScale","avOutline","blur","zoom","g1","g2","rays","spot","sat","vig","title","effect","font","size","curve","tilt","fillTop","fillBottom","stroke","sticker","stickerColor"]
     .forEach((id) => $(id).addEventListener("input", draw));
 
   // ---------- drawing ----------
@@ -302,7 +351,7 @@
       const s = Math.max(W / state.img.width, H / state.img.height) * z;
       const w = state.img.width * s, h = state.img.height * s;
       ctx.save();
-      ctx.filter = `saturate(${+$("sat").value}%) contrast(108%)`;
+      ctx.filter = `saturate(${+$("sat").value}%) contrast(108%) blur(${+$("blur").value * (W / 1024)}px)`;
       ctx.imageSmoothingQuality = "high";
       ctx.drawImage(state.img, (W - w) / 2 + state.bgOffset.x * W, (H - h) / 2 + state.bgOffset.y * H, w, h);
       ctx.restore();
@@ -404,11 +453,39 @@
     return { x, y, r: r * 1.3 };
   }
 
-  let hit = { title: null, sticker: null };
+  // White sticker-style outline around a transparent image (cached per avatar render)
+  const outlineCache = { key: "", canvas: null };
+  function withOutline(src, px, key) {
+    if (outlineCache.key === key && outlineCache.canvas) return outlineCache.canvas;
+    const cv = document.createElement("canvas"); cv.width = src.width; cv.height = src.height;
+    const g = cv.getContext("2d");
+    for (let i = 0; i < 24; i++) { const a = (i / 24) * Math.PI * 2; g.drawImage(src, Math.cos(a) * px, Math.sin(a) * px); }
+    g.globalCompositeOperation = "source-in"; g.fillStyle = "#fff"; g.fillRect(0, 0, cv.width, cv.height);
+    g.globalCompositeOperation = "source-over"; g.drawImage(src, 0, 0);
+    outlineCache.key = key; outlineCache.canvas = cv;
+    return cv;
+  }
+
+  function drawAvatar(W, H) {
+    if (!$("avOn").checked || !window.renderAvatar) return null;
+    const opts = { skin: $("avSkin").value, shirt: $("avShirt").value, pants: $("avPants").value, face: $("avFace").value, pose: $("avPose").value, acc: $("avAcc").value, framing: $("avFraming").value, yaw: +$("avYaw").value, rim: $("g1").value };
+    const src = window.renderAvatar(opts);
+    const img = $("avOutline").checked ? withOutline(src, 10, JSON.stringify(opts)) : src;
+    const size = Math.min(W, H) * (+$("avScale").value / 100) * 1.08;
+    const x = state.avPos.x * W, y = state.avPos.y * H;
+    ctx.save();
+    ctx.shadowColor = "rgba(0,0,0,.45)"; ctx.shadowBlur = size * 0.05; ctx.shadowOffsetY = size * 0.02;
+    ctx.drawImage(img, x - size / 2, y - size / 2, size, size);
+    ctx.restore();
+    return { x, y, w: size * 0.5, h: size * 0.8 };
+  }
+
+  let hit = { title: null, sticker: null, avatar: null };
   function draw() {
     const W = c.width, H = c.height;
     ctx.clearRect(0, 0, W, H);
     drawBackground(W, H);
+    hit.avatar = drawAvatar(W, H);
     hit.title = drawTitle(W, H);
     hit.sticker = drawSticker(W, H);
     const m = mini.getContext("2d");
@@ -424,6 +501,7 @@
     const p = toCanvas(e); const s = hit.sticker, t = hit.title;
     if (s && Math.hypot(p.x - s.x, p.y - s.y) < s.r) drag = { key: "stickerPos", dx: p.x - s.x, dy: p.y - s.y };
     else if (t && Math.abs(p.x - t.x) < t.w / 2 && Math.abs(p.y - t.y) < t.h / 2) drag = { key: "titlePos", dx: p.x - t.x, dy: p.y - t.y };
+    else if (hit.avatar && Math.abs(p.x - hit.avatar.x) < hit.avatar.w / 2 && Math.abs(p.y - hit.avatar.y) < hit.avatar.h / 2) drag = { key: "avPos", dx: p.x - hit.avatar.x, dy: p.y - hit.avatar.y };
     else if (state.img) drag = { key: "bg", sx: p.x, sy: p.y, ox: state.bgOffset.x, oy: state.bgOffset.y };
     if (drag) { c.setPointerCapture(e.pointerId); c.classList.add("dragging"); }
   });
@@ -448,9 +526,11 @@
   window.thumbSetBackground = setBackground;
   window.thumbFormat = () => state.format;
 
+  window.addEventListener("avatar-ready", draw);
   applyTemplate(TEMPLATES[0]);
 })();
 </script>
+<script type="module" src="avatar.js"></script>
 <script type="module" src="ai.js"></script>
 </body>
 </html>

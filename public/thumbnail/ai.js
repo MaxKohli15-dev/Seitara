@@ -158,13 +158,13 @@ function showVariant(cv, n) {
 async function onGenerate() {
   if (busy) return;
   const text = $("aiPrompt").value.trim();
-  if (text.length < 3) return setStatus("Beschreibe kurz, was gross zu sehen sein soll.", true);
+  if (text.length < 3) return setStatus("Beschreibe kurz, wo dein Spiel spielt.", true);
   if (BLOCKED.test(text)) return setStatus("Diese Beschreibung ist nicht erlaubt. Bitte wähle etwas Kinderfreundliches.", true);
   if (usage() >= DAILY_LIMIT) return showLeft();
   if (!sessions && !confirm("Beim ersten Mal lädt die KI ca. 2,5 GB herunter (danach im Browser gespeichert). Das kann je nach Internet einige Minuten dauern. Fortfahren?")) return;
 
-  // Icon-style prompt: one big centered subject on a clean background (text and frame come from the editor)
-  const prompt = `${text}, ${$("aiStyle").value}, single subject centered, close-up filling the frame, game icon art, clean simple gradient background, vibrant saturated colors, rim light, high quality, no text`;
+  // Scene behind the Roblox figure: environment only, no characters (the figure comes from avatar.js)
+  const prompt = `${text}, ${$("aiStyle").value}, game background scene, wide environment, no people, no characters, vibrant saturated colors, depth, high quality, no text`;
   $("aiVariants").innerHTML = "";
   setBusy(true, "KI wird geladen …");
   setStatus(sessions ? "Einen Moment …" : "Die KI wird geladen. Lass das Fenster offen.");

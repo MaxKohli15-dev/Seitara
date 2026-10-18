@@ -55,7 +55,7 @@ export function privacy(locale: Locale): Section[] {
       { title: "6. Fonts, images and video", body: ["Fonts, photos and the tutorial video are served directly from this website. No connection is made to Google Fonts, YouTube, Unsplash or similar services."] },
       { title: "6a. Thumbnail Maker and AI backgrounds", body: [
         "Images you upload in the Thumbnail Maker and descriptions for AI backgrounds are processed only in your browser and are not transmitted to us or third parties.",
-        "Only when you use “Create with AI” does your browser load the AI model from Hugging Face (huggingface.co) and the required libraries from jsDelivr (cdn.jsdelivr.net). Technical data such as your IP address is transmitted to these providers, which may operate servers outside Switzerland and the EU. The model is then stored in your browser's storage.",
+        "When you open the Icon Maker, your browser loads program libraries (e.g. for the 3D figure) from jsDelivr (cdn.jsdelivr.net). Only if you use the AI is the AI model additionally loaded from Hugging Face (huggingface.co). Technical data such as your IP address is transmitted to these providers, which may operate servers outside Switzerland and the EU. The model is then stored in your browser's storage.",
         "For the daily limit, your browser counts locally (localStorage) how many images you created today. This information never leaves your device.",
       ] },
       { title: "7. Cookies and tracking", body: ["This website does not use cookies, analytics or advertising tools. Your browser may store small amounts of technical data locally, which are not used to track you."] },
@@ -78,7 +78,7 @@ export function privacy(locale: Locale): Section[] {
     { title: "6. Schriftarten, Bilder und Video", body: ["Schriftarten, Fotos und das Tutorial-Video werden direkt von dieser Website ausgeliefert. Es wird keine Verbindung zu Google Fonts, YouTube, Unsplash oder ähnlichen Diensten hergestellt."] },
     { title: "6a. Thumbnail Maker und KI-Hintergründe", body: [
       "Im Thumbnail Maker hochgeladene Bilder und die Beschreibungen für KI-Hintergründe werden ausschliesslich in deinem Browser verarbeitet und nicht an uns oder Dritte übertragen.",
-      "Nur wenn du „Mit KI erstellen“ nutzt, lädt dein Browser das KI-Modell von Hugging Face (huggingface.co) und die nötigen Programmbibliotheken vom Dienst jsDelivr (cdn.jsdelivr.net). Dabei werden technische Daten wie deine IP-Adresse an diese Anbieter übermittelt, die ihre Server auch ausserhalb der Schweiz und der EU betreiben können. Das Modell wird danach im Speicher deines Browsers abgelegt.",
+      "Beim Aufruf des Icon Makers lädt dein Browser Programmbibliotheken (z. B. für die 3D-Figur) vom Dienst jsDelivr (cdn.jsdelivr.net). Nur wenn du die KI nutzt, wird zusätzlich das KI-Modell von Hugging Face (huggingface.co) geladen. Dabei werden technische Daten wie deine IP-Adresse an diese Anbieter übermittelt, die ihre Server auch ausserhalb der Schweiz und der EU betreiben können. Das Modell wird danach im Speicher deines Browsers abgelegt.",
       "Für das Tageslimit zählt dein Browser lokal (localStorage), wie viele Bilder du heute erstellt hast. Diese Angabe verlässt dein Gerät nicht.",
     ] },
     { title: "7. Cookies und Tracking", body: ["Diese Website verwendet keine Cookies, keine Analyse- und keine Werbe-Tools. Dein Browser speichert höchstens technisch notwendige Daten lokal, die nicht zu deiner Verfolgung genutzt werden."] },
