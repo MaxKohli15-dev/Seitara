@@ -25,8 +25,13 @@ export default async function Home({ params }: { params: Promise<{ locale: Local
           <p className="fade-up delay-2 mt-6 max-w-xl text-lg text-muted">{t.hero.text}</p>
           <div className="fade-up delay-3 mt-10 flex flex-col gap-3 sm:flex-row">
             <Link href={`/${locale}/contact`} className="btn-primary group">{t.hero.primary}<span className="btn-arrow">→</span></Link>
-            <Link href={`/${locale}/portfolio`} className="btn-ghost">{t.hero.secondary}</Link>
+            <Link href="#preview" className="btn-ghost">{t.hero.secondary}</Link>
           </div>
+          <ul className="fade-up delay-3 mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted">
+            {t.hero.trust.map((x) => (
+              <li key={x} className="flex items-center gap-2"><span className="text-violet-400"><Icon name="check" className="h-4 w-4" /></span>{x}</li>
+            ))}
+          </ul>
           </div>
           <div className="fade-up delay-2">
             <HeroPreview badge={t.hero.previewBadge} sites={projects.map((p) => ({ name: p.name, tagline: p.tagline[locale], theme: p.theme }))} />
@@ -53,7 +58,8 @@ export default async function Home({ params }: { params: Promise<{ locale: Local
 
       <Steps locale={locale} />
 
-      <section id="preview" className="mx-auto max-w-6xl scroll-mt-24 px-4 py-20">
+      <div className="border-y border-line bg-surface/40">
+      <section id="preview" className="mx-auto max-w-6xl scroll-mt-20 px-4 py-20">
         <SectionTitle eyebrow={t.builder.eyebrow} title={t.builder.title} text={t.builder.text} />
         <Reveal>
           <PreviewBuilder
@@ -63,6 +69,7 @@ export default async function Home({ params }: { params: Promise<{ locale: Local
           />
         </Reveal>
       </section>
+      </div>
 
       <section className="mx-auto max-w-6xl px-4 py-20">
         <SectionTitle title={t.industries.title} text={t.industries.text} />

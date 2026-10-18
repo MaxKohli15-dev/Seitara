@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import { notFound } from "next/navigation";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -8,7 +8,8 @@ import { BRAND, SITE_URL, getDict, isLocale, locales } from "@/lib/i18n";
 import { pageMeta } from "@/lib/seo";
 import "../globals.css";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
+const geist = Geist({ subsets: ["latin"], variable: "--font-geist", display: "swap" });
+const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono", display: "swap" });
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -28,7 +29,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
   const orgLd = { "@context": "https://schema.org", "@type": "Organization", name: BRAND, url: SITE_URL };
 
   return (
-    <html lang={locale} className={inter.variable}>
+    <html lang={locale} className={`${geist.variable} ${geistMono.variable}`}>
       <body className="min-h-screen font-sans antialiased">
         <ScrollUI label={getDict(locale).backToTop} />
         <Header locale={locale} />

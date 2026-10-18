@@ -20,7 +20,8 @@ const de = {
     highlight: "kostenlos.",
     text: "Wir designen und bauen deine Website gratis. Modern, schnell und bereit für Google. Online stellst du sie kostenlos mit GitHub Pages.",
     primary: "Jetzt Website anfragen",
-    secondary: "Beispiele ansehen",
+    secondary: "Vorschau ausprobieren",
+    trust: ["Keine Kosten", "Keine Vertragsbindung", "Dateien gehören dir"],
     previewBadge: "Fertig in 1–2 Wochen · 0 €",
   },
   benefits: {
@@ -122,7 +123,7 @@ const de = {
   menu: "Menü",
   logoFaq: { home: "Zur Startseite", close: "Schließen" },
   cta: { title: "Bereit für deine neue Website?", text: "Kostenlos, unverbindlich und in wenigen Tagen online.", button: "Jetzt starten" },
-  footer: { tagline: "Professionelle Websites – kostenlos.", imprint: "Impressum", privacy: "Datenschutz", rights: "Alle Rechte vorbehalten." },
+  footer: { offer: "Angebot", resources: "Ressourcen", legal: "Rechtliches", contactTitle: "Kontakt", preview: "Vorschau-Generator", tagline: "Professionelle Websites – kostenlos.", imprint: "Impressum", privacy: "Datenschutz", rights: "Alle Rechte vorbehalten." },
   legal: { imprint: "Impressum", privacy: "Datenschutzerklärung", placeholder: "Platzhalter – bitte vor dem Livegang durch die rechtlich korrekten Angaben ersetzen." },
 };
 
@@ -138,7 +139,8 @@ const en: typeof de = {
     highlight: "for free.",
     text: "We design and build your website at no cost. Modern, fast and ready for Google. Publish it for free with GitHub Pages.",
     primary: "Request your website",
-    secondary: "See examples",
+    secondary: "Try the preview",
+    trust: ["No cost", "No contract", "You own the files"],
     previewBadge: "Ready in 1–2 weeks · €0",
   },
   benefits: {
@@ -240,7 +242,7 @@ const en: typeof de = {
   menu: "Menu",
   logoFaq: { home: "Go to homepage", close: "Close" },
   cta: { title: "Ready for your new website?", text: "Free, no obligation and online in days.", button: "Get started" },
-  footer: { tagline: "Professional websites – for free.", imprint: "Imprint", privacy: "Privacy", rights: "All rights reserved." },
+  footer: { offer: "Offer", resources: "Resources", legal: "Legal", contactTitle: "Contact", preview: "Preview generator", tagline: "Professional websites – for free.", imprint: "Imprint", privacy: "Privacy", rights: "All rights reserved." },
   legal: { imprint: "Imprint", privacy: "Privacy policy", placeholder: "Placeholder – replace with legally correct information before going live." },
 };
 

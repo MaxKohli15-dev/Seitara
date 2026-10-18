@@ -10,6 +10,9 @@ export default function CountUp({ value, prefix = "", suffix = "" }: { value: nu
   useEffect(() => {
     const el = ref.current;
     if (!el || value === 0 || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    // Only animate numbers that start below the fold; otherwise keep the final value
+    const r = el.getBoundingClientRect();
+    if ((r.top < innerHeight && r.bottom > 0) || !("IntersectionObserver" in window)) return;
     let timer: ReturnType<typeof setInterval> | undefined;
     setN(0);
     const io = new IntersectionObserver(([entry]) => {
