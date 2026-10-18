@@ -1,7 +1,7 @@
 export const locales = ["de", "en"] as const;
 export type Locale = (typeof locales)[number];
 
-export const SITE_URL = "https://vexastudios.example";
+export const SITE_URL = "https://maxkohli15-dev.github.io/VexaStudiosSites";
 export const BRAND = "Vexa Studios";
 
 export function isLocale(value: string): value is Locale {
