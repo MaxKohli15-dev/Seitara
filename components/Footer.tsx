@@ -13,6 +13,7 @@ export default function Footer({ locale }: { locale: Locale }) {
         </div>
         <div className="flex flex-wrap gap-5">
           <Link href={`/${locale}/portfolio`} className="hover:text-white">{t.nav.portfolio}</Link>
+          <Link href={`/${locale}/industries`} className="hover:text-white">{t.industries.nav}</Link>
           <Link href={`/${locale}/blog`} className="hover:text-white">{t.nav.blog}</Link>
           <Link href={`/${locale}/imprint`} className="hover:text-white">{t.footer.imprint}</Link>
           <Link href={`/${locale}/privacy`} className="hover:text-white">{t.footer.privacy}</Link>

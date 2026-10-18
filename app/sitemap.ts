@@ -1,12 +1,13 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL, locales } from "@/lib/i18n";
-import { posts, projects } from "@/lib/content";
+import { industries, posts, projects } from "@/lib/content";
 
 export const dynamic = "force-static";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const paths = [
-    "", "/portfolio", "/services", "/blog", "/contact",
+    "", "/portfolio", "/services", "/industries", "/blog", "/contact",
+    ...industries.map((i) => `/industries/${i.slug}`),
     ...projects.map((p) => `/portfolio/${p.slug}`),
     ...posts.map((p) => `/blog/${p.slug}`),
   ];

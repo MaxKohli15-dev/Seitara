@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import { notFound } from "next/navigation";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import ScrollUI from "@/components/ScrollUI";
 import { BRAND, SITE_URL, getDict, isLocale, locales } from "@/lib/i18n";
 import { pageMeta } from "@/lib/seo";
 import "../globals.css";
@@ -29,6 +30,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
   return (
     <html lang={locale} className={inter.variable}>
       <body className="min-h-screen font-sans antialiased">
+        <ScrollUI label={getDict(locale).backToTop} />
         <Header locale={locale} />
         <main>{children}</main>
         <Footer locale={locale} />

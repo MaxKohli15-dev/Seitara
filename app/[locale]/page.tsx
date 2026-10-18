@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { getDict, type Locale } from "@/lib/i18n";
-import { Cta, Faq, ProjectGrid, SectionTitle, Tutorial } from "@/components/Sections";
+import { Cta, Facts, Faq, IndustryGrid, ProjectGrid, SectionTitle, Tutorial } from "@/components/Sections";
 import Reveal from "@/components/Reveal";
 
 const icons = ["✦", "◆", "↗"];
@@ -27,6 +27,8 @@ export default async function Home({ params }: { params: Promise<{ locale: Local
           </div>
         </div>
       </section>
+
+      <Facts locale={locale} />
 
       <section className="mx-auto max-w-6xl px-4 py-20">
         <SectionTitle title={t.benefits.title} />
@@ -56,6 +58,11 @@ export default async function Home({ params }: { params: Promise<{ locale: Local
             </li>
           ))}
         </ol>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-4 py-20">
+        <SectionTitle title={t.industries.title} text={t.industries.text} />
+        <IndustryGrid locale={locale} />
       </section>
 
       <section className="mx-auto max-w-6xl px-4 py-20">

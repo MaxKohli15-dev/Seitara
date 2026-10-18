@@ -1,18 +1,32 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { Dictionary } from "@/lib/i18n";
 
 type Status = "idle" | "sending" | "success" | "error";
 
-export default function ContactForm({ t }: { t: Dictionary["contact"] }) {
+type IndustryOption = { slug: string; name: string };
+
+export default function ContactForm({ t, c, industries }: { t: Dictionary["contact"]; c: Dictionary["configurator"]; industries: IndustryOption[] }) {
   const [status, setStatus] = useState<Status>("idle");
+  const [industry, setIndustry] = useState("");
+  const [needs, setNeeds] = useState<string[]>([]);
+
+  // Industry pages link here with ?industry=<slug>
+  useEffect(() => {
+    const slug = new URLSearchParams(location.search).get("industry");
+    if (slug && industries.some((i) => i.slug === slug)) setIndustry(slug);
+  }, [industries]);
+
+  const toggleNeed = (n: string) => setNeeds((cur) => (cur.includes(n) ? cur.filter((x) => x !== n) : [...cur, n]));
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setStatus("sending");
     const form = e.currentTarget;
     const data = new FormData(form);
+    data.set("industry", industries.find((i) => i.slug === industry)?.name ?? (industry ? c.other : "-"));
+    data.set("needs", needs.join(", ") || "-");
     // Web3Forms forwards every request by email to the address linked to this access key
     data.append("access_key", process.env.NEXT_PUBLIC_WEB3FORMS_KEY ?? "");
     data.append("subject", `Neue Website-Anfrage von ${data.get("name")}`);
@@ -23,6 +37,8 @@ export default function ContactForm({ t }: { t: Dictionary["contact"] }) {
       if (!json.success) throw new Error();
       setStatus("success");
       form.reset();
+      setNeeds([]);
+      setIndustry("");
     } catch {
       setStatus("error");
     }
@@ -39,6 +55,31 @@ export default function ContactForm({ t }: { t: Dictionary["contact"] }) {
       </label>
       <label className="block text-sm font-medium">{t.email}
         <input name="email" type="email" required maxLength={200} className={field} autoComplete="email" />
+      </label>
+      <label className="block text-sm font-medium">{c.industry}
+        <select value={industry} onChange={(e) => setIndustry(e.target.value)} className={field}>
+          <option value="">{c.choose}</option>
+          {industries.map((i) => <option key={i.slug} value={i.slug}>{i.name}</option>)}
+          <option value="other">{c.other}</option>
+        </select>
+      </label>
+      <fieldset>
+        <legend className="text-sm font-medium">{c.needs}</legend>
+        <div className="mt-3 flex flex-wrap gap-2">
+          {c.options.map((o) => {
+            const on = needs.includes(o);
+            return (
+              <button key={o} type="button" onClick={() => toggleNeed(o)} aria-pressed={on}
+                className={`rounded-full border px-4 py-2 text-sm transition ${on ? "border-violet-500 bg-violet-600/20 text-white" : "border-line text-muted hover:border-violet-500/60"}`}>
+                {on ? "✓ " : ""}{o}
+              </button>
+            );
+          })}
+        </div>
+      </fieldset>
+      <label className="flex items-center gap-3 text-sm text-muted">
+        <input type="checkbox" name="redesign" value="ja" className="h-4 w-4 accent-violet-600" />
+        {c.hasSite}
       </label>
       <label className="block text-sm font-medium">{t.project}
         <textarea name="project" required rows={5} maxLength={3000} className={field} />

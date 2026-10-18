@@ -111,3 +111,92 @@ export const posts: Post[] = [
     },
   },
 ];
+
+export type Industry = {
+  slug: string;
+  icon: string;
+  name: Localized;
+  intro: Localized;
+  features: Record<Locale, string[]>;
+};
+
+export const industries: Industry[] = [
+  {
+    slug: "restaurant-cafe",
+    icon: "☕",
+    name: { de: "Restaurant & Café", en: "Restaurant & Café" },
+    intro: {
+      de: "Gäste suchen online nach Speisekarte, Öffnungszeiten und Lage. Wir bauen dir eine appetitliche Website, die genau das in Sekunden zeigt – kostenlos.",
+      en: "Guests look online for your menu, opening hours and location. We build you a mouth-watering website that shows exactly that in seconds – for free.",
+    },
+    features: {
+      de: ["Digitale Speisekarte", "Öffnungszeiten & Anfahrt", "Tischreservierung per Formular", "Bildergalerie"],
+      en: ["Digital menu", "Opening hours & directions", "Table booking form", "Photo gallery"],
+    },
+  },
+  {
+    slug: "handwerk",
+    icon: "🔨",
+    name: { de: "Handwerk", en: "Trades & Crafts" },
+    intro: {
+      de: "Kunden wollen sehen, was du kannst. Mit einer Referenz-Galerie und einem einfachen Anfrageformular gewinnst du neue Aufträge – auch während du auf der Baustelle bist.",
+      en: "Customers want to see what you can do. A reference gallery and a simple quote form win you new jobs – even while you're on site.",
+    },
+    features: {
+      de: ["Referenzprojekte", "Leistungsübersicht", "Angebotsanfrage", "Einzugsgebiet auf Karte"],
+      en: ["Reference projects", "Service overview", "Quote request", "Service area map"],
+    },
+  },
+  {
+    slug: "fitness-sport",
+    icon: "💪",
+    name: { de: "Fitness & Sport", en: "Fitness & Sports" },
+    intro: {
+      de: "Ob Studio, Personal Trainer oder Verein: Eine dynamische Website mit Kursplan und Probetraining bringt neue Mitglieder.",
+      en: "Studio, personal trainer or club: a dynamic website with class schedule and free trial brings in new members.",
+    },
+    features: {
+      de: ["Kurs- & Trainingsplan", "Trainerprofile", "Probetraining anfragen", "Mitgliedschaften"],
+      en: ["Class & training schedule", "Trainer profiles", "Free trial request", "Memberships"],
+    },
+  },
+  {
+    slug: "friseur-beauty",
+    icon: "✂️",
+    name: { de: "Friseur & Beauty", en: "Hair & Beauty" },
+    intro: {
+      de: "Zeig deinen Stil: Eine elegante Website mit Leistungen, Team und Terminanfrage macht aus Besuchern Stammkunden.",
+      en: "Show your style: an elegant website with services, team and appointment requests turns visitors into regulars.",
+    },
+    features: {
+      de: ["Leistungen & Preisliste", "Team-Vorstellung", "Terminanfrage", "Vorher-Nachher-Galerie"],
+      en: ["Services & price list", "Meet the team", "Appointment request", "Before & after gallery"],
+    },
+  },
+  {
+    slug: "vereine",
+    icon: "🤝",
+    name: { de: "Vereine", en: "Clubs & Associations" },
+    intro: {
+      de: "Termine, Neuigkeiten und Mitgliedschaft an einem Ort. Ideal für Vereine mit kleinem Budget – denn bei uns kostet die Website nichts.",
+      en: "Events, news and membership in one place. Perfect for clubs on a small budget – because our websites cost nothing.",
+    },
+    features: {
+      de: ["Termine & Events", "News-Bereich", "Mitglied werden", "Sponsoren-Seite"],
+      en: ["Events calendar", "News section", "Membership sign-up", "Sponsors page"],
+    },
+  },
+  {
+    slug: "portfolio-freelancer",
+    icon: "🎨",
+    name: { de: "Freelancer & Portfolio", en: "Freelancers & Portfolios" },
+    intro: {
+      de: "Fotografen, Designer, Musiker: Präsentiere deine Arbeit professionell und lass dich direkt buchen.",
+      en: "Photographers, designers, musicians: present your work professionally and get booked directly.",
+    },
+    features: {
+      de: ["Projekt-Showcase", "Über mich", "Buchungsanfrage", "Social-Media-Links"],
+      en: ["Project showcase", "About me", "Booking request", "Social media links"],
+    },
+  },
+];

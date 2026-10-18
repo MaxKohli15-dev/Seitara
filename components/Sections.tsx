@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { getDict, type Locale } from "@/lib/i18n";
-import { projects } from "@/lib/content";
+import { industries, projects } from "@/lib/content";
 import Reveal from "./Reveal";
+import CountUp from "./CountUp";
 
 export function SectionTitle({ title, text }: { title: string; text?: string }) {
   return (
@@ -59,6 +60,45 @@ export function ProjectGrid({ locale, limit }: { locale: Locale; limit?: number 
         </Reveal>
       ))}
     </div>
+  );
+}
+
+export function IndustryGrid({ locale }: { locale: Locale }) {
+  const t = getDict(locale).industries;
+  return (
+    <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {industries.map((ind, i) => (
+        <Reveal key={ind.slug} delay={(i % 3) * 100}>
+          <Link href={`/${locale}/industries/${ind.slug}`} className="card card-hover group flex h-full flex-col p-6">
+            <span className="icon-badge text-3xl">{ind.icon}</span>
+            <h3 className="mt-4 text-lg font-semibold">{ind.name[locale]}</h3>
+            <p className="mt-2 line-clamp-2 flex-1 text-sm text-muted">{ind.intro[locale]}</p>
+            <span className="mt-4 text-sm font-semibold text-violet-400 transition-transform group-hover:translate-x-1">{t.more} →</span>
+          </Link>
+        </Reveal>
+      ))}
+    </div>
+  );
+}
+
+export function Facts({ locale }: { locale: Locale }) {
+  const facts = getDict(locale).facts;
+  return (
+    <section className="mx-auto max-w-6xl px-4">
+      <Reveal>
+        <dl className="card grid grid-cols-2 divide-line md:grid-cols-4 md:divide-x">
+          {facts.map((f) => (
+            <div key={f.label} className="p-6 text-center">
+              <dt className="sr-only">{f.label}</dt>
+              <dd className="gradient-text text-4xl font-bold">
+                <CountUp value={f.value} prefix={f.prefix} suffix={f.suffix} />
+              </dd>
+              <p className="mt-2 text-sm text-muted">{f.label}</p>
+            </div>
+          ))}
+        </dl>
+      </Reveal>
+    </section>
   );
 }
 

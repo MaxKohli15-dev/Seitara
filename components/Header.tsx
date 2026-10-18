@@ -8,6 +8,7 @@ export default function Header({ locale }: { locale: Locale }) {
   const links = [
     ["/portfolio", t.portfolio],
     ["/services", t.pricing],
+    ["/industries", getDict(locale).industries.nav],
     ["/blog", t.blog],
     ["/contact", t.contact],
   ] as const;
@@ -32,7 +33,7 @@ export default function Header({ locale }: { locale: Locale }) {
           <Link href={`/${locale}/contact`} className="btn-primary !hidden !px-4 !py-2 text-sm sm:!inline-flex">{t.cta}</Link>
         </div>
       </nav>
-      <ul className="flex justify-center gap-5 border-t border-line/60 px-4 py-2 text-sm text-muted md:hidden">
+      <ul className="flex justify-start gap-5 overflow-x-auto whitespace-nowrap border-t sm:justify-center border-line/60 px-4 py-2 text-sm text-muted md:hidden">
         {links.map(([href, label]) => (
           <li key={href}><Link href={`/${locale}${href}`}>{label}</Link></li>
         ))}
