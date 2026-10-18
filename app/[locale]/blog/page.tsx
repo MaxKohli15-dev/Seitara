@@ -7,7 +7,7 @@ import { SectionTitle } from "@/components/Sections";
 export async function generateMetadata({ params }: { params: Promise<{ locale: Locale }> }) {
   const { locale } = await params;
   const t = getDict(locale).blog;
-  return pageMeta(locale, "/blog", `${t.title} | Vexa Studios`, t.text);
+  return pageMeta(locale, "/blog", `${t.title} | Seitara`, t.text);
 }
 
 export default async function Blog({ params }: { params: Promise<{ locale: Locale }> }) {

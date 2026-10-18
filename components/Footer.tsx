@@ -31,7 +31,7 @@ export default function Footer({ locale }: { locale: Locale }) {
         ))}
       </div>
       <div className="border-t border-line">
-        <p className="mx-auto max-w-6xl px-4 py-6 text-xs text-muted">© {new Date().getFullYear()} Vexa Studios. {t.footer.rights}</p>
+        <p className="mx-auto max-w-6xl px-4 py-6 text-xs text-muted">© {new Date().getFullYear()} Seitara. {t.footer.rights}</p>
       </div>
     </footer>
   );

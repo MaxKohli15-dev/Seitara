@@ -8,7 +8,7 @@ import Reveal from "@/components/Reveal";
 export async function generateMetadata({ params }: { params: Promise<{ locale: Locale }> }) {
   const { locale } = await params;
   const t = getDict(locale).pricing;
-  return pageMeta(locale, "/services", `${t.title} | Vexa Studios`, t.text);
+  return pageMeta(locale, "/services", `${t.title} | Seitara`, t.text);
 }
 
 export default async function Services({ params }: { params: Promise<{ locale: Locale }> }) {

@@ -4,7 +4,7 @@ import LegalPage from "@/components/LegalPage";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: Locale }> }) {
   const { locale } = await params;
-  return { title: `${getDict(locale).legal.imprint} | Vexa Studios`, robots: { index: false } };
+  return { title: `${getDict(locale).legal.imprint} | Seitara`, robots: { index: false } };
 }
 
 export default async function Imprint({ params }: { params: Promise<{ locale: Locale }> }) {

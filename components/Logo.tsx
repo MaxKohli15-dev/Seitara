@@ -1,4 +1,4 @@
-/** Vector version of the Vexa Studios Sites logo: browser window framed by code brackets. */
+/** Vector version of the Seitara logo: browser window framed by code brackets. */
 export function LogoMark({ className = "h-8 w-8" }: { className?: string }) {
   return (
     <svg viewBox="0 0 64 48" className={className} aria-hidden="true">
@@ -31,7 +31,7 @@ export default function Logo() {
     <span className="flex items-center gap-2.5">
       <LogoMark />
       <span className="text-lg font-bold tracking-tight">
-        Vexa<span className="text-violet-500">Studios</span>Sites
+        Seit<span className="text-violet-500">ara</span>
       </span>
     </span>
   );

@@ -74,12 +74,12 @@ export const posts: Post[] = [
     body: {
       de: [
         "Eine eigene Website ist heute für fast jedes Unternehmen Pflicht. Doch gerade kleine Betriebe scheuen die Kosten. Die gute Nachricht: Es geht auch kostenlos.",
-        "Baukästen wie Wix oder Jimdo sind gratis, zeigen aber Werbung und eine fremde Domain. Eine professionelle Alternative ist ein Dienstleister wie Vexa Studios, der Design und Umsetzung kostenlos übernimmt.",
+        "Baukästen wie Wix oder Jimdo sind gratis, zeigen aber Werbung und eine fremde Domain. Eine professionelle Alternative ist ein Dienstleister wie Seitara, der Design und Umsetzung kostenlos übernimmt.",
         "Achte auf drei Dinge: Gehören dir die Inhalte? Ist die Seite mobiloptimiert? Und kannst du später problemlos wechseln? Wenn ja – los geht's.",
       ],
       en: [
         "A website is a must for almost every business today. Yet small businesses often shy away from the cost. The good news: it can be free.",
-        "Builders like Wix or Jimdo are free but show ads and a third-party domain. A professional alternative is a service like Vexa Studios that handles design and development for free.",
+        "Builders like Wix or Jimdo are free but show ads and a third-party domain. A professional alternative is a service like Seitara that handles design and development for free.",
         "Check three things: Do you own your content? Is the site mobile-friendly? Can you switch later without hassle? If yes – go for it.",
       ],
     },

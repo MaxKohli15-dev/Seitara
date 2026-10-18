@@ -5,7 +5,7 @@ import { Cta, IndustryGrid, SectionTitle } from "@/components/Sections";
 export async function generateMetadata({ params }: { params: Promise<{ locale: Locale }> }) {
   const { locale } = await params;
   const t = getDict(locale).industries;
-  return pageMeta(locale, "/industries", `${t.title} | Vexa Studios`, t.text);
+  return pageMeta(locale, "/industries", `${t.title} | Seitara`, t.text);
 }
 
 export default async function Industries({ params }: { params: Promise<{ locale: Locale }> }) {

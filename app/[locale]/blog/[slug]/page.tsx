@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: { params: Params }) {
   const { locale, slug } = await params;
   const p = posts.find((x) => x.slug === slug);
   if (!p) return {};
-  return pageMeta(locale, `/blog/${slug}`, `${p.title[locale]} | Vexa Studios`, p.excerpt[locale]);
+  return pageMeta(locale, `/blog/${slug}`, `${p.title[locale]} | Seitara`, p.excerpt[locale]);
 }
 
 export default async function PostPage({ params }: { params: Params }) {

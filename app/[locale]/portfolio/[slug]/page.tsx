@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: { params: Params }) {
   const { locale, slug } = await params;
   const p = projects.find((x) => x.slug === slug);
   if (!p) return {};
-  return pageMeta(locale, `/portfolio/${slug}`, `${p.name} – ${p.category[locale]} | Vexa Studios`, p.summary[locale]);
+  return pageMeta(locale, `/portfolio/${slug}`, `${p.name} – ${p.category[locale]} | Seitara`, p.summary[locale]);
 }
 
 export default async function ProjectPage({ params }: { params: Params }) {

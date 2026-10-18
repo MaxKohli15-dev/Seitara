@@ -8,7 +8,7 @@ export function pageMeta(locale: Locale, path: string, title: string, descriptio
     title,
     description,
     alternates: { canonical: `${SITE_URL}/${locale}${path}`, languages: { ...languages, "x-default": `${SITE_URL}/de${path}` } },
-    openGraph: { title, description, url: `${SITE_URL}/${locale}${path}`, siteName: "Vexa Studios", locale, type: "website" },
+    openGraph: { title, description, url: `${SITE_URL}/${locale}${path}`, siteName: "Seitara", locale, type: "website" },
     twitter: { card: "summary_large_image", title, description },
   };
 }

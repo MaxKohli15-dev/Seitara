@@ -1,8 +1,8 @@
 export const locales = ["de", "en"] as const;
 export type Locale = (typeof locales)[number];
 
-export const SITE_URL = "https://vexastudios.example";
-export const BRAND = "Vexa Studios";
+export const SITE_URL = "https://maxkohli15-dev.github.io/Seitara";
+export const BRAND = "Seitara";
 
 export function isLocale(value: string): value is Locale {
   return (locales as readonly string[]).includes(value);
@@ -11,7 +11,7 @@ export function isLocale(value: string): value is Locale {
 const de = {
   nav: { home: "Start", portfolio: "Portfolio", pricing: "Leistungen", blog: "Ratgeber", contact: "Kontakt", cta: "Gratis-Website anfragen" },
   meta: {
-    title: "Kostenlose Website erstellen lassen | Vexa Studios",
+    title: "Kostenlose Website erstellen lassen | Seitara",
     description: "Wir erstellen deine professionelle Website kostenlos – modern, schnell und mobiloptimiert. Komplett gratis – auch das Hosting über GitHub Pages.",
   },
   hero: {
@@ -25,7 +25,7 @@ const de = {
     previewBadge: "Fertig in 1–2 Wochen · 0 €",
   },
   benefits: {
-    title: "Warum Vexa Studios?",
+    title: "Warum Seitara?",
     items: [
       { title: "Wirklich gratis", text: "Design und Umsetzung kosten dich nichts. Kein Abo, keine Falle." },
       { title: "Profi-Qualität", text: "Modernes Design, blitzschnelle Ladezeiten und perfekt auf dem Handy." },
@@ -109,7 +109,7 @@ const de = {
   compare: {
     eyebrow: "Vergleich",
     title: "Warum nicht einfach ein Baukasten?",
-    cols: ["Vexa Studios", "Gratis-Baukasten", "Agentur"],
+    cols: ["Seitara", "Gratis-Baukasten", "Agentur"],
     rows: [
       ["Kosten", "0 €", "0 € (mit Einschränkungen)", "oft mehrere tausend €"],
       ["Individuelles Design", true, false, true],
@@ -130,7 +130,7 @@ const de = {
 const en: typeof de = {
   nav: { home: "Home", portfolio: "Portfolio", pricing: "Services", blog: "Guides", contact: "Contact", cta: "Get a free website" },
   meta: {
-    title: "Get a Free Professional Website | Vexa Studios",
+    title: "Get a Free Professional Website | Seitara",
     description: "We build your professional website for free – modern, fast and mobile-ready. Completely free – including hosting via GitHub Pages.",
   },
   hero: {
@@ -144,7 +144,7 @@ const en: typeof de = {
     previewBadge: "Ready in 1–2 weeks · €0",
   },
   benefits: {
-    title: "Why Vexa Studios?",
+    title: "Why Seitara?",
     items: [
       { title: "Truly free", text: "Design and development cost you nothing. No subscription, no catch." },
       { title: "Pro quality", text: "Modern design, lightning-fast load times and perfect on mobile." },
@@ -228,7 +228,7 @@ const en: typeof de = {
   compare: {
     eyebrow: "Comparison",
     title: "Why not just use a website builder?",
-    cols: ["Vexa Studios", "Free builder", "Agency"],
+    cols: ["Seitara", "Free builder", "Agency"],
     rows: [
       ["Cost", "€0", "€0 (with limits)", "often several thousand €"],
       ["Custom design", true, false, true],

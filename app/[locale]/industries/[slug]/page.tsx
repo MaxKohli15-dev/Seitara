@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: { params: Params }) {
   const ind = industries.find((x) => x.slug === slug);
   if (!ind) return {};
   const t = getDict(locale).industries;
-  return pageMeta(locale, `/industries/${slug}`, `${t.pageTitle} ${ind.name[locale]} | Vexa Studios`, ind.intro[locale]);
+  return pageMeta(locale, `/industries/${slug}`, `${t.pageTitle} ${ind.name[locale]} | Seitara`, ind.intro[locale]);
 }
 
 export default async function IndustryPage({ params }: { params: Params }) {

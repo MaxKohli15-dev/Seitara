@@ -2,7 +2,7 @@ import type { Locale } from "./i18n";
 
 /** Operator details shown in imprint and privacy policy. Fill in `name` with the full legal name. */
 export const OPERATOR = {
-  brand: "Vexa Studios",
+  brand: "Seitara",
   name: "",
   country: { de: "Schweiz", en: "Switzerland" },
   email: "Fiscord.noreply@gmail.com",
@@ -20,7 +20,7 @@ export function imprint(locale: Locale): Section[] {
   if (locale === "en") {
     return [
       { title: "Responsible for this website", body: [op, `Email: ${OPERATOR.email}`] },
-      { title: "Nature of the offer", body: ["Vexa Studios is a private, non-commercial project. Websites are created free of charge. No goods or paid services are offered on this website."] },
+      { title: "Nature of the offer", body: ["Seitara is a private, non-commercial project. Websites are created free of charge. No goods or paid services are offered on this website."] },
       { title: "Liability for content", body: ["The content of this website was created with great care. However, we cannot guarantee that it is correct, complete or up to date."] },
       { title: "Liability for links", body: ["This website contains links to external websites. We have no influence on their content and accept no liability for it. The respective operator is always responsible for the content of linked pages."] },
       { title: "Copyright", body: ["Texts, graphics, the logo and the video on this website are protected by copyright. Any use beyond what is permitted by law requires our prior written consent."] },
@@ -29,7 +29,7 @@ export function imprint(locale: Locale): Section[] {
   }
   return [
     { title: "Verantwortlich für diese Website", body: [op, `E-Mail: ${OPERATOR.email}`] },
-    { title: "Art des Angebots", body: ["Vexa Studios ist ein privates, nicht kommerzielles Projekt. Websites werden kostenlos erstellt. Auf dieser Website werden keine Waren oder kostenpflichtigen Dienstleistungen angeboten."] },
+    { title: "Art des Angebots", body: ["Seitara ist ein privates, nicht kommerzielles Projekt. Websites werden kostenlos erstellt. Auf dieser Website werden keine Waren oder kostenpflichtigen Dienstleistungen angeboten."] },
     { title: "Haftung für Inhalte", body: ["Die Inhalte dieser Website wurden mit grösster Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität können wir jedoch keine Gewähr übernehmen."] },
     { title: "Haftung für Links", body: ["Diese Website enthält Links zu externen Websites. Auf deren Inhalte haben wir keinen Einfluss und übernehmen dafür keine Haftung. Für die Inhalte verlinkter Seiten ist stets der jeweilige Betreiber verantwortlich."] },
     { title: "Urheberrecht", body: ["Texte, Grafiken, das Logo und das Video auf dieser Website sind urheberrechtlich geschützt. Jede Verwendung ausserhalb der gesetzlichen Schranken bedarf unserer vorherigen schriftlichen Zustimmung."] },

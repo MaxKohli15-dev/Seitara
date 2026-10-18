@@ -5,7 +5,7 @@ import { Cta, ProjectGrid, SectionTitle } from "@/components/Sections";
 export async function generateMetadata({ params }: { params: Promise<{ locale: Locale }> }) {
   const { locale } = await params;
   const t = getDict(locale).portfolio;
-  return pageMeta(locale, "/portfolio", `${t.title} | Vexa Studios`, t.text);
+  return pageMeta(locale, "/portfolio", `${t.title} | Seitara`, t.text);
 }
 
 export default async function Portfolio({ params }: { params: Promise<{ locale: Locale }> }) {

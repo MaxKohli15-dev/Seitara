@@ -34,7 +34,7 @@ export default function ContactForm({ t, c, industries }: { t: Dictionary["conta
     // Web3Forms forwards every request by email to the address linked to this access key
     data.append("access_key", process.env.NEXT_PUBLIC_WEB3FORMS_KEY ?? "");
     data.append("subject", `Neue Website-Anfrage von ${data.get("name")}`);
-    data.append("from_name", "Vexa Studios Website");
+    data.append("from_name", "Seitara Website");
     try {
       const res = await fetch("https://api.web3forms.com/submit", { method: "POST", body: data });
       const json = await res.json();
