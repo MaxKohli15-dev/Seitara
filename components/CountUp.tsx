@@ -10,20 +10,24 @@ export default function CountUp({ value, prefix = "", suffix = "" }: { value: nu
   useEffect(() => {
     const el = ref.current;
     if (!el || value === 0 || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    let timer: ReturnType<typeof setInterval> | undefined;
     setN(0);
     const io = new IntersectionObserver(([entry]) => {
       if (!entry.isIntersecting) return;
       io.disconnect();
-      const start = performance.now();
-      const tick = (now: number) => {
-        const p = Math.min((now - start) / 1400, 1);
+      const start = Date.now();
+      // setInterval (not rAF) so the final value is always reached, even in background tabs
+      timer = setInterval(() => {
+        const p = Math.min((Date.now() - start) / 1400, 1);
         setN(Math.round(value * (1 - Math.pow(1 - p, 3))));
-        if (p < 1) requestAnimationFrame(tick);
-      };
-      requestAnimationFrame(tick);
+        if (p >= 1) clearInterval(timer);
+      }, 16);
     });
     io.observe(el);
-    return () => io.disconnect();
+    return () => {
+      io.disconnect();
+      clearInterval(timer);
+    };
   }, [value]);
 
   return <span ref={ref}>{prefix}{n}{suffix}</span>;

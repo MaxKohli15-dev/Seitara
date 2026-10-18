@@ -1,5 +1,6 @@
 import type { Locale } from "./i18n";
 import type { IconName } from "@/components/Icons";
+import type { MockTheme } from "@/components/SiteMock";
 
 type Localized = Record<Locale, string>;
 
@@ -9,7 +10,7 @@ export type Project = {
   category: Localized;
   summary: Localized;
   details: Localized;
-  theme: { bg: string; fg: string; accent: string; variant: "menu" | "schedule" | "gallery" };
+  theme: MockTheme;
   tagline: Localized;
 };
 
@@ -120,6 +121,8 @@ export const posts: Post[] = [
 export type Industry = {
   slug: string;
   icon: IconName;
+  variant: MockTheme["variant"];
+  tagline: Localized;
   name: Localized;
   intro: Localized;
   features: Record<Locale, string[]>;
@@ -129,6 +132,8 @@ export const industries: Industry[] = [
   {
     slug: "restaurant-cafe",
     icon: "coffee",
+    variant: "menu",
+    tagline: { de: "Frisch gekocht. Herzlich serviert.", en: "Freshly made. Warmly served." },
     name: { de: "Restaurant & Café", en: "Restaurant & Café" },
     intro: {
       de: "Gäste suchen online nach Speisekarte, Öffnungszeiten und Lage. Wir bauen dir eine appetitliche Website, die genau das in Sekunden zeigt – kostenlos.",
@@ -142,6 +147,8 @@ export const industries: Industry[] = [
   {
     slug: "handwerk",
     icon: "hammer",
+    variant: "gallery",
+    tagline: { de: "Qualität, die man sieht.", en: "Quality you can see." },
     name: { de: "Handwerk", en: "Trades & Crafts" },
     intro: {
       de: "Kunden wollen sehen, was du kannst. Mit einer Referenz-Galerie und einem einfachen Anfrageformular gewinnst du neue Aufträge – auch während du auf der Baustelle bist.",
@@ -155,6 +162,8 @@ export const industries: Industry[] = [
   {
     slug: "fitness-sport",
     icon: "dumbbell",
+    variant: "schedule",
+    tagline: { de: "Dein Training. Dein Tempo.", en: "Your training. Your pace." },
     name: { de: "Fitness & Sport", en: "Fitness & Sports" },
     intro: {
       de: "Ob Studio, Personal Trainer oder Verein: Eine dynamische Website mit Kursplan und Probetraining bringt neue Mitglieder.",
@@ -168,6 +177,8 @@ export const industries: Industry[] = [
   {
     slug: "friseur-beauty",
     icon: "scissors",
+    variant: "gallery",
+    tagline: { de: "Dein Look. Unser Handwerk.", en: "Your look. Our craft." },
     name: { de: "Friseur & Beauty", en: "Hair & Beauty" },
     intro: {
       de: "Zeig deinen Stil: Eine elegante Website mit Leistungen, Team und Terminanfrage macht aus Besuchern Stammkunden.",
@@ -181,6 +192,8 @@ export const industries: Industry[] = [
   {
     slug: "vereine",
     icon: "users",
+    variant: "schedule",
+    tagline: { de: "Gemeinsam mehr erleben.", en: "Better together." },
     name: { de: "Vereine", en: "Clubs & Associations" },
     intro: {
       de: "Termine, Neuigkeiten und Mitgliedschaft an einem Ort. Ideal für Vereine mit kleinem Budget – denn bei uns kostet die Website nichts.",
@@ -194,6 +207,8 @@ export const industries: Industry[] = [
   {
     slug: "portfolio-freelancer",
     icon: "pen",
+    variant: "gallery",
+    tagline: { de: "Ideen, die auffallen.", en: "Ideas that stand out." },
     name: { de: "Freelancer & Portfolio", en: "Freelancers & Portfolios" },
     intro: {
       de: "Fotografen, Designer, Musiker: Präsentiere deine Arbeit professionell und lass dich direkt buchen.",

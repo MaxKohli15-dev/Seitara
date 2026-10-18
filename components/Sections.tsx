@@ -6,9 +6,10 @@ import CountUp from "./CountUp";
 import Icon from "./Icons";
 import SiteMock from "./SiteMock";
 
-export function SectionTitle({ title, text }: { title: string; text?: string }) {
+export function SectionTitle({ title, text, eyebrow }: { title: string; text?: string; eyebrow?: string }) {
   return (
     <Reveal className="mb-10 max-w-2xl">
+      {eyebrow && <p className="eyebrow mb-3">{eyebrow}</p>}
       <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">{title}</h2>
       {text && <p className="mt-4 text-muted">{text}</p>}
     </Reveal>
@@ -50,7 +51,7 @@ export function ProjectGrid({ locale, limit }: { locale: Locale; limit?: number 
         <Reveal key={p.slug} delay={i * 120}>
           <Link href={`/${locale}/portfolio/${p.slug}`} className="card card-hover group block h-full overflow-hidden">
             <div className="p-3 pb-0">
-              <SiteMock project={p} locale={locale} />
+              <SiteMock site={{ name: p.name, tagline: p.tagline[locale], theme: p.theme }} />
             </div>
             <div className="p-5">
               <p className="flex items-baseline justify-between gap-3">
@@ -100,6 +101,64 @@ export function Facts({ locale }: { locale: Locale }) {
             </div>
           ))}
         </dl>
+      </Reveal>
+    </section>
+  );
+}
+
+export function Compare({ locale }: { locale: Locale }) {
+  const t = getDict(locale).compare;
+  const cell = (v: string | boolean) =>
+    typeof v === "string" ? v : v
+      ? <span className="inline-flex text-violet-400"><Icon name="check" className="h-5 w-5" /><span className="sr-only">✓</span></span>
+      : <span className="inline-flex text-[#55555f]"><Icon name="close" className="h-4 w-4" /><span className="sr-only">–</span></span>;
+  return (
+    <section className="mx-auto max-w-6xl px-4 py-20">
+      <SectionTitle eyebrow={t.eyebrow} title={t.title} />
+      <Reveal>
+        <div className="card relative overflow-x-auto">
+          <table className="w-full min-w-[560px] text-left text-sm">
+            <thead>
+              <tr className="border-b border-line">
+                <th className="p-4 font-medium text-muted" />
+                {t.cols.map((c, i) => (
+                  <th key={c} className={`p-4 font-semibold ${i === 0 ? "bg-violet-500/[.07] text-white" : "text-muted"}`}>{c}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {t.rows.map(([label, ...vals]) => (
+                <tr key={label as string} className="compare-row border-b border-line last:border-0">
+                  <td className="p-4 text-muted">{label}</td>
+                  {vals.map((v, i) => (
+                    <td key={i} className={`p-4 ${i === 0 ? "bg-violet-500/[.07] font-medium text-white" : "text-muted"}`}>{cell(v)}</td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </Reveal>
+    </section>
+  );
+}
+
+export function Steps({ locale }: { locale: Locale }) {
+  const t = getDict(locale).steps;
+  return (
+    <section className="mx-auto max-w-6xl px-4 py-20">
+      <SectionTitle title={t.title} />
+      <Reveal>
+        <ol className="relative grid gap-10 md:grid-cols-3 md:gap-6">
+          <span className="draw-line absolute left-5 right-[16%] top-5 hidden h-px bg-violet-500/60 md:block" aria-hidden="true" />
+          {t.items.map((s, i) => (
+            <li key={s.title} className="step relative" style={{ transitionDelay: `${300 + i * 250}ms` }}>
+              <span className="relative z-10 flex h-10 w-10 items-center justify-center rounded-lg border border-line bg-bg font-mono text-sm text-violet-400">0{i + 1}</span>
+              <h3 className="mt-5 text-lg font-semibold">{s.title}</h3>
+              <p className="mt-1 text-muted">{s.text}</p>
+            </li>
+          ))}
+        </ol>
       </Reveal>
     </section>
   );

@@ -29,7 +29,7 @@ export default async function ProjectPage({ params }: { params: Params }) {
       <Link href={`/${locale}/portfolio`} className="text-sm text-muted hover:text-white">← {t.back}</Link>
       <p className="eyebrow mt-8">{p.category[locale]} · {t.concept}</p>
       <h1 className="mt-3 text-4xl font-semibold tracking-tight">{p.name}</h1>
-      <div className="mt-8"><SiteMock project={p} locale={locale} large /></div>
+      <div className="mt-8"><SiteMock site={{ name: p.name, tagline: p.tagline[locale], theme: p.theme }} large /></div>
       <p className="mt-8 text-lg leading-relaxed text-muted">{p.details[locale]}</p>
       <Link href={`/${locale}/contact`} className="btn-primary mt-10">{t.visit}</Link>
     </article>

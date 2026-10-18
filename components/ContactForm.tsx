@@ -14,9 +14,13 @@ export default function ContactForm({ t, c, industries }: { t: Dictionary["conta
 
   // Industry pages link here with ?industry=<slug>
   useEffect(() => {
-    const slug = new URLSearchParams(location.search).get("industry");
+    const params = new URLSearchParams(location.search);
+    const slug = params.get("industry");
     if (slug && industries.some((i) => i.slug === slug)) setIndustry(slug);
-  }, [industries]);
+    const name = params.get("name");
+    const area = document.querySelector<HTMLTextAreaElement>('textarea[name="project"]');
+    if (name && area && !area.value) area.value = `${c.prefill} „${name.slice(0, 40)}“. `;
+  }, [industries, c.prefill]);
 
   const toggleNeed = (n: string) => setNeeds((cur) => (cur.includes(n) ? cur.filter((x) => x !== n) : [...cur, n]));
 
