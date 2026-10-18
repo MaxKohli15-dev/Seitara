@@ -8,10 +8,12 @@ import SiteMock from "./SiteMock";
 
 export function SectionTitle({ title, text, eyebrow }: { title: string; text?: string; eyebrow?: string }) {
   return (
-    <Reveal className="mb-10 max-w-2xl">
-      {eyebrow && <p className="eyebrow mb-3">{eyebrow}</p>}
-      <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">{title}</h2>
-      {text && <p className="mt-4 text-muted">{text}</p>}
+    <Reveal className="mb-12 grid gap-4 lg:grid-cols-2 lg:items-end lg:gap-16">
+      <div>
+        {eyebrow && <p className="eyebrow mb-3">{eyebrow}</p>}
+        <h2 className="text-3xl font-semibold tracking-tight md:text-[2.5rem] md:leading-[1.1]">{title}</h2>
+      </div>
+      {text && <p className="max-w-lg text-lg text-muted lg:justify-self-end">{text}</p>}
     </Reveal>
   );
 }
@@ -68,20 +70,23 @@ export function ProjectGrid({ locale, limit }: { locale: Locale; limit?: number 
 }
 
 export function IndustryGrid({ locale }: { locale: Locale }) {
-  const t = getDict(locale).industries;
   return (
-    <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-      {industries.map((ind, i) => (
-        <Reveal key={ind.slug} delay={(i % 3) * 100}>
-          <Link href={`/${locale}/industries/${ind.slug}`} className="card card-hover group flex h-full flex-col p-6">
-            <span className="icon-badge flex h-11 w-11 items-center justify-center rounded-lg border border-line bg-bg text-violet-400"><Icon name={ind.icon} className="h-5 w-5" /></span>
-            <h3 className="mt-4 text-lg font-semibold">{ind.name[locale]}</h3>
-            <p className="mt-2 line-clamp-2 flex-1 text-sm text-muted">{ind.intro[locale]}</p>
-            <span className="mt-4 text-sm font-semibold text-violet-400 transition-transform group-hover:translate-x-1">{t.more} →</span>
-          </Link>
-        </Reveal>
-      ))}
-    </div>
+    <Reveal>
+      <ul className="card grid overflow-hidden sm:grid-cols-2 lg:grid-cols-3">
+        {industries.map((ind) => (
+          <li key={ind.slug} className="industry-cell border-line">
+            <Link href={`/${locale}/industries/${ind.slug}`} className="group flex h-full items-center gap-4 p-5 transition-colors hover:bg-white/[.025]">
+              <span className="icon-badge flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-line bg-bg text-violet-400"><Icon name={ind.icon} className="h-5 w-5" /></span>
+              <span className="min-w-0 flex-1">
+                <span className="block font-medium">{ind.name[locale]}</span>
+                <span className="block text-sm text-muted">{ind.tagline[locale]}</span>
+              </span>
+              <span className="text-muted transition-transform duration-300 group-hover:translate-x-1 group-hover:text-white" aria-hidden="true">→</span>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </Reveal>
   );
 }
 

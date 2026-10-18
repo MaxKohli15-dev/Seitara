@@ -15,14 +15,15 @@ export default async function Home({ params }: { params: Promise<{ locale: Local
 
   return (
     <>
-      <section className="border-b border-line">
+      <section className="relative border-b border-line">
+        <div className="bg-dots pointer-events-none absolute inset-0 -z-10" aria-hidden="true" />
         <div className="mx-auto grid max-w-6xl items-center gap-14 px-4 pb-20 pt-16 md:pb-28 md:pt-24 lg:grid-cols-[1.05fr_1fr]">
           <div>
           <p className="eyebrow fade-up">{t.hero.badge}</p>
           <h1 className="fade-up delay-1 mt-5 text-4xl font-semibold leading-[1.08] tracking-tight md:text-[3.5rem]">
             {t.hero.title} <span className="gradient-text">{t.hero.highlight}</span>
           </h1>
-          <p className="fade-up delay-2 mt-6 max-w-xl text-lg text-muted">{t.hero.text}</p>
+          <p className="fade-up delay-2 mt-6 max-w-xl text-lg leading-relaxed text-muted">{t.hero.text}</p>
           <div className="fade-up delay-3 mt-10 flex flex-col gap-3 sm:flex-row">
             <Link href={`/${locale}/contact`} className="btn-primary group">{t.hero.primary}<span className="btn-arrow">→</span></Link>
             <Link href="#preview" className="btn-ghost">{t.hero.secondary}</Link>

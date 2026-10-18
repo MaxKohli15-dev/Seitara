@@ -4,7 +4,7 @@
   --color-bg: #0c0c10;
   --color-surface: #141419;
   --color-line: #26262e;
-  --color-muted: #9b9ba6;
+  --color-muted: #a6a6b2;
   --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
 }
@@ -24,6 +24,7 @@ p { text-wrap: pretty; }
   background: #7c3aed; color: white;
   transition: background-color .2s;
 }
+.btn-primary { box-shadow: inset 0 1px 0 rgb(255 255 255 / .18), 0 1px 2px rgb(0 0 0 / .4); }
 .btn-primary:hover { background: #6d28d9; }
 
 .btn-ghost {
@@ -33,7 +34,14 @@ p { text-wrap: pretty; }
 }
 .btn-ghost:hover { border-color: #3a3a46; background: var(--color-surface); }
 
-.card { background: var(--color-surface); border: 1px solid var(--color-line); border-radius: 12px; }
+.card { background: var(--color-surface); border: 1px solid var(--color-line); border-radius: 12px; box-shadow: inset 0 1px 0 rgb(255 255 255 / .04), 0 1px 2px rgb(0 0 0 / .3); }
+
+/* Fine dot grid behind the hero, fading out towards the bottom */
+.bg-dots {
+  background-image: radial-gradient(rgb(255 255 255 / .07) 1px, transparent 1px);
+  background-size: 22px 22px;
+  mask-image: linear-gradient(to bottom, black 30%, transparent 95%);
+}
 
 /* Small uppercase label above section titles */
 .eyebrow { font-size: .75rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: #a78bfa; }
@@ -80,6 +88,16 @@ p { text-wrap: pretty; }
 .step { transition: opacity .5s ease-out, transform .5s ease-out; }
 .reveal .step { opacity: 0; transform: translateY(10px); }
 .reveal.is-visible .step { opacity: 1; transform: none; }
+
+/* Industry list: hairlines between cells */
+.industry-cell { border-bottom-width: 1px; }
+@media (min-width: 640px) { .industry-cell:nth-child(odd) { border-right-width: 1px; } .industry-cell:nth-last-child(-n+2) { border-bottom-width: 0; } }
+@media (min-width: 1024px) {
+  .industry-cell { border-right-width: 1px; border-bottom-width: 1px; }
+  .industry-cell:nth-child(3n) { border-right-width: 0; }
+  .industry-cell:nth-last-child(-n+3) { border-bottom-width: 0; }
+}
+.industry-cell:last-child { border-bottom-width: 0; }
 
 /* Comparison rows */
 .compare-row { transition: background-color .2s; }
