@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thumbnail Maker für Roblox-Spiele – kostenlos | Seitara</title>
+<meta name="description" content="Erstelle kostenlos Thumbnails und Icons für deine Roblox-Spiele: Vorlagen, eigener Hintergrund, Text mit Umrandung, Sticker und PNG-Download. Alles läuft in deinem Browser.">
+<link rel="icon" href="../icon.svg" type="image/svg+xml">
+<style>
+  :root { --bg:#0c0c10; --surface:#141419; --line:#26262e; --muted:#a6a6b2; --accent:#7c3aed; --text:#ececf1; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif; }
+  a { color:#a78bfa; }
+  header { display:flex; align-items:center; justify-content:space-between; gap:12px; max-width:1200px; margin:0 auto; padding:16px; }
+  header a.home { color:var(--muted); text-decoration:none; font-size:14px; }
+  header a.home:hover { color:#fff; }
+  .brand { font-weight:700; font-size:18px; letter-spacing:-.01em; }
+  .brand span { color:#8b5cf6; }
+  main { max-width:1200px; margin:0 auto; padding:8px 16px 48px; }
+  h1 { font-size:clamp(28px,4vw,42px); line-height:1.1; letter-spacing:-.02em; margin:12px 0 8px; }
+  .lead { color:var(--muted); max-width:640px; margin:0 0 24px; }
+  .layout { display:grid; gap:20px; grid-template-columns:1fr; }
+  @media (min-width:960px) { .layout { grid-template-columns:minmax(0,1fr) 340px; } }
+  .card { background:var(--surface); border:1px solid var(--line); border-radius:12px; }
+  .stage { padding:12px; }
+  canvas { display:block; width:100%; height:auto; border-radius:8px; background:#000; touch-action:none; cursor:grab; }
+  canvas.dragging { cursor:grabbing; }
+  .hint { color:var(--muted); font-size:13px; margin:8px 2px 0; }
+  .panel { padding:16px; display:flex; flex-direction:column; gap:18px; }
+  fieldset { border:0; padding:0; margin:0; min-width:0; }
+  legend, .label { font-size:13px; font-weight:600; margin-bottom:8px; display:block; }
+  input[type=text], select { width:100%; background:var(--bg); color:var(--text); border:1px solid var(--line); border-radius:8px; padding:9px 11px; font:inherit; }
+  input[type=text]:focus, select:focus { outline:none; border-color:var(--accent); }
+  input[type=range] { width:100%; accent-color:var(--accent); }
+  input[type=color] { width:38px; height:32px; padding:0; border:1px solid var(--line); border-radius:6px; background:none; cursor:pointer; }
+  .row { display:flex; align-items:center; gap:10px; }
+  .row > label { flex:1; font-size:13px; color:var(--muted); }
+  .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+  .seg { display:grid; grid-template-columns:1fr 1fr; gap:6px; }
+  .btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; border-radius:8px; padding:10px 14px; font:600 14px/1 inherit; cursor:pointer; border:1px solid var(--line); background:var(--bg); color:var(--text); transition:border-color .2s, background .2s; }
+  .btn:hover { border-color:#3d3d4a; }
+  .btn.on { border-color:var(--accent); background:rgb(124 58 237 / .15); }
+  .btn.primary { background:var(--accent); border-color:var(--accent); color:#fff; box-shadow:inset 0 1px 0 rgb(255 255 255 / .18); }
+  .btn.primary:hover { background:#6d28d9; }
+  .templates { display:grid; grid-template-columns:repeat(4,1fr); gap:6px; }
+  .tpl { aspect-ratio:16/10; border-radius:6px; border:2px solid transparent; cursor:pointer; color:#fff; font:800 10px/1.1 "Arial Black",sans-serif; display:flex; align-items:center; justify-content:center; text-align:center; padding:2px; text-shadow:0 1px 2px #000; transition:transform .15s, border-color .15s; }
+  .tpl:hover { transform:translateY(-1px); }
+  .tpl.on { border-color:#fff; }
+  .file { position:relative; overflow:hidden; }
+  .file input { position:absolute; inset:0; opacity:0; cursor:pointer; }
+  .donate { margin-top:20px; padding:20px; display:grid; gap:12px; border-top:2px solid var(--accent); }
+  @media (min-width:760px) { .donate { grid-template-columns:1fr auto; align-items:center; } }
+  .donate h2 { margin:0; font-size:18px; }
+  .donate p { margin:4px 0 0; color:var(--muted); font-size:14px; }
+  footer { max-width:1200px; margin:0 auto; padding:24px 16px 40px; color:var(--muted); font-size:12px; border-top:1px solid var(--line); }
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">Seit<span>ara</span> · Thumbnail Maker</div>
+  <a class="home" href="../de/">Zur Startseite →</a>
+</header>
+
+<main>
+  <h1>Thumbnail Maker für Roblox-Spiele</h1>
+  <p class="lead">Wähle eine Vorlage, lade einen Screenshot aus deinem Spiel hoch, schreib deinen Titel drauf und lade das Bild als PNG herunter. Komplett kostenlos – alles läuft direkt in deinem Browser, nichts wird hochgeladen.</p>
+
+  <div class="layout">
+    <section class="card stage">
+      <canvas id="c" width="1920" height="1080" aria-label="Vorschau des Thumbnails"></canvas>
+      <p class="hint">Tipp: Titel und Sticker kannst du in der Vorschau mit der Maus oder dem Finger verschieben.</p>
+    </section>
+
+    <aside class="card panel">
+      <fieldset>
+        <legend>Format</legend>
+        <div class="seg">
+          <button class="btn on" data-format="thumb" type="button">Thumbnail 16:9</button>
+          <button class="btn" data-format="icon" type="button">Icon 1:1</button>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Vorlage</legend>
+        <div class="templates" id="templates"></div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Hintergrund</legend>
+        <div class="grid2">
+          <div class="btn file">Bild hochladen<input id="bgFile" type="file" accept="image/*"></div>
+          <button class="btn" id="bgClear" type="button">Bild entfernen</button>
+        </div>
+        <div class="row" style="margin-top:10px"><label for="dim">Abdunkeln</label><input id="dim" type="range" min="0" max="80" value="25" style="width:60%"></div>
+        <div class="row"><label>Verlauf-Farben</label><input id="g1" type="color"><input id="g2" type="color"></div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Titel</legend>
+        <input id="title" type="text" maxlength="40" value="MEGA OBBY">
+        <input id="subtitle" type="text" maxlength="40" value="100 LEVELS!" style="margin-top:8px" placeholder="Untertitel (optional)">
+        <div class="grid2" style="margin-top:8px">
+          <select id="font" aria-label="Schriftart">
+            <option value='"Arial Black", "Arial Bold", sans-serif'>Arial Black</option>
+            <option value='Impact, "Arial Narrow Bold", sans-serif'>Impact</option>
+            <option value='"Trebuchet MS", sans-serif'>Trebuchet</option>
+            <option value='Verdana, sans-serif'>Verdana</option>
+            <option value='"Comic Sans MS", "Comic Sans", cursive'>Comic</option>
+            <option value='Georgia, serif'>Georgia</option>
+          </select>
+          <select id="effect" aria-label="Effekt">
+            <option value="outline">Umrandung</option>
+            <option value="3d">3D-Schatten</option>
+            <option value="glow">Leuchten</option>
+            <option value="none">Ohne</option>
+          </select>
+        </div>
+        <div class="row" style="margin-top:10px"><label for="size">Grösse</label><input id="size" type="range" min="60" max="260" value="170" style="width:60%"></div>
+        <div class="row"><label for="tilt">Drehung</label><input id="tilt" type="range" min="-15" max="15" value="-4" style="width:60%"></div>
+        <div class="row"><label>Text / Rand</label><input id="fill" type="color"><input id="stroke" type="color"></div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Sticker</legend>
+        <select id="sticker" aria-label="Sticker">
+          <option value="none">Kein Sticker</option>
+          <option value="burst:NEU!">Stern: NEU!</option>
+          <option value="burst:UPDATE">Stern: UPDATE</option>
+          <option value="burst:x2">Stern: x2</option>
+          <option value="banner:FREE">Band: FREE</option>
+          <option value="banner:EVENT">Band: EVENT</option>
+          <option value="arrow">Pfeil</option>
+        </select>
+        <div class="row" style="margin-top:8px"><label>Sticker-Farbe</label><input id="stickerColor" type="color"></div>
+      </fieldset>
+
+      <button class="btn primary" id="download" type="button">PNG herunterladen</button>
+    </aside>
+  </div>
+
+  <section class="card donate">
+    <div>
+      <h2>Gefällt dir das Tool?</h2>
+      <p>Der Thumbnail Maker ist und bleibt kostenlos. Wenn du etwas zurückgeben möchtest, kannst du freiwillig direkt an UNICEF Schweiz spenden – das Geld geht ohne Umweg an UNICEF. <strong>Bist du unter 18, frag bitte vorher deine Eltern.</strong></p>
+      <p style="font-size:12px">Seitara ist nicht mit UNICEF verbunden und erhält keinen Anteil an Spenden.</p>
+    </div>
+    <a class="btn" href="https://www.unicef.ch/de/spenden" target="_blank" rel="noopener noreferrer">Zur Spendenseite von UNICEF Schweiz ↗</a>
+  </section>
+</main>
+
+<footer>
+  Roblox ist eine Marke der Roblox Corporation. Dieses Tool ist ein unabhängiges Projekt und steht in keiner Verbindung zu Roblox.
+  Hochgeladene Bilder werden nur in deinem Browser verarbeitet und nicht gespeichert oder übertragen.
+  · <a href="../de/imprint/">Impressum</a> · <a href="../de/privacy/">Datenschutz</a>
+</footer>
+
+<script>
+(() => {
+  const c = document.getElementById("c");
+  const ctx = c.getContext("2d");
+  const $ = (id) => document.getElementById(id);
+
+  const TEMPLATES = [
+    { name: "Obby",      g1: "#22d3ee", g2: "#7c3aed", title: "MEGA OBBY",       sub: "100 LEVELS!",  fill: "#ffe14d", stroke: "#1b1033", sticker: "burst:NEU!",   sc: "#ef4444", effect: "outline" },
+    { name: "Simulator", g1: "#34d399", g2: "#0ea5e9", title: "PET SIMULATOR",   sub: "SAMMLE ALLE!", fill: "#ffffff", stroke: "#064e3b", sticker: "burst:x2",     sc: "#f59e0b", effect: "3d" },
+    { name: "Tycoon",    g1: "#facc15", g2: "#ea580c", title: "MONEY TYCOON",    sub: "WERDE REICH",  fill: "#ffffff", stroke: "#7c2d12", sticker: "banner:FREE",  sc: "#16a34a", effect: "outline" },
+    { name: "Horror",    g1: "#111827", g2: "#7f1d1d", title: "DON'T LOOK BACK", sub: "ÜBERLEBE...",  fill: "#f87171", stroke: "#000000", sticker: "none",         sc: "#dc2626", effect: "glow" },
+    { name: "Update",    g1: "#6366f1", g2: "#ec4899", title: "BIG UPDATE",      sub: "NEUE MAP",     fill: "#ffffff", stroke: "#312e81", sticker: "burst:UPDATE", sc: "#facc15", effect: "3d" },
+    { name: "Tower Def", g1: "#0f766e", g2: "#1e293b", title: "TOWER DEFENSE",   sub: "WAVE 50",      fill: "#5eead4", stroke: "#022c22", sticker: "arrow",        sc: "#f97316", effect: "outline" },
+    { name: "Event",     g1: "#f472b6", g2: "#fb923c", title: "SUMMER EVENT",    sub: "LIMITIERT",    fill: "#fff7ed", stroke: "#9d174d", sticker: "banner:EVENT", sc: "#2563eb", effect: "outline" },
+    { name: "Racing",    g1: "#1d4ed8", g2: "#0f172a", title: "TURBO RACE",      sub: "FAHR SCHNELL", fill: "#fde047", stroke: "#000000", sticker: "burst:NEU!",   sc: "#e11d48", effect: "3d" },
+  ];
+
+  const state = {
+    format: "thumb", img: null,
+    titlePos: { x: 0.5, y: 0.42 }, stickerPos: { x: 0.84, y: 0.2 },
+  };
+
+  // Template buttons
+  const tplWrap = $("templates");
+  TEMPLATES.forEach((t, i) => {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "tpl" + (i === 0 ? " on" : ""); b.textContent = t.name;
+    b.style.background = `linear-gradient(135deg, ${t.g1}, ${t.g2})`;
+    b.onclick = () => { applyTemplate(t); tplWrap.querySelectorAll(".tpl").forEach((x) => x.classList.toggle("on", x === b)); };
+    tplWrap.appendChild(b);
+  });
+
+  function applyTemplate(t) {
+    $("g1").value = t.g1; $("g2").value = t.g2; $("title").value = t.title; $("subtitle").value = t.sub;
+    $("fill").value = t.fill; $("stroke").value = t.stroke; $("sticker").value = t.sticker; $("stickerColor").value = t.sc; $("effect").value = t.effect;
+    draw();
+  }
+
+  // Format
+  document.querySelectorAll("[data-format]").forEach((b) => b.onclick = () => {
+    state.format = b.dataset.format;
+    document.querySelectorAll("[data-format]").forEach((x) => x.classList.toggle("on", x === b));
+    if (state.format === "icon") { c.width = 1024; c.height = 1024; state.titlePos = { x: 0.5, y: 0.62 }; state.stickerPos = { x: 0.76, y: 0.2 }; }
+    else { c.width = 1920; c.height = 1080; state.titlePos = { x: 0.5, y: 0.42 }; state.stickerPos = { x: 0.84, y: 0.2 }; }
+    draw();
+  });
+
+  // Background image: read locally only
+  $("bgFile").onchange = (e) => {
+    const f = e.target.files[0]; if (!f) return;
+    const img = new Image();
+    img.onload = () => { state.img = img; draw(); URL.revokeObjectURL(img.src); };
+    img.src = URL.createObjectURL(f);
+  };
+  $("bgClear").onclick = () => { state.img = null; $("bgFile").value = ""; draw(); };
+
+  ["dim","g1","g2","title","subtitle","font","effect","size","tilt","fill","stroke","sticker","stickerColor"].forEach((id) => $(id).addEventListener("input", draw));
+
+  // ---------- Drawing ----------
+  function drawBackground(W, H) {
+    const g = ctx.createLinearGradient(0, 0, W, H);
+    g.addColorStop(0, $("g1").value); g.addColorStop(1, $("g2").value);
+    ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+    if (state.img) {
+      const s = Math.max(W / state.img.width, H / state.img.height);
+      const w = state.img.width * s, h = state.img.height * s;
+      ctx.drawImage(state.img, (W - w) / 2, (H - h) / 2, w, h);
+    } else {
+      // subtle diagonal stripes so plain gradients don't look flat
+      ctx.save(); ctx.globalAlpha = 0.08; ctx.fillStyle = "#fff";
+      for (let x = -H; x < W; x += 120) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x + 50, 0); ctx.lineTo(x + 50 + H, H); ctx.lineTo(x + H, H); ctx.fill(); }
+      ctx.restore();
+    }
+    const dim = +$("dim").value / 100;
+    const v = ctx.createRadialGradient(W / 2, H / 2, Math.min(W, H) * 0.2, W / 2, H / 2, Math.max(W, H) * 0.75);
+    v.addColorStop(0, `rgba(0,0,0,${dim * 0.4})`); v.addColorStop(1, `rgba(0,0,0,${Math.min(dim + 0.25, 0.9)})`);
+    ctx.fillStyle = v; ctx.fillRect(0, 0, W, H);
+  }
+
+  function styledText(text, x, y, size) {
+    const font = $("font").value, effect = $("effect").value, fill = $("fill").value, stroke = $("stroke").value;
+    ctx.font = `900 ${size}px ${font}`; ctx.textAlign = "center"; ctx.textBaseline = "middle"; ctx.lineJoin = "round";
+    // shrink to fit width
+    const maxW = c.width * 0.9; const w = ctx.measureText(text).width;
+    if (w > maxW) { size *= maxW / w; ctx.font = `900 ${size}px ${font}`; }
+    if (effect === "3d") {
+      for (let i = Math.round(size * 0.08); i > 0; i--) { ctx.fillStyle = stroke; ctx.fillText(text, x + i, y + i); }
+    }
+    if (effect === "glow") { ctx.shadowColor = fill; ctx.shadowBlur = size * 0.35; }
+    if (effect === "outline" || effect === "3d") { ctx.lineWidth = size * 0.16; ctx.strokeStyle = stroke; ctx.strokeText(text, x, y); }
+    ctx.fillStyle = fill; ctx.fillText(text, x, y);
+    ctx.shadowBlur = 0;
+    return size;
+  }
+
+  function drawTitle(W, H) {
+    const scale = state.format === "icon" ? 0.75 : 1;
+    const size = +$("size").value * scale * (W / 1920) * (state.format === "icon" ? 1.9 : 1);
+    const x = state.titlePos.x * W, y = state.titlePos.y * H;
+    ctx.save(); ctx.translate(x, y); ctx.rotate((+$("tilt").value * Math.PI) / 180);
+    const title = $("title").value.trim(), sub = $("subtitle").value.trim();
+    const used = title ? styledText(title, 0, 0, size) : size;
+    if (sub) styledText(sub, 0, used * 0.95, used * 0.48);
+    ctx.restore();
+    return { x, y, w: W * 0.8, h: size * 1.8 };
+  }
+
+  function burst(r, color, label) {
+    ctx.beginPath();
+    for (let i = 0; i < 28; i++) { const a = (i / 28) * Math.PI * 2, rr = i % 2 ? r * 0.78 : r; ctx.lineTo(Math.cos(a) * rr, Math.sin(a) * rr); }
+    ctx.closePath(); ctx.fillStyle = color; ctx.fill(); ctx.lineWidth = r * 0.07; ctx.strokeStyle = "#fff"; ctx.stroke();
+    ctx.font = `900 ${r * (label.length > 4 ? 0.36 : 0.5)}px "Arial Black", sans-serif`; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+    ctx.lineWidth = r * 0.08; ctx.strokeStyle = "rgba(0,0,0,.45)"; ctx.strokeText(label, 0, 0); ctx.fillStyle = "#fff"; ctx.fillText(label, 0, 0);
+  }
+
+  function drawSticker(W, H) {
+    const v = $("sticker").value; if (v === "none") return null;
+    const [kind, label] = v.split(":"); const color = $("stickerColor").value;
+    const r = Math.min(W, H) * 0.16; const x = state.stickerPos.x * W, y = state.stickerPos.y * H;
+    ctx.save(); ctx.translate(x, y); ctx.rotate(0.22);
+    if (kind === "burst") burst(r, color, label);
+    if (kind === "banner") {
+      const w = r * 2.6, h = r * 0.8;
+      ctx.fillStyle = color; ctx.fillRect(-w / 2, -h / 2, w, h); ctx.lineWidth = r * 0.06; ctx.strokeStyle = "#fff"; ctx.strokeRect(-w / 2, -h / 2, w, h);
+      ctx.font = `900 ${h * 0.62}px "Arial Black", sans-serif`; ctx.textAlign = "center"; ctx.textBaseline = "middle"; ctx.fillStyle = "#fff"; ctx.fillText(label, 0, 2);
+    }
+    if (kind === "arrow") {
+      ctx.rotate(0.5); ctx.beginPath();
+      ctx.moveTo(-r, -r * 0.25); ctx.lineTo(r * 0.2, -r * 0.25); ctx.lineTo(r * 0.2, -r * 0.6); ctx.lineTo(r, 0); ctx.lineTo(r * 0.2, r * 0.6); ctx.lineTo(r * 0.2, r * 0.25); ctx.lineTo(-r, r * 0.25); ctx.closePath();
+      ctx.fillStyle = color; ctx.fill(); ctx.lineWidth = r * 0.08; ctx.strokeStyle = "#fff"; ctx.stroke();
+    }
+    ctx.restore();
+    return { x, y, r: r * 1.3 };
+  }
+
+  let hit = { title: null, sticker: null };
+  function draw() {
+    const W = c.width, H = c.height;
+    ctx.clearRect(0, 0, W, H);
+    drawBackground(W, H);
+    hit.title = drawTitle(W, H);
+    hit.sticker = drawSticker(W, H);
+  }
+
+  // ---------- Dragging ----------
+  let drag = null;
+  const toCanvas = (e) => { const r = c.getBoundingClientRect(); return { x: (e.clientX - r.left) * (c.width / r.width), y: (e.clientY - r.top) * (c.height / r.height) }; };
+  c.addEventListener("pointerdown", (e) => {
+    const p = toCanvas(e); const s = hit.sticker, t = hit.title;
+    if (s && Math.hypot(p.x - s.x, p.y - s.y) < s.r) drag = { key: "stickerPos", dx: p.x - s.x, dy: p.y - s.y };
+    else if (t && Math.abs(p.x - t.x) < t.w / 2 && Math.abs(p.y - t.y) < t.h) drag = { key: "titlePos", dx: p.x - t.x, dy: p.y - t.y };
+    if (drag) { c.setPointerCapture(e.pointerId); c.classList.add("dragging"); }
+  });
+  c.addEventListener("pointermove", (e) => {
+    if (!drag) return; const p = toCanvas(e);
+    state[drag.key] = { x: Math.min(Math.max((p.x - drag.dx) / c.width, 0.05), 0.95), y: Math.min(Math.max((p.y - drag.dy) / c.height, 0.05), 0.95) };
+    draw();
+  });
+  const end = () => { drag = null; c.classList.remove("dragging"); };
+  c.addEventListener("pointerup", end); c.addEventListener("pointercancel", end);
+
+  // ---------- Download ----------
+  $("download").onclick = () => {
+    const name = ($("title").value.trim() || "thumbnail").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "thumbnail";
+    const a = document.createElement("a");
+    a.download = `${name}-${state.format === "icon" ? "icon" : "thumbnail"}.png`;
+    a.href = c.toDataURL("image/png"); a.click();
+  };
+
+  applyTemplate(TEMPLATES[0]);
+})();
+</script>
+</body>
+</html>

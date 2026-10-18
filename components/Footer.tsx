@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getDict, type Locale } from "@/lib/i18n";
 import { OPERATOR } from "@/lib/legal";
 import Logo from "./Logo";
+import { asset } from "./SiteMock";
 
 export default function Footer({ locale }: { locale: Locale }) {
   const t = getDict(locale);
@@ -26,6 +27,10 @@ export default function Footer({ locale }: { locale: Locale }) {
               {c.links.map(([href, label]) => (
                 <li key={href}><Link href={href} className="transition hover:text-white">{label}</Link></li>
               ))}
+              {/* Static tool page outside the Next router, so a plain link with basePath */}
+              {c.title === t.footer.resources && (
+                <li><a href={asset("/thumbnail/")} className="transition hover:text-white">Roblox Thumbnail Maker</a></li>
+              )}
             </ul>
           </nav>
         ))}
